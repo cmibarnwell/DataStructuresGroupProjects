@@ -14,6 +14,11 @@
 
 --Insertion
 
+
+
+
+
+
 --MAXCHAIN   szCourseId
 Prints the count of the number of successors in the longest chain 
 that begins with the specified vertex. If the course doesn't exist, 
@@ -23,6 +28,21 @@ RECURSIVE
 int maxChainLength(Graph graph, int iVertex)
 Returns the a count of the number of vertices in the longest chain that
 begins with the specified vertex.
+
+Depth First or Breadth first
+
+****successor list
+check if pNext edge is null
+compare successor nodes to find greatest
+move to that vertex increase count
+repeat
+
+
+
+
+
+
+
 
 
 RECURSIVE
@@ -48,6 +68,19 @@ iLongLength - known longest chain length
 
 
 
+
+
+
+
 --deleteCourse()
+
+
+
+
+
+
+
+
+
 
 ***********************************************************************/ 
