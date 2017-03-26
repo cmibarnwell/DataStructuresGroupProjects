@@ -72,3 +72,19 @@ typedef struct
     char szLabel[LABEL_SIZE+1];
     EdgeNode * successorList;
 } Vertex;
+
+
+/********Utility Functions***********/
+char * getToken(char *pszInputTxt, char szToken[], int iTokenSize);
+
+
+/********Brandon B. Functions********/
+
+
+/********Brandon L. Functions********/
+
+/***********Caleb Functions**********/
+
+
+
+
