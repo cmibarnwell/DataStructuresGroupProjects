@@ -97,7 +97,7 @@ typedef struct
 
 /********** Brandon L. Funcs **************/
 
-void printLongChains(Graph graph, int iVertex. int pathM[], int iLevel. int iLongLength);
+void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLongLength);
 void deleteCourse(Graph graph, int iVertex); //for program 6
 void insertPrereq(Graph graph, int iPrereqVertex, int iCourseVertex);
 int maxChain(Graph graph, int iVertex);
