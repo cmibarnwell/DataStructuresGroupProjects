@@ -114,7 +114,7 @@ void printOne(Graph graph, int iVertex);
 
 /********** Brandon B. Funcs ***************/
 int causesCycle(Graph graph, int iPrereqVertex, int iVertex);
-int finCourse(Graph graph, char szCourseId[]);
+int findCourse(Graph graph, char szCourseId[]);
 void setLevel(Graph g, Plan plan, int iVertex, int iLev); //for program 6
 
 //NOTE(accelerator): Put hash table functions here
