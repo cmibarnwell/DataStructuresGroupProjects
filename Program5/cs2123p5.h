@@ -137,6 +137,8 @@ Graph newGraph();
 //void setLevel(Graph g, Plan plan, int iVertex, int iLev);
 Plan newPlan();
 
+void insert(Graph, Vertex);
+
 // functions in most programs, but require modifications
 void processCommandSwitches(int argc, char *argv[], char **ppszCommandFileName);
 void exitUsage(int iArg, char *pszMessage, char *pszDiagnosticInfo);
