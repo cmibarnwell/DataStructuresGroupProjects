@@ -40,6 +40,32 @@ End Graph Funcs
 /**************************
 Utility Functions
 **************************/
+
+/******************** getToken **************************************
+char * getToken (char *pszInputTxt, char szToken[], int iTokenSize)
+Purpose:
+    Examines the input text to return the next token.  It also
+    returns the position in the text after that token.  This function
+    does not skip over white space, but it assumes the input uses
+    spaces to separate tokens.
+Parameters:
+    I   char *pszInputTxt       input buffer to be parsed
+    O   char szToken[]          Returned token.
+    I   int iTokenSize          The size of the token variable.  This is used
+                                to prevent overwriting memory.  The size
+                                should be the memory size minus 1 (for
+                                the zero byte).
+Returns:
+    Functionally:
+        Pointer to the next character following the delimiter after the token.
+        NULL - no token found.
+    szToken parm - the returned token.  If not found, it will be an
+        empty string.
+Notes:
+    - If the token is larger than iTokenSize, we return a truncated value.
+    - If a token isn't found, szToken is set to an empty string
+    - This function does not skip over white space occurring prior to the token.
+**************************************************************************/
 char * getToken(char *pszInputTxt, char szToken[], int iTokenSize)
 {
     int iDelimPos;                      // found position of delim

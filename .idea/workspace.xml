@@ -33,7 +33,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="df1767a3-fec4-48f5-aafc-e6e1be6e3901" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Program5/CMBp5.c" afterPath="$PROJECT_DIR$/Program5/CMBp5.c" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Program5/cs2123p5Driver.c" afterPath="$PROJECT_DIR$/Program5/cs2123p5Driver.c" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -50,11 +50,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="CMBp5.c" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CMBp5.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Program5/CMBp5.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
-              <caret line="1" column="26" lean-forward="true" selection-start-line="1" selection-start-column="26" selection-end-line="1" selection-end-column="26" />
+            <state relative-caret-position="72">
+              <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -70,11 +70,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cs2123p5Driver.c" pinned="false" current-in-tab="true">
+      <file leaf-file-name="cs2123p5Driver.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Program5/cs2123p5Driver.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="750">
-              <caret line="149" column="67" lean-forward="true" selection-start-line="149" selection-start-column="0" selection-end-line="149" selection-end-column="67" />
+            <state relative-caret-position="1132">
+              <caret line="67" column="75" lean-forward="true" selection-start-line="43" selection-start-column="0" selection-end-line="67" selection-end-column="75" />
               <folding />
             </state>
           </provider>
@@ -93,7 +93,7 @@
       <file leaf-file-name="cs2123p5.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Program5/cs2123p5.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="876">
+            <state relative-caret-position="2514">
               <caret line="147" column="67" lean-forward="true" selection-start-line="147" selection-start-column="67" selection-end-line="147" selection-end-column="67" />
               <folding />
             </state>
@@ -109,9 +109,9 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Program5/Makefile" />
-        <option value="$PROJECT_DIR$/Program5/CMBp5.c" />
-        <option value="$PROJECT_DIR$/Program5/cs2123p5Driver.c" />
         <option value="$PROJECT_DIR$/Program5/cs2123p5.h" />
+        <option value="$PROJECT_DIR$/Program5/cs2123p5Driver.c" />
+        <option value="$PROJECT_DIR$/Program5/CMBp5.c" />
       </list>
     </option>
   </component>
@@ -177,6 +177,8 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="js.eslint.eslintPackage" value="" />
     <property name="ToolWindowCMake.ShowToolbar" value="false" />
+    <property name="nodejs_interpreter_path" value="/usr/bin/node" />
+    <property name="js-jscs-nodeInterpreter" value="/usr/bin/node" />
   </component>
   <component name="RunManager" selected="Application.Build All">
     <configuration default="true" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" PASS_PARENT_ENVS_2="true" TEST_MODE="SUITE_TEST">
@@ -185,6 +187,26 @@
     </configuration>
     <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="DataStructuresGroupProjects" TARGET_NAME="DataStructuresGroupProjects" CONFIG_NAME="Debug">
       <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
+      <module name="" />
+      <working_directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <method />
+    </configuration>
+    <configuration default="true" type="GoRunFileConfiguration" factoryName="Go Single File">
+      <module name="" />
+      <working_directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <method />
+    </configuration>
+    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
+      <module name="" />
+      <working_directory value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <kind value="DIRECTORY" />
       <method />
     </configuration>
     <configuration default="true" type="JavaScriptTestRunnerProtractor" factoryName="Protractor">
@@ -370,12 +392,12 @@
       <option name="presentableId" value="Default" />
       <updated>1490708131140</updated>
       <workItem from="1490708132417" duration="1523000" />
-      <workItem from="1490715096921" duration="972000" />
+      <workItem from="1490715096921" duration="1858000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2495000" />
+    <option name="totallyTimeSpent" value="3381000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1720" y="27" width="1720" height="1413" extended-state="4" />
@@ -453,10 +475,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Program5/CMBp5.c">
+    <entry file="file://$PROJECT_DIR$/Program5/Makefile">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="1" column="26" lean-forward="true" selection-start-line="1" selection-start-column="26" selection-end-line="1" selection-end-column="26" />
+        <state relative-caret-position="90">
+          <caret line="5" column="25" lean-forward="false" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Program5/cs2123p5.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2514">
+          <caret line="147" column="67" lean-forward="true" selection-start-line="147" selection-start-column="67" selection-end-line="147" selection-end-column="67" />
           <folding />
         </state>
       </provider>
@@ -469,26 +499,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Program5/Makefile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="5" column="25" lean-forward="false" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Program5/cs2123p5.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="876">
-          <caret line="147" column="67" lean-forward="true" selection-start-line="147" selection-start-column="67" selection-end-line="147" selection-end-column="67" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Program5/cs2123p5Driver.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="750">
-          <caret line="149" column="67" lean-forward="true" selection-start-line="149" selection-start-column="0" selection-end-line="149" selection-end-column="67" />
+        <state relative-caret-position="1132">
+          <caret line="67" column="75" lean-forward="true" selection-start-line="43" selection-start-column="0" selection-end-line="67" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Program5/CMBp5.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>
