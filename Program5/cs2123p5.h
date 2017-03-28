@@ -97,25 +97,28 @@ typedef struct
 
 /********** Brandon L. Funcs **************/
 
-void printLongChains(Graph graph, int iVertex. int pathM[], int iLevel. int iLongLength);
-void deleteCourse(Graph graph, int iVertex);
+void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLongLength);
+void deleteCourse(Graph graph, int iVertex); //for program 6
 void insertPrereq(Graph graph, int iPrereqVertex, int iCourseVertex);
 int maxChain(Graph graph, int iVertex);
 
 /********** Caleb B. Funcs ****************/
 
-
+//void printSuccessors(Graph graph);
 void printTraversal(Graph graph, int iCourseVertex, int indent);
 void printSources(Graph graph);
 void printSinks(Graph graph);
-void doPlan(Graph graph, Plan plan);
+void doPlan(Graph graph, Plan plan); //for program 6
+void printAllInList(Graph graph);
+void printOne(Graph graph, int iVertex);
 
 /********** Brandon B. Funcs ***************/
 int causesCycle(Graph graph, int iPrereqVertex, int iVertex);
-int finCourse(Graph graph, char szCourseId[]);
-void setLevel(Graph g, Plan plan, int iVertex, int iLev);
+int findCourse(Graph graph, char szCourseId[]);
+void setLevel(Graph g, Plan plan, int iVertex, int iLev); //for program 6
 
 //NOTE(accelerator): Put hash table functions here
+//HashTable* createHashTable(int); //program 6
 
 /****************Program 6 Functions and generic Functions below **********************/
 //int maxChain(Graph graph, int iVertex); 
@@ -124,8 +127,8 @@ void setLevel(Graph g, Plan plan, int iVertex, int iLev);
 //int causesCycle(Graph graph, int iPrereqVertex, int iVertex);
 //int findCourse(Graph graph, char szCourseId[]);
 //void insertPrereq(Graph graph, int iPrereqVertex, int iCourseVertex);
-void printAllInList(Graph graph); 
-void printOne(Graph graph, int iVertex);
+//void printAllInList(Graph graph); 
+//void printOne(Graph graph, int iVertex);
 //void printSources(Graph graph);
 //void printSinks(Graph graph);
 Graph newGraph();
@@ -133,6 +136,8 @@ Graph newGraph();
 //void doPlan(Graph graph, Plan plan);
 //void setLevel(Graph g, Plan plan, int iVertex, int iLev);
 Plan newPlan();
+
+void insert(Graph, Vertex);
 
 // functions in most programs, but require modifications
 void processCommandSwitches(int argc, char *argv[], char **ppszCommandFileName);
