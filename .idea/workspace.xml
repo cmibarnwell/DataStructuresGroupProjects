@@ -50,11 +50,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="CMBp5.c" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CMBp5.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Program5/CMBp5.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+            <state relative-caret-position="342">
+              <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="34" selection-end-column="75" />
               <folding />
             </state>
           </provider>
@@ -70,11 +70,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cs2123p5Driver.c" pinned="false" current-in-tab="false">
+      <file leaf-file-name="cs2123p5Driver.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Program5/cs2123p5Driver.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1132">
-              <caret line="67" column="75" lean-forward="true" selection-start-line="43" selection-start-column="0" selection-end-line="67" selection-end-column="75" />
+            <state relative-caret-position="355">
+              <caret line="30" column="103" lean-forward="false" selection-start-line="30" selection-start-column="103" selection-end-line="30" selection-end-column="103" />
               <folding />
             </state>
           </provider>
@@ -93,7 +93,7 @@
       <file leaf-file-name="cs2123p5.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Program5/cs2123p5.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2514">
+            <state relative-caret-position="1890">
               <caret line="147" column="67" lean-forward="true" selection-start-line="147" selection-start-column="67" selection-end-line="147" selection-end-column="67" />
               <folding />
             </state>
@@ -110,8 +110,8 @@
       <list>
         <option value="$PROJECT_DIR$/Program5/Makefile" />
         <option value="$PROJECT_DIR$/Program5/cs2123p5.h" />
-        <option value="$PROJECT_DIR$/Program5/cs2123p5Driver.c" />
         <option value="$PROJECT_DIR$/Program5/CMBp5.c" />
+        <option value="$PROJECT_DIR$/Program5/cs2123p5Driver.c" />
       </list>
     </option>
   </component>
@@ -392,15 +392,15 @@
       <option name="presentableId" value="Default" />
       <updated>1490708131140</updated>
       <workItem from="1490708132417" duration="1523000" />
-      <workItem from="1490715096921" duration="1858000" />
+      <workItem from="1490715096921" duration="2702000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3381000" />
+    <option name="totallyTimeSpent" value="4225000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1720" y="27" width="1720" height="1413" extended-state="4" />
+    <frame x="1720" y="27" width="1720" height="1413" extended-state="5" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14883721" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -475,6 +475,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Program5/CMBp5.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="34" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Program5/Makefile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -485,7 +493,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Program5/cs2123p5.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2514">
+        <state relative-caret-position="1890">
           <caret line="147" column="67" lean-forward="true" selection-start-line="147" selection-start-column="67" selection-end-line="147" selection-end-column="67" />
           <folding />
         </state>
@@ -501,16 +509,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Program5/cs2123p5Driver.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1132">
-          <caret line="67" column="75" lean-forward="true" selection-start-line="43" selection-start-column="0" selection-end-line="67" selection-end-column="75" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Program5/CMBp5.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+        <state relative-caret-position="355">
+          <caret line="30" column="103" lean-forward="false" selection-start-line="30" selection-start-column="103" selection-end-line="30" selection-end-column="103" />
           <folding />
         </state>
       </provider>

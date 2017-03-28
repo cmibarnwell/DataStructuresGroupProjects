@@ -44,6 +44,8 @@ Purpose:
 
 Parameters:
     I   Graph graph      graph
+    I   int iCourseVertex
+    I   int indent
 
 Returns:
 

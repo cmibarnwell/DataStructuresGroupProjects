@@ -28,7 +28,36 @@
 Start Graph Funcs
 **************************/
 
+//The dft is not yet functional, and may be unnecessary. However I'm putting it here in case we need it - Caleb
+/************************** dft ******************************************
+void dft(Graph g, int v, int visitedM[])
+Purpose:
 
+Parameters:
+    I   Graph graph      graph
+    I   int v
+    I   int visitedM[]
+
+Returns:
+
+Notes:
+
+**************************************************************************/
+void dft(Graph g, int v, int visitedM[])
+{
+    EdgeNode *e;
+    if (visitedM[v])
+        return;
+    visitedM[v] = TRUE;
+    //visit vertex, perform necessary operations
+
+    for (e = g->vertexM[v].successorList; e != NULL; e = e->pNextEdge) {
+        //visit edge, perform necessary operations
+
+
+        dft(g, e->iVertex, visitedM)
+    }
+}
 
 /**************************
 End Graph Funcs
