@@ -19,3 +19,43 @@
 #include <string.h>
 #include "cs2123p5.h"
 
+void printSuccessors(Graph graph)
+{
+
+}
+
+
+void printTraversal(Graph graph, int iCourseVertex, int indent)
+{
+
+}
+
+
+void printSources(Graph graph)
+{
+
+}
+
+
+void printSinks(Graph graph)
+{
+
+}
+
+
+void printAllInList(Graph graph)
+{
+
+}
+
+
+void printOne(Graph graph, int iVertex);
+{
+
+}
+
+
+void doPlan(Graph graph, Plan plan)
+{
+
+}
