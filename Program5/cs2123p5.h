@@ -101,6 +101,7 @@ void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLon
 void deleteCourse(Graph graph, int iVertex); //for program 6
 void insertPrereq(Graph graph, int iPrereqVertex, int iCourseVertex);
 int maxChain(Graph graph, int iVertex);
+void insertCourse(Graph graph, int iCourseVertex);
 
 /********** Caleb B. Funcs ****************/
 
@@ -121,7 +122,7 @@ void setLevel(Graph g, Plan plan, int iVertex, int iLev); //for program 6
 //HashTable* createHashTable(int); //program 6
 
 /****************Program 6 Functions and generic Functions below **********************/
-void insertCourse(Graph graph, int iCourseVertex);
+//void insertCourse(Graph graph, int iCourseVertex);
 //int maxChain(Graph graph, int iVertex); 
 //void printTraversal(Graph graph, int iCourseVertex, int indent);
 //void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLongLength);
