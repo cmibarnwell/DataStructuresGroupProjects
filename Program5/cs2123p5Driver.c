@@ -59,6 +59,36 @@ void dft(Graph g, int v, int visitedM[])
     }
 }
 
+/************************** allocateVertex ******************************************
+Vertex * allocateVertex(char szCourseName[], char szCourseID[])
+Purpose:
+
+Parameters:
+    I   char szCourseName[]
+    I   char szCourseId[]
+
+Returns:
+
+Notes:
+
+**************************************************************************/
+Vertex * allocateVertex(char szCourseName[], char szCourseId[])
+{
+    Vertex * pVertex = (Vertex *)malloc(sizeof(Vertex));
+    if(pVertex == NULL)
+        ErrExit(ERR_ALGORITHM, "No available memory for linked list");
+    strcpy(pVertex->szCourseId, szCourseId);
+    strcpy(pVertex->szCourseName, szCourseName);
+    pVertex->prereqList->iPrereqVertex = 0;
+    pVertex->prereqList->iSuccVertex = 0;
+    pVertex->prereqList->pNextEdge = NULL;
+    pVertex->successorList->iPrereqVertex = 0;
+    pVertex->successorList->iSuccVertex = 0;
+    pVertex->successorList->pNextEdge = NULL;
+
+    return pVertex;
+}
+
 /**************************
 End Graph Funcs
 **************************/
