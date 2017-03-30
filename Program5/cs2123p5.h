@@ -101,7 +101,7 @@ void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLon
 void deleteCourse(Graph graph, int iVertex); //for program 6
 void insertPrereq(Graph graph, int iPrereqVertex, int iCourseVertex);
 int maxChain(Graph graph, int iVertex);
-void insertCourse(Graph graph, int iCourseVertex);
+void insertCourse(Graph graph, char* szCourseName, char* szPrereqName);
 
 /********** Caleb B. Funcs ****************/
 
