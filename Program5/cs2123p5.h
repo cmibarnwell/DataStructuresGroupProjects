@@ -112,6 +112,8 @@ void printSinks(Graph graph);
 void doPlan(Graph graph, Plan plan); //for program 6
 void printAllInList(Graph graph);
 void printOne(Graph graph, int iVertex);
+Vertex * allocateVertex(char szCourseName[], char szCourseId[]);
+Graph newGraph();
 
 /********** Brandon B. Funcs ***************/
 int causesCycle(Graph graph, int iPrereqVertex, int iVertex);
