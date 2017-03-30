@@ -121,6 +121,7 @@ void setLevel(Graph g, Plan plan, int iVertex, int iLev); //for program 6
 //HashTable* createHashTable(int); //program 6
 
 /****************Program 6 Functions and generic Functions below **********************/
+void insertCourse(Graph graph, int iCourseVertex);
 //int maxChain(Graph graph, int iVertex); 
 //void printTraversal(Graph graph, int iCourseVertex, int indent);
 //void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLongLength);
