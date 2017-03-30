@@ -21,8 +21,32 @@
 
  int main(int argc, char *argv[])
  {
+     Graph graph = newGraph();
+
 
  }
+
+void readData(Graph graph)
+{
+    char szBuffer[MAX_LINE_SIZE], szType[MAX_TOKEN], szCourseId[MAX_TOKEN], szCourseName[MAX_TOKEN];
+    FILE * pFile = fopen("p5Input.txt", "r");
+
+    //Below is WIP!!!!!
+    while(fgets(szBuffer, MAX_LINE_SIZE-1, pFile))
+    {
+        int iScanfCnt = sscanf(szBuffer, "%s %s",
+        szType, szCourseId, szCourseName);
+        if(strcmp(szType,"COURSE")
+            insertCourse(graph, szCourseId, szCourseName, "");
+        else if(strcmp(szType,"COURSE")
+            insertCourse(graph, szCourseId, szCourseName, );
+    }
+
+    fclose(pFile);
+}
+
+
+
 
 /**************************
 Start Graph Funcs
@@ -73,11 +97,29 @@ Notes:
 Graph newGraph()
 {
     Graph graph;
+
     graph = (Graph)malloc(sizeof(GraphImp));
     if(graph == NULL)
         ErrExit(ERR_ALGORITHM, "No available memory for Graph");
     graph->iNumVertices = 0;
-    graph->vertexM[];
+}
+
+/************************** allocateEdgeNode ******************************************
+Vertex * allocateEdgeNode(char szCourseName[], char szCourseId[])
+Purpose:
+
+Parameters:
+    I   char szCourseName[]
+    I   char szCourseId[]
+
+Returns:
+
+Notes:
+
+**************************************************************************/
+Vertex * allocateEdgeNode(char szCourseName[], char szCourseId[])
+{
+
 }
 
 /************************** allocateVertex ******************************************
@@ -100,6 +142,7 @@ Vertex * allocateVertex(char szCourseName[], char szCourseId[])
         ErrExit(ERR_ALGORITHM, "No available memory for vertex");
     strcpy(pVertex->szCourseId, szCourseId);
     strcpy(pVertex->szCourseName, szCourseName);
+    strcpy(pVertex->szDept, "");
     pVertex->prereqList->iPrereqVertex = 0;
     pVertex->prereqList->iSuccVertex = 0;
     pVertex->prereqList->pNextEdge = NULL;
