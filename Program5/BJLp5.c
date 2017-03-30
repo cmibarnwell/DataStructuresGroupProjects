@@ -8,21 +8,43 @@
 void insertCourse(Graph graph, char* szCourseId[], char* szCourseName[]
 , char* szPrereqId[])
 {
-	Vertex tempVertex = allocateVertex();
+	Vertex *tempVertex = allocateVertex(szCourseName, szCourseId);
 	int iFind = 0;
-	
-	if(strcmp(szPrereqName,'')==0) //Insert Course
+	//Insert Course with no Prereq
+	if(strcmp(szPrereqName,'')==0)
 	{
+		//Check if course already exist
 		iFind = findCourse(graph, szCourseId);
-		if(iFind == -1) //Course already exist
+		if(iFind == -1)
 		{
 			ErrExit(ERR_BAD_COURSE,"Course Already Exist")
 		}
+		
+		//Store the Course Id, Name, and Department
+		char szTempCourseId[], szToken[], szDept[]; //Temp Varibles for get token
+		strcpy(szTempCourseId, szCourseId);			//Copy szCourseId into temp
+		
+		while(TRUE)
+		{
+			szTempCourseId = getToken(szTempCourseId, szToken, 1);
+			if(!isdigit(szToken))
+				strcat(szDept,szToken);
+				
+			else
+				break
+		}
+		
+		strcpy(tempVertex->szDept, szDept);
 		strcpy(szCourseId,tempVertex.szCourseId);
 		strcpy(szCourseName,tempVertex.szCourseName);
-		
-		
+		//Insert vertex into array
+		graph.vertexM[iNumVertices] = tempVertex;
+		iNumVertices++
 				
+	}
+	//Insert Prereq
+	else
+	{
 	}
 }
 
