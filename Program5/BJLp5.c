@@ -5,6 +5,45 @@
 #include <string.h>
 #include "cs2123p5.h"
 
+void insertCourse(Graph graph, char* szCourseId[], char* szCourseName[]
+, char* szPrereqId[])
+{
+	Vertex tempVertex = allocateVertex();
+	int iFind = 0;
+	
+	if(strcmp(szPrereqName,'')==0) //Insert Course
+	{
+		iFind = findCourse(graph, szCourseId);
+		if(iFind == -1) //Course already exist
+		{
+			ErrExit(ERR_BAD_COURSE,"Course Already Exist")
+		}
+		strcpy(szCourseId,tempVertex.szCourseId);
+		strcpy(szCourseName,tempVertex.szCourseName);
+		
+		
+				
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*******TO DO LIST*********/
 
