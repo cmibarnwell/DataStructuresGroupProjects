@@ -105,7 +105,7 @@ void insertCourse(Graph graph, char* szCourseName, char* szPrereqName);
 
 /********** Caleb B. Funcs ****************/
 
-//void printSuccessors(Graph graph);
+void printSuccessors(Graph graph, int iVertex);
 void printTraversal(Graph graph, int iCourseVertex, int indent);
 void printSources(Graph graph);
 void printSinks(Graph graph);
@@ -115,6 +115,9 @@ void printOne(Graph graph, int iVertex);
 Vertex * allocateVertex(char szCourseName[], char szCourseId[]);
 Graph newGraph();
 EdgeNode * newEdgeNode(EdgeNode * list, int iPrereqVertex, int iSuccVertex);
+Graph newGraph();
+EdgeNode * allocateEdgeNode();
+void printOne(Graph graph, int iVertex);
 
 /********** Brandon B. Funcs ***************/
 int causesCycle(Graph graph, int iPrereqVertex, int iVertex);
@@ -132,11 +135,8 @@ void setLevel(Graph g, Plan plan, int iVertex, int iLev); //for program 6
 //int causesCycle(Graph graph, int iPrereqVertex, int iVertex);
 //int findCourse(Graph graph, char szCourseId[]);
 //void insertPrereq(Graph graph, int iPrereqVertex, int iCourseVertex);
-//void printAllInList(Graph graph); 
-//void printOne(Graph graph, int iVertex);
+//void printAllInList(Graph graph);
 //void printSources(Graph graph);
-//void printSinks(Graph graph);
-Graph newGraph();
 //void deleteCourse (Graph graph, int iVertex);
 //void doPlan(Graph graph, Plan plan);
 //void setLevel(Graph g, Plan plan, int iVertex, int iLev);
