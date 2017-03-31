@@ -30,18 +30,46 @@
 //Make sure to use getToken on this e.g. string= getToken(szTempCourseId, szToken, sizeof(Longest possible Command type));
 void readData(Graph graph)
 {
-    char szBuffer[MAX_LINE_SIZE], szType[MAX_TOKEN], szCourseId[MAX_TOKEN], szCourseName[MAX_TOKEN];
+    char szInputBuffer[MAX_LINE_SIZE], szType[MAX_TOKEN], szCourseId[MAX_TOKEN], szCourseName[MAX_TOKEN];
+    char * pszRemainingBuffer;
+    int iLevel, iPrevLevel;
     FILE * pFile = fopen("p5Input.txt", "r");
 
     //Below is WIP!!!!!
-    while(fgets(szBuffer, MAX_LINE_SIZE-1, pFile))
+    while(fgets(szInputBuffer, MAX_LINE_SIZE-1, pFile))
     {
-        int iScanfCnt = sscanf(szBuffer, "%s %s",
-        szType, szCourseId, szCourseName);
-        if(strcmp(szType,"COURSE")
-            insertCourse(graph, szCourseId, szCourseName, "");
-        else if(strcmp(szType,"COURSE")
-            insertCourse(graph, szCourseId, szCourseName, );
+        pszRemainingBuffer = getToken(szInputBuffer, szType, MAX_TOKEN-1);
+        if(strcmp(szType,"COURSE")==0) {
+            pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
+            pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseName, MAX_TOKEN-1);
+            insertCourse(graph, szCourseId, szCourseName);
+            iPrevLevel = findCourse(graph, szCourseId);
+        }
+        else if(strcmp(szType,"PREREQ")==0) {
+            pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
+            iLevel = findCourse(graph, szCourseId);
+            newEdgeNode(graph->vertexM[iPrevLevel].prereqList, iLevel, iPrevLevel);
+            newEdgeNode(graph->vertexM[iLevel].successorList, iLevel, iPrevLevel);
+        }
+        else if(strcmp(szType, "PRTONE")==0){
+            pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
+            printOne(graph, findCourse(graph, szCourseId));
+        }
+        else if(strcmp(szType, "PRTSUCC")==0){
+            pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
+            printSuccessors(graph, findCourse(graph, szCourseId));
+        }
+        else if(strcmp(szType, "PRTALL")==0){
+            printAllInList(graph);
+        }
+        else if(strcmp(szType, "MAXCHAIN")==0){
+            pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
+            maxChain(graph, findCourse(graph, szCourseId));
+        }
+        else if(strcmp(szType, "PRTLONGS")==0){
+            pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
+            printLongChains(graph,findCourse(graph,szCourseId),);
+        }
     }
 
     fclose(pFile);
