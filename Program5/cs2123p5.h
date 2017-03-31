@@ -46,15 +46,6 @@ Notes:
 #define FALSE 0
 #define TRUE 1
 
-//Linked Lists
-
-typedef struct
-{
-    EdgeNode *pHead;
-} LinkedListImp;
-
-typedef LinkedListImp *LinkedList;
-
 // EdgeNode represents one edge in a graph
 typedef struct EdgeNode
 {
@@ -63,6 +54,14 @@ typedef struct EdgeNode
     struct EdgeNode *pNextEdge;     // points to next  edge
 } EdgeNode;
 
+//Linked Lists
+
+typedef struct
+{
+    EdgeNode *pHead;
+} LinkedListImp;
+
+typedef LinkedListImp *LinkedList;
 
 typedef struct Vertex
 {
