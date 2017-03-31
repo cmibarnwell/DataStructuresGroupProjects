@@ -54,15 +54,6 @@ typedef struct EdgeNode
     struct EdgeNode *pNextEdge;     // points to next  edge
 } EdgeNode;
 
-//Linked Lists
-
-typedef struct
-{
-    EdgeNode *pHead;
-} LinkedListImp;
-
-typedef LinkedListImp *LinkedList;
-
 typedef struct Vertex
 {
     char szCourseId[8];             // Course Identifier
