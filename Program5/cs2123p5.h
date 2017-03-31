@@ -114,6 +114,7 @@ void printAllInList(Graph graph);
 void printOne(Graph graph, int iVertex);
 Vertex * allocateVertex(char szCourseName[], char szCourseId[]);
 Graph newGraph();
+EdgeNode * newEdgeNode(EdgeNode * list, int iPrereqVertex, int iSuccVertex);
 
 /********** Brandon B. Funcs ***************/
 int causesCycle(Graph graph, int iPrereqVertex, int iVertex);

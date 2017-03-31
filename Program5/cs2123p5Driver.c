@@ -172,17 +172,28 @@ EdgeNode * newEdgeNode(EdgeNode * list, int iPrereqVertex, int iSuccVertex)
  *****************************************************************/
 EdgeNode * newEdgeNode(EdgeNode * list, int iPrereqVertex, int iSuccVertex)
 {
-    EdgeNode *p, *pPrecedes;
+    EdgeNode *p, *pPrecedes, *pNew;
+
+
+    if(list == NULL)
+    {
+        list = allocateEdgeNode();
+        list->iPrereqVertex = iPrereqVertex;
+        list->iSuccVertex = iSuccVertex;
+        return list;
+    }
 
     for(p = list; p!=NULL; p=p->pNextEdge)
     {
         pPrecedes = p;
     }
-    p->iPrereqVertex = iPrereqVertex;
-    p->iSuccVertex = iSuccVertex;
-    if(pPrecedes!=NULL)
-        pPrecedes->pNextEdge = p;
-    return p;
+
+    pNew = allocateEdgeNode();
+
+    pNew->iPrereqVertex = iPrereqVertex;
+    pNew->iSuccVertex = iSuccVertex;
+    pPrecedes->pNextEdge = pNew;
+    return pNew;
 }
 
 /**************************
