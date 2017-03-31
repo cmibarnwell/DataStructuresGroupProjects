@@ -10,11 +10,11 @@ void insertCourse(Graph graph, char* szCourseId[], char* szCourseName[]
 {
 	Vertex *tempVertex = allocateVertex(szCourseName, szCourseId);
 	int iFind = 0;
+	iFind = findCourse(graph, szCourseId);
 	//Insert Course with no Prereq
 	if(strcmp(szPrereqName,'')==0)
 	{
 		//Check if course already exist
-		iFind = findCourse(graph, szCourseId);
 		if(iFind == -1)
 		{
 			ErrExit(ERR_BAD_COURSE,"Course Already Exist")
@@ -35,8 +35,8 @@ void insertCourse(Graph graph, char* szCourseId[], char* szCourseName[]
 		}
 		
 		strcpy(tempVertex->szDept, szDept);
-		strcpy(szCourseId,tempVertex.szCourseId);
-		strcpy(szCourseName,tempVertex.szCourseName);
+		strcpy(szCourseId,tempVertex->szCourseId);
+		strcpy(szCourseName,tempVertex->szCourseName);
 		//Insert vertex into array
 		graph.vertexM[iNumVertices] = tempVertex;
 		iNumVertices++
@@ -45,6 +45,28 @@ void insertCourse(Graph graph, char* szCourseId[], char* szCourseName[]
 	//Insert Prereq
 	else
 	{
+		//loop through the prerecList insert at the end of szCourse
+		EdgeNode p = newEdgeNode();
+		//Check if prerecList is empty
+		if(graph.vertextM[iFind]->prereqList == NULL)
+		{
+			
+		}
+		//Add at the end of the list
+		for(p = graph.vertexM[iFind]->prereqList; p!=NULL; p = p->pNextEdge)
+		{
+		}
+		//loop through the Prereq successorList and add szCourse
+		//Check if successorList is empty
+		if(graph.vertextM[iFind]->successorList == NULL)
+		{
+		}
+		//And at the end of the list
+		for(p = graph.vertexM[iFind]->successorList; p!=NULL; p = p->pNextEdge)
+		{
+		}
+
+		
 	}
 }
 
