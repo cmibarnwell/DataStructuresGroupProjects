@@ -26,6 +26,8 @@
 
  }
 
+
+//Make sure to use getToken on this e.g. string= getToken(szTempCourseId, szToken, sizeof(Longest possible Command type));
 void readData(Graph graph)
 {
     char szBuffer[MAX_LINE_SIZE], szType[MAX_TOKEN], szCourseId[MAX_TOKEN], szCourseName[MAX_TOKEN];
@@ -104,24 +106,6 @@ Graph newGraph()
     graph->iNumVertices = 0;
 }
 
-/************************** allocateEdgeNode ******************************************
-Vertex * allocateEdgeNode(char szCourseName[], char szCourseId[])
-Purpose:
-
-Parameters:
-    I   char szCourseName[]
-    I   char szCourseId[]
-
-Returns:
-
-Notes:
-
-**************************************************************************/
-Vertex * allocateEdgeNode(char szCourseName[], char szCourseId[])
-{
-
-}
-
 /************************** allocateVertex ******************************************
 Vertex * allocateVertex(char szCourseName[], char szCourseID[])
 Purpose:
@@ -143,20 +127,67 @@ Vertex * allocateVertex(char szCourseName[], char szCourseId[])
     strcpy(pVertex->szCourseId, szCourseId);
     strcpy(pVertex->szCourseName, szCourseName);
     strcpy(pVertex->szDept, "");
-    pVertex->prereqList->iPrereqVertex = 0;
-    pVertex->prereqList->iSuccVertex = 0;
-    pVertex->prereqList->pNextEdge = NULL;
-    pVertex->successorList->iPrereqVertex = 0;
-    pVertex->successorList->iSuccVertex = 0;
-    pVertex->successorList->pNextEdge = NULL;
+    pVertex->prereqList = NULL;
+    pVertex->successorList = NULL;
 
     return pVertex;
+}
+
+/************************** allocateEdgeNode ******************************************
+Vertex * allocateVertex(char szCourseName[], char szCourseID[])
+Purpose:
+
+Parameters:
+    I   char szCourseName[]
+    I   char szCourseId[]
+
+Returns:
+
+Notes:
+
+**************************************************************************/
+EdgeNode * allocateEdgeNode()
+{
+    EdgeNode *pEdge = (EdgeNode *)malloc(sizeof(EdgeNode));
+    if(pEdge == NULL)
+        ErrExit(ERR_ALGORITHM, "No available memory for Edge Node");
+    pEdge->iPrereqVertex = 0;
+    pEdge->iSuccVertex = 0;
+    pEdge->pNextEdge = NULL;
+
+    return pEdge;
+}
+
+/******************** newEdgeNode ****************************
+EdgeNode * newEdgeNode(EdgeNode * list, int iPrereqVertex, int iSuccVertex)
+ Purpose:
+     Inserts an element into an ordered linked list.
+ Parameters:
+     LinkedList list
+     Event value
+ Returns:
+     1. If it already exists in list, it returns the pointer to that
+     specific node.
+     2. Otherwise, it returns the pointer to the new node.
+ *****************************************************************/
+EdgeNode * newEdgeNode(EdgeNode * list, int iPrereqVertex, int iSuccVertex)
+{
+    EdgeNode *p, *pPrecedes;
+
+    for(p = list; p!=NULL; p=p->pNextEdge)
+    {
+        pPrecedes = p;
+    }
+    p->iPrereqVertex = iPrereqVertex;
+    p->iSuccVertex = iSuccVertex;
+    if(pPrecedes!=NULL)
+        pPrecedes->pNextEdge = p;
+    return p;
 }
 
 /**************************
 End Graph Funcs
 **************************/
-
 
 
 
