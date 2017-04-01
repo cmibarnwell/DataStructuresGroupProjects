@@ -5,22 +5,23 @@
 #include <string.h>
 #include "cs2123p5.h"
 
-void insertCourse(Graph graph, char* szCourseId[], char* szCourseName[]
-, char* szPrereqId[])
+void insertCourse(Graph graph, char* szCourseId[], char* szCourseName[])
 {
 	Vertex *tempVertex = allocateVertex(szCourseName, szCourseId);
-	int iFind = 0;
+	int iFind;
+	int i;
 	iFind = findCourse(graph, szCourseId);
-	//Insert Course with no Prereq
-	if(strcmp(szPrereqName,'')==0)
-	{
 		//Check if course already exist
 		if(iFind == -1)
 		{
 			ErrExit(ERR_BAD_COURSE,"Course Already Exist")
 		}
 		
-		//Store the Course Id, Name, and Department
+		//Store the Course Id, Name, and Departmentm
+		strcpy(tempVertex->szDept, szDept);
+		strcpy(szCourseId,tempVertex->szCourseId);
+		strcpy(szCourseName,tempVertex->szCourseName);
+		
 		char szTempCourseId[], szToken[], szDept[]; //Temp Varibles for get token
 		strcpy(szTempCourseId, szCourseId);			//Copy szCourseId into temp
 		
@@ -34,39 +35,15 @@ void insertCourse(Graph graph, char* szCourseId[], char* szCourseName[]
 				break
 		}
 		
-		strcpy(tempVertex->szDept, szDept);
-		strcpy(szCourseId,tempVertex->szCourseId);
-		strcpy(szCourseName,tempVertex->szCourseName);
+		//Loop through the Graph
+		for(i=0; i < graph->iNumVertices; i++)
+		{
+			
+		}
 		//Insert vertex into array
 		graph.vertexM[iNumVertices] = tempVertex;
 		iNumVertices++
 				
-	}
-	//Insert Prereq
-	else
-	{
-		//loop through the prerecList insert at the end of szCourse
-		EdgeNode p = newEdgeNode();
-		//Check if prerecList is empty
-		if(graph.vertextM[iFind]->prereqList == NULL)
-		{
-			
-		}
-		//Add at the end of the list
-		for(p = graph.vertexM[iFind]->prereqList; p!=NULL; p = p->pNextEdge)
-		{
-		}
-		//loop through the Prereq successorList and add szCourse
-		//Check if successorList is empty
-		if(graph.vertextM[iFind]->successorList == NULL)
-		{
-		}
-		//And at the end of the list
-		for(p = graph.vertexM[iFind]->successorList; p!=NULL; p = p->pNextEdge)
-		{
-		}
-
-		
 	}
 }
 

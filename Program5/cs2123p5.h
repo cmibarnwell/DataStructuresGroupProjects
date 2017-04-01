@@ -99,9 +99,8 @@ typedef struct
 
 void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLongLength);
 void deleteCourse(Graph graph, int iVertex); //for program 6
-void insertPrereq(Graph graph, int iPrereqVertex, int iCourseVertex);
 int maxChain(Graph graph, int iVertex);
-void insertCourse(Graph graph, char* szCourseName, char* szPrereqName);
+int insertCourse(Graph graph, char* szCourseId[], char* szCourseName[]);
 
 /********** Caleb B. Funcs ****************/
 
