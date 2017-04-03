@@ -6,7 +6,7 @@
 #include <ctype.h>
 #include "cs2123p5.h"
 
-void insertCourse(Graph graph, char* szCourseId[], char* szCourseName[])
+int insertCourse(Graph graph, char szCourseId[], char szCourseName[])
 {
 	Vertex *tempVertex = allocateVertex(szCourseName, szCourseId);
 	int iFind;
@@ -15,26 +15,27 @@ void insertCourse(Graph graph, char* szCourseId[], char* szCourseName[])
 		//Check if course already exist
 		if(iFind == -1)
 		{
-			ErrExit(ERR_BAD_COURSE,"Course Already Exist")
+			ErrExit(ERR_BAD_COURSE,"Course Already Exist");
 		}
 		
-		//Store the Course Id, Name, and Departmentm
-		strcpy(tempVertex->szDept, szDept);
+		//Store the Course Id, Name, and Department
 		strcpy(szCourseId,tempVertex->szCourseId);
 		strcpy(szCourseName,tempVertex->szCourseName);
 		
-		char szTempCourseId[], szToken[], szDept[]; //Temp Varibles for get token
+		char szTempCourseId[MAX_TOKEN], szToken[MAX_TOKEN], szDept[MAX_TOKEN]; //Temp Varibles for get token
 		strcpy(szTempCourseId, szCourseId);			//Copy szCourseId into temp
 		
 		while(TRUE)
 		{
-			szTempCourseId = getToken(szTempCourseId, szToken, 1);
+			strcpy(szTempCourseId,getToken(szTempCourseId, szToken, 1));
 			if(!isdigit(szToken))
 				strcat(szDept,szToken);
 				
 			else
-				break
+				break;
 		}
+
+        strcpy(tempVertex->szDept, szDept);
 		
 		//Loop through the Graph
 		for(i=0; i < graph->iNumVertices; i++)
@@ -42,10 +43,11 @@ void insertCourse(Graph graph, char* szCourseId[], char* szCourseName[])
 			
 		}
 		//Insert vertex into array
-		graph.vertexM[iNumVertices] = tempVertex;
-		iNumVertices++
-				
-	}
+        graph->iNumVertices++;
+        graph->vertexM[graph->iNumVertices] = *tempVertex;
+
+    return 0;
+
 }
 
 
