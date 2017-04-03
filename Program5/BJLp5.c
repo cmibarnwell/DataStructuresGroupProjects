@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
+#include <ctype.h>
 #include "cs2123p5.h"
 
 void insertCourse(Graph graph, char* szCourseId[], char* szCourseName[])
