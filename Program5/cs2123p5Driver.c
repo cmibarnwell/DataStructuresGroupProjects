@@ -22,12 +22,24 @@
  int main(int argc, char *argv[])
  {
      Graph graph = newGraph();
+     readData(graph);
 
 
  }
 
 
-//Make sure to use getToken on this e.g. string= getToken(szTempCourseId, szToken, sizeof(Longest possible Command type));
+/************************** readData ******************************************
+void readData(Graph graph)
+Purpose:
+
+Parameters:
+    I   Graph graph      graph
+
+Returns:
+
+Notes:
+
+**************************************************************************/
 void readData(Graph graph)
 {
     char szInputBuffer[MAX_LINE_SIZE], szType[MAX_TOKEN], szCourseId[MAX_TOKEN], szCourseName[MAX_TOKEN];
@@ -57,18 +69,27 @@ void readData(Graph graph)
         }
         else if(strcmp(szType, "PRTSUCC")==0){
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
-            printSuccessors(graph, findCourse(graph, szCourseId));
+            printSuccessors(graph,graph->vertexM[findCourse(graph, szCourseId)].successorList, 0);
         }
         else if(strcmp(szType, "PRTALL")==0){
             printAllInList(graph);
         }
         else if(strcmp(szType, "MAXCHAIN")==0){
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
-            maxChain(graph, findCourse(graph, szCourseId));
+            //maxChain(graph, findCourse(graph, szCourseId));
         }
         else if(strcmp(szType, "PRTLONGS")==0){
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
-            printLongChains(graph,findCourse(graph,szCourseId),);
+            //printLongChains(graph,findCourse(graph,szCourseId),);
+        }
+        else if(strcmp(szType, "PRTSINKS")==0){
+            printSinks(graph);
+        }
+        else if(strcmp(szType, "PRTSOURCES")==0){
+            printSources(graph);
+        }
+        else{
+            ErrExit(ERR_COMMAND_LINE, "Delegated command %s unknown.", szType);
         }
     }
 
@@ -96,7 +117,7 @@ Returns:
 
 Notes:
 
-**************************************************************************/
+**************************************************************************
 void dft(Graph g, int v, int visitedM[])
 {
     EdgeNode *e;
@@ -111,7 +132,7 @@ void dft(Graph g, int v, int visitedM[])
 
         dft(g, e->iVertex, visitedM)
     }
-}
+}*/
 
 /************************** newGraph ******************************************
 Graph newGraph()
@@ -132,6 +153,8 @@ Graph newGraph()
     if(graph == NULL)
         ErrExit(ERR_ALGORITHM, "No available memory for Graph");
     graph->iNumVertices = 0;
+
+    return graph;
 }
 
 /************************** allocateVertex ******************************************
