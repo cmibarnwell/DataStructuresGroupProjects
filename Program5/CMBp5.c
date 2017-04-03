@@ -33,9 +33,21 @@ Returns:
 Notes:
 
 **************************************************************************/
-void printSuccessors(Graph graph)
+void printSuccessors(Graph graph, EdgeNode * pEdge, int iIndent)
 {
+    int i;
 
+    //check if NULL
+    if (pEdge == NULL)
+        return;
+
+    //Print the successors recursively
+    printSuccessors(graph, pEdge->pNextEdge, iIndent+1);
+
+    for(i=0; i<iIndent; i++){
+        printf("\t");
+    }
+    printf("%s\n", graph->vertexM[pEdge->iSuccVertex].szCourseName);
 }
 
 /******************** printTraversal **************************************
