@@ -100,11 +100,11 @@ typedef struct
 void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLongLength);
 void deleteCourse(Graph graph, int iVertex); //for program 6
 int maxChain(Graph graph, int iVertex);
-int insertCourse(Graph graph, char* szCourseId[], char* szCourseName[]);
+int insertCourse(Graph graph, char szCourseId[], char szCourseName[]);
 
 /********** Caleb B. Funcs ****************/
 
-void printSuccessors(Graph graph, int iVertex);
+void printSuccessors(Graph graph, EdgeNode * pEdge, int iIndent);
 void printTraversal(Graph graph, int iCourseVertex, int indent);
 void printSources(Graph graph);
 void printSinks(Graph graph);
@@ -117,6 +117,7 @@ EdgeNode * newEdgeNode(EdgeNode * list, int iPrereqVertex, int iSuccVertex);
 Graph newGraph();
 EdgeNode * allocateEdgeNode();
 void printOne(Graph graph, int iVertex);
+void readData(Graph graph);
 
 /********** Brandon B. Funcs ***************/
 int causesCycle(Graph graph, int iPrereqVertex, int iVertex);
