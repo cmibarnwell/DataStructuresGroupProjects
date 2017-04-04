@@ -66,9 +66,15 @@ void readData(Graph graph)
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
             printf(">> PREREQ %s\n", szCourseId);
             if(findCourse(graph, szCourseId)==-1)
-                insertCourse(graph, szCourseId, "TBD");
+            {
+              printf("Course was not found in prereq\n");
+              insertCourse(graph, szCourseId, "TBD");
+            }
+            else {
+
             newEdgeNode(graph->vertexM[findCourse(graph, szLastId)].prereqList, findCourse(graph, szCourseId), findCourse(graph, szLastId));
             newEdgeNode(graph->vertexM[findCourse(graph, szCourseId)].successorList, findCourse(graph, szCourseId), findCourse(graph, szLastId));
+            }
         }
         else if(strcmp(szType, "PRTONE")==0){
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
