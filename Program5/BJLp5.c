@@ -24,11 +24,12 @@ int insertCourse(Graph graph, char szCourseId[], char szCourseName[])
 		
 		char szTempCourseId[MAX_TOKEN], szToken[MAX_TOKEN], szDept[MAX_TOKEN]; //Temp Varibles for get token
 		strcpy(szTempCourseId, szCourseId);			//Copy szCourseId into temp
-		
+
 		while(TRUE)
 		{
 			strcpy(szTempCourseId,getToken(szTempCourseId, szToken, 1));
-			if(isalpha(szToken))
+            int i = szToken[0] - '0';
+			if(isalpha(i))
 				strcat(szDept,szToken);
 				
 			else
