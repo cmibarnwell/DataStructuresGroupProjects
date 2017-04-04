@@ -22,20 +22,16 @@ int insertCourse(Graph graph, char szCourseId[], char szCourseName[])
 		strcpy(szCourseId,tempVertex->szCourseId);
 		strcpy(szCourseName,tempVertex->szCourseName);
 		
-		char szTempCourseId[8], szToken[MAX_TOKEN], szDept[4]; //Temp Varibles for get token
-		strcpy(szTempCourseId, szCourseId);			//Copy szCourseId into temp
+		char szDept[4];
+        int j;
 
-		while(TRUE)
-		{
-			
-			szTempCourseId = getToken(szTempCourseId, szToken, 1));
-            int i = szToken[0] - '0';
-			if(isalpha(i))
-				strcat(szDept,szToken);
-				
-			else
-				break;
-		}
+		for(j = 0; j < strlen(szCourseId)-1; j++) {
+            if (isalpha(szCourseId[j])) {
+                szDept[j] = szCourseId[j];
+            } else {
+                break;
+            }
+        }
 
         strcpy(tempVertex->szDept, szDept);
 		
