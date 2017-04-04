@@ -118,6 +118,7 @@ Graph newGraph();
 EdgeNode * allocateEdgeNode();
 void printOne(Graph graph, int iVertex);
 void readData(Graph graph);
+void freeGraph(Graph graph);
 
 /********** Brandon B. Funcs ***************/
 int causesCycle(Graph graph, int iPrereqVertex, int iVertex);

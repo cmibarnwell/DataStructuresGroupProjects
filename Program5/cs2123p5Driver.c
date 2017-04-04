@@ -24,7 +24,7 @@
      Graph graph = newGraph();
      readData(graph);
 
-
+     freeGraph(graph);
  }
 
 
@@ -158,6 +158,22 @@ Graph newGraph()
     graph->iNumVertices = 0;
 
     return graph;
+}
+
+/************************** freeGraph ******************************************
+void freeGraph()
+Purpose:
+
+Parameters:
+
+Returns:
+
+Notes:
+
+**************************************************************************/
+void freeGraph(Graph graph)
+{
+    free(graph);
 }
 
 /************************** allocateVertex ******************************************
