@@ -83,7 +83,21 @@ Notes:
 **************************************************************************/
 void printSources(Graph graph)
 {
+    int i;
+    int bFindEver = FALSE;
 
+    printf("All Sources:\n");
+
+    for(i = 0; i < graph->iNumVertices; i++)
+    {
+        if(graph->vertexM[i].prereqList->iPrereqVertex == -1) {
+            printf("%s %s\n", graph->vertexM[i].szCourseId, graph->vertexM[i].szCourseName);
+            bFindEver = TRUE;
+        }
+    }
+
+    if(!bFindEver)
+        printf("None\n");
 }
 
 /******************** printSinks **************************************
@@ -100,7 +114,28 @@ Notes:
 **************************************************************************/
 void printSinks(Graph graph)
 {
+    int i, j;
+    int bFind = FALSE;
+    int bFindEver = FALSE;
 
+    printf("All Sinks:\n");
+
+    for(i = 0; i < graph->iNumVertices; i++)
+    {
+        for(j = 0; j < graph->iNumVertices; j++)
+        {
+            if(graph->vertexM[j].prereqList->iPrereqVertex == i) {
+                bFind = TRUE;
+                bFindEver = TRUE;
+            }
+        }
+        if(!bFind)
+            printf("%s %s\n", graph->vertexM[i].szCourseId, graph->vertexM[i].szCourseName);
+        bFind = FALSE;
+    }
+
+    if(!bFindEver)
+        printf("None\n");
 }
 
 /******************** printAllInList **************************************
@@ -137,8 +172,8 @@ Notes:
 **************************************************************************/
 void printOne(Graph graph, int iVertex)
 {
-    printf("%-4s%-3s%-20s%-15s%-15s\n", "Vx","TE","Course Name","Prereqs","Successors");
-    printf("%-4d%-3d%-20s\n",iVertex, 0, graph->vertexM[iVertex].szCourseName);
+    printf("%-4s%-3s%20s%-15s%-15s\n", "Vx","TE","Course Name","Prereqs","Successors");
+    printf("%d %4d %20s\n",iVertex, 0, graph->vertexM[iVertex].szCourseName);
 }
 
 /******************** doPlan **************************************
