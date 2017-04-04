@@ -33,21 +33,15 @@ Returns:
 Notes:
 
 **************************************************************************/
-void printSuccessors(Graph graph, EdgeNode * pEdge, int iIndent)
+void printSuccessors(Graph graph, int iVertex)
 {
-    int i;
+    printf("In successors\n");
 
-    //check if NULL
-    if (pEdge == NULL)
-        return;
+    printf("%s\n", graph->vertexM[iVertex].szCourseName);
+    printf("Numbah: %d\n", graph->vertexM[iVertex].successorList->iSuccVertex);
 
-    //Print the successors recursively
-    printSuccessors(graph, pEdge->pNextEdge, iIndent+1);
+    printTraversal(graph, graph->vertexM[iVertex].successorList->iSuccVertex, 0);
 
-    for(i=0; i<iIndent; i++){
-        printf("\t");
-    }
-    printf("%s\n", graph->vertexM[pEdge->iSuccVertex].szCourseName);
 }
 
 /******************** printTraversal **************************************
@@ -64,9 +58,21 @@ Returns:
 Notes:
 
 **************************************************************************/
-void printTraversal(Graph graph, int iCourseVertex, int indent)
+void printTraversal(Graph graph, int iCourseVertex, int iIndent)
 {
+    int i;
 
+    //check if NULL
+    if (iCourseVertex == -1)
+        return;
+
+    for(i=0; i<iIndent; i++){
+        printf("\t");
+    }
+    printf("%s\n", graph->vertexM[iCourseVertex].szCourseName);
+
+    //Print the successors recursively
+    printTraversal(graph, graph->vertexM[iCourseVertex].successorList->iSuccVertex, iIndent+1);
 }
 
 /******************** printSources **************************************
