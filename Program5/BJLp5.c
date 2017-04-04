@@ -36,8 +36,8 @@ int insertCourse(Graph graph, char szCourseId[], char szCourseName[])
 
         strcpy(tempVertex->szDept, szDept);
 		
-        graph->iNumVertices++;
         graph->vertexM[graph->iNumVertices] = *tempVertex;
+        ++graph->iNumVertices;
 
     return 0;
 
