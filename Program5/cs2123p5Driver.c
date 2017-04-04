@@ -42,7 +42,7 @@ Notes:
 **************************************************************************/
 void readData(Graph graph)
 {
-    char szInputBuffer[MAX_LINE_SIZE], szType[MAX_TOKEN], szCourseId[MAX_TOKEN], szCourseName[MAX_TOKEN];
+    char szInputBuffer[MAX_LINE_SIZE], szType[MAX_TOKEN], szCourseId[MAX_TOKEN], szLastId[MAX_TOKEN];
     char * pszRemainingBuffer = NULL;
     int iLevel, iPrevLevel;
     FILE * pFile = fopen("p5Input.txt", "r");
@@ -53,15 +53,16 @@ void readData(Graph graph)
         pszRemainingBuffer = getToken(szInputBuffer, szType, MAX_TOKEN-1);
         if(strcmp(szType,"COURSE")==0) {
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
-            pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseName, MAX_TOKEN-1);
-            insertCourse(graph, szCourseId, szCourseName);
-            iPrevLevel = findCourse(graph, szCourseId);
+            insertCourse(graph, szCourseId, pszRemainingBuffer);
+            strcpy(szLastId, szCourseId);
         }
         else if(strcmp(szType,"PREREQ")==0) {
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
-            iLevel = findCourse(graph, szCourseId);
-            newEdgeNode(graph->vertexM[iPrevLevel].prereqList, iLevel, iPrevLevel);
-            newEdgeNode(graph->vertexM[iLevel].successorList, iLevel, iPrevLevel);
+            if(findCourse(graph, szCourseId)==-1)
+                insertCourse(graph, szCourseId, "TBD");
+            printf("Last Id: %s\n", szLastId);
+            newEdgeNode(graph->vertexM[findCourse(graph, szLastId)].prereqList, findCourse(graph, szCourseId), findCourse(graph, szLastId));
+            newEdgeNode(graph->vertexM[findCourse(graph, szCourseId)].successorList, findCourse(graph, szCourseId), findCourse(graph, szLastId));
         }
         else if(strcmp(szType, "PRTONE")==0){
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
@@ -69,7 +70,8 @@ void readData(Graph graph)
         }
         else if(strcmp(szType, "PRTSUCC")==0){
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
-            printSuccessors(graph,graph->vertexM[findCourse(graph, szCourseId)].successorList, 0);
+            printf("Made it here\n");
+            printSuccessors(graph,findCourse(graph, szCourseId));
         }
         else if(strcmp(szType, "PRTALL")==0){
             printAllInList(graph);
@@ -221,8 +223,8 @@ EdgeNode * allocateEdgeNode()
     EdgeNode *pEdge = (EdgeNode *)malloc(sizeof(EdgeNode));
     if(pEdge == NULL)
         ErrExit(ERR_ALGORITHM, "No available memory for Edge Node");
-    pEdge->iPrereqVertex = 0;
-    pEdge->iSuccVertex = 0;
+    pEdge->iPrereqVertex = -1;
+    pEdge->iSuccVertex = -1;
     pEdge->pNextEdge = NULL;
 
     return pEdge;
@@ -231,25 +233,24 @@ EdgeNode * allocateEdgeNode()
 /******************** newEdgeNode ****************************
 EdgeNode * newEdgeNode(EdgeNode * list, int iPrereqVertex, int iSuccVertex)
  Purpose:
-     Inserts an element into an ordered linked list.
+
  Parameters:
-     LinkedList list
-     Event value
+
  Returns:
-     1. If it already exists in list, it returns the pointer to that
-     specific node.
-     2. Otherwise, it returns the pointer to the new node.
+
  *****************************************************************/
 EdgeNode * newEdgeNode(EdgeNode * list, int iPrereqVertex, int iSuccVertex)
 {
     EdgeNode *p, *pPrecedes, *pNew;
-
+    printf("iPrereqVertex: %d iSuccVertex: %d\n", iPrereqVertex, iSuccVertex);
 
     if(list == NULL)
     {
+        printf("Allocating List\n");
         list = allocateEdgeNode();
         list->iPrereqVertex = iPrereqVertex;
         list->iSuccVertex = iSuccVertex;
+        printf("new iPrereqVertex: %d new iSuccVertex: %d\n", list->iPrereqVertex, list->iSuccVertex);
         return list;
     }
 
