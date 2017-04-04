@@ -35,13 +35,7 @@ Notes:
 **************************************************************************/
 void printSuccessors(Graph graph, int iVertex)
 {
-    printf("In successors\n");
-
-    printf("%s\n", graph->vertexM[iVertex].szCourseName);
-    printf("Numbah: %d\n", graph->vertexM[iVertex].successorList->iSuccVertex);
-
-    printTraversal(graph, graph->vertexM[iVertex].successorList->iSuccVertex, 0);
-
+    printTraversal(graph, iVertex, 0);
 }
 
 /******************** printTraversal **************************************
@@ -129,7 +123,10 @@ void printAllInList(Graph graph)
 /******************** printOne **************************************
 void printOne(Graph graph, int iVertex)
 Purpose:
-
+    Print the vertex subscript, max dist from source (this isn't
+    set until the DOPLAN command is executed in Pgm #6, from now use 0),
+    course ID, course name, prereqs (max of 4), and successors.
+    If the course doesn't exist, show a warning.
 Parameters:
     I   Graph graph      graph
 
@@ -140,7 +137,8 @@ Notes:
 **************************************************************************/
 void printOne(Graph graph, int iVertex)
 {
-
+    printf("%-4s%-3s%-20s%-15s%-15s\n", "Vx","TE","Course Name","Prereqs","Successors");
+    printf("%-4d%-3d%-20s\n",iVertex, 0, graph->vertexM[iVertex].szCourseName);
 }
 
 /******************** doPlan **************************************
