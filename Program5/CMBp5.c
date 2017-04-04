@@ -83,7 +83,21 @@ Notes:
 **************************************************************************/
 void printSources(Graph graph)
 {
+    int i;
+    int bFindEver = FALSE;
 
+    printf("All Sources:\n");
+
+    for(i = 0; i < graph->iNumVertices; i++)
+    {
+        if(graph->vertexM[i].prereqList->iPrereqVertex == -1) {
+            printf("%s %s\n", graph->vertexM[i].szCourseId, graph->vertexM[i].szCourseName);
+            bFindEver = TRUE;
+        }
+    }
+
+    if(!bFindEver)
+        printf("None\n");
 }
 
 /******************** printSinks **************************************
