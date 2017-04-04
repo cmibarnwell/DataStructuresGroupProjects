@@ -95,9 +95,11 @@ void readData(Graph graph)
             //printLongChains(graph,findCourse(graph,szCourseId),);
         }
         else if(strcmp(szType, "PRTSINKS")==0){
+            printf(">> PRTSINKS\n");
             printSinks(graph);
         }
         else if(strcmp(szType, "PRTSOURCES")==0){
+            printf(">> PRTSOURCES\n");
             printSources(graph);
         }
         else if(strcmp(szType, "*")==0){
