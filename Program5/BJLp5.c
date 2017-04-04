@@ -15,7 +15,7 @@ int insertCourse(Graph graph, char szCourseId[], char szCourseName[])
 		//Check if course already exist
 		if(iFind != -1)
 		{
-			ErrExit(ERR_BAD_COURSE,"Course Already Exist");
+			printf("Course Already Exist %s/n", szCourseId);
 		}
 		
 		//Store the Course Id, Name, and Department
@@ -35,12 +35,6 @@ int insertCourse(Graph graph, char szCourseId[], char szCourseName[])
 
         strcpy(tempVertex->szDept, szDept);
 		
-		//Loop through the Graph
-		for(i=0; i < graph->iNumVertices; i++)
-		{
-			
-		}
-		//Insert vertex into array
         graph->iNumVertices++;
         graph->vertexM[graph->iNumVertices] = *tempVertex;
 
