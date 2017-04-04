@@ -8,7 +8,7 @@
 
 int insertCourse(Graph graph, char szCourseId[], char szCourseName[])
 {
-	Vertex *tempVertex = allocateVertex(szCourseName, szCourseId);
+	Vertex tempVertex = allocateVertex(szCourseName, szCourseId);
 	int iFind;
 	int i;
 	iFind = findCourse(graph, szCourseId);
@@ -20,8 +20,8 @@ int insertCourse(Graph graph, char szCourseId[], char szCourseName[])
 		}
 		
 		//Store the Course Id, Name, and Department
-		strcpy(szCourseId,tempVertex->szCourseId);
-		strcpy(szCourseName,tempVertex->szCourseName);
+		strcpy(szCourseId,tempVertex.szCourseId);
+		strcpy(szCourseName,tempVertex.szCourseName);
 		
 		char szDept[4];
         int j;
@@ -34,9 +34,9 @@ int insertCourse(Graph graph, char szCourseId[], char szCourseName[])
             }
         }
 
-        strcpy(tempVertex->szDept, szDept);
+        strcpy(tempVertex.szDept, szDept);
 		
-        graph->vertexM[graph->iNumVertices] = *tempVertex;
+        graph->vertexM[graph->iNumVertices] = tempVertex;
         ++graph->iNumVertices;
 
     return 0;

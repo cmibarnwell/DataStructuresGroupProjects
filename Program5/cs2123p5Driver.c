@@ -191,18 +191,16 @@ Returns:
 Notes:
 
 **************************************************************************/
-Vertex * allocateVertex(char szCourseName[], char szCourseId[])
+Vertex allocateVertex(char szCourseName[], char szCourseId[])
 {
-    Vertex * pVertex = (Vertex *)malloc(sizeof(Vertex));
-    if(pVertex == NULL)
-        ErrExit(ERR_ALGORITHM, "No available memory for vertex");
-    strcpy(pVertex->szCourseId, szCourseId);
-    strcpy(pVertex->szCourseName, szCourseName);
-    strcpy(pVertex->szDept, "");
-    pVertex->prereqList = NULL;
-    pVertex->successorList = NULL;
+    Vertex vertex;
+    strcpy(vertex.szCourseId, szCourseId);
+    strcpy(vertex.szCourseName, szCourseName);
+    strcpy(vertex.szDept, "");
+    vertex.prereqList = NULL;
+    vertex.successorList = NULL;
 
-    return pVertex;
+    return vertex;
 }
 
 /************************** allocateEdgeNode ******************************************
