@@ -53,35 +53,45 @@ void readData(Graph graph)
         pszRemainingBuffer = getToken(szInputBuffer, szType, MAX_TOKEN-1);
         if(strcmp(szType,"COURSE")==0) {
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
+
+            // Remove the trailing new line
+            strtok(pszRemainingBuffer, "\n");
+
+
+            printf(">> COURSE %s %s\n", szCourseId, pszRemainingBuffer);
             insertCourse(graph, szCourseId, pszRemainingBuffer);
             strcpy(szLastId, szCourseId);
         }
         else if(strcmp(szType,"PREREQ")==0) {
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
+            printf(">> PREREQ %s\n", szCourseId);
             if(findCourse(graph, szCourseId)==-1)
                 insertCourse(graph, szCourseId, "TBD");
-            printf("Last Id: %s\n", szLastId);
             newEdgeNode(graph->vertexM[findCourse(graph, szLastId)].prereqList, findCourse(graph, szCourseId), findCourse(graph, szLastId));
             newEdgeNode(graph->vertexM[findCourse(graph, szCourseId)].successorList, findCourse(graph, szCourseId), findCourse(graph, szLastId));
         }
         else if(strcmp(szType, "PRTONE")==0){
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
+            printf(">> PRTONE %s\n", szCourseId);
             printOne(graph, findCourse(graph, szCourseId));
         }
         else if(strcmp(szType, "PRTSUCC")==0){
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
-            printf("Made it here\n");
+            printf(">> PRTSUCC %s\n", szCourseId);
             printSuccessors(graph,findCourse(graph, szCourseId));
         }
         else if(strcmp(szType, "PRTALL")==0){
+            printf(">> PRTALL\n");
             printAllInList(graph);
         }
         else if(strcmp(szType, "MAXCHAIN")==0){
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
+            printf(">> MAXCHAIN %s\n", szCourseId);
             //maxChain(graph, findCourse(graph, szCourseId));
         }
         else if(strcmp(szType, "PRTLONGS")==0){
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
+            printf(">> PRTLONGS %s\n", szCourseId);
             //printLongChains(graph,findCourse(graph,szCourseId),);
         }
         else if(strcmp(szType, "PRTSINKS")==0){
@@ -91,6 +101,10 @@ void readData(Graph graph)
             printSources(graph);
         }
         else if(strcmp(szType, "*")==0){
+            fgets(szInputBuffer, MAX_LINE_SIZE-1, pFile);
+            strtok(szInputBuffer, "\n");
+            printf(">> *\n>> %s\n>> *\n", szInputBuffer);
+            fgets(szInputBuffer, MAX_LINE_SIZE-1, pFile);
             continue;
         }
         else{
@@ -197,8 +211,8 @@ Vertex allocateVertex(char szCourseName[], char szCourseId[])
     strcpy(vertex.szCourseId, szCourseId);
     strcpy(vertex.szCourseName, szCourseName);
     strcpy(vertex.szDept, "");
-    vertex.prereqList = NULL;
-    vertex.successorList = NULL;
+    vertex.prereqList = allocateEdgeNode();
+    vertex.successorList = allocateEdgeNode();
 
     return vertex;
 }
@@ -240,17 +254,16 @@ EdgeNode * newEdgeNode(EdgeNode * list, int iPrereqVertex, int iSuccVertex)
 EdgeNode * newEdgeNode(EdgeNode * list, int iPrereqVertex, int iSuccVertex)
 {
     EdgeNode *p, *pPrecedes, *pNew;
-    printf("iPrereqVertex: %d iSuccVertex: %d\n", iPrereqVertex, iSuccVertex);
 
-    if(list == NULL)
+
+    if(list->iPrereqVertex == -1 || list->iSuccVertex == -1)
     {
-        printf("Allocating List\n");
-        list = allocateEdgeNode();
         list->iPrereqVertex = iPrereqVertex;
         list->iSuccVertex = iSuccVertex;
-        printf("new iPrereqVertex: %d new iSuccVertex: %d\n", list->iPrereqVertex, list->iSuccVertex);
         return list;
     }
+
+    pPrecedes = NULL;
 
     for(p = list; p!=NULL; p=p->pNextEdge)
     {
@@ -258,10 +271,10 @@ EdgeNode * newEdgeNode(EdgeNode * list, int iPrereqVertex, int iSuccVertex)
     }
 
     pNew = allocateEdgeNode();
-
     pNew->iPrereqVertex = iPrereqVertex;
     pNew->iSuccVertex = iSuccVertex;
-    pPrecedes->pNextEdge = pNew;
+    if(pPrecedes != NULL)
+        pPrecedes->pNextEdge = pNew;
     return pNew;
 }
 
