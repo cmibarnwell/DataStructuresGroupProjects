@@ -43,7 +43,7 @@ Notes:
 void readData(Graph graph)
 {
     char szInputBuffer[MAX_LINE_SIZE], szType[MAX_TOKEN], szCourseId[MAX_TOKEN], szCourseName[MAX_TOKEN];
-    char * pszRemainingBuffer;
+    char * pszRemainingBuffer = NULL;
     int iLevel, iPrevLevel;
     FILE * pFile = fopen("p5Input.txt", "r");
 
@@ -87,6 +87,9 @@ void readData(Graph graph)
         }
         else if(strcmp(szType, "PRTSOURCES")==0){
             printSources(graph);
+        }
+        else if(strcmp(szType, "*")==0){
+            continue;
         }
         else{
             ErrExit(ERR_COMMAND_LINE, "Delegated command %s unknown.", szType);
