@@ -20,8 +20,8 @@ int insertCourse(Graph graph, char szCourseId[], char szCourseName[])
 		}
 		
 		//Store the Course Id, Name, and Department
-		strcpy(szCourseId,tempVertex.szCourseId);
-		strcpy(szCourseName,tempVertex.szCourseName);
+		//strcpy(szCourseId,tempVertex.szCourseId);
+		//strcpy(szCourseName,tempVertex.szCourseName);
 		
 		char szDept[4];
         int j;
