@@ -15,7 +15,8 @@ int insertCourse(Graph graph, char szCourseId[], char szCourseName[])
 		//Check if course already exist
 		if(iFind != -1)
 		{
-			printf("Course Already Exist %s/n", szCourseId);
+			printf("Course Already Exist %s\n", szCourseId);
+            return -1;
 		}
 		
 		//Store the Course Id, Name, and Department
