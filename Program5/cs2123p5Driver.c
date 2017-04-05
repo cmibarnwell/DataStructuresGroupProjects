@@ -20,7 +20,7 @@
 #include "cs2123p5.h"
 
  int main(int argc, char *argv[])
- {
+ {g
      Graph graph = newGraph();
      readData(graph);
 
@@ -42,9 +42,9 @@ Notes:
 **************************************************************************/
 void readData(Graph graph)
 {
-    char szInputBuffer[MAX_LINE_SIZE], szType[MAX_TOKEN], szCourseId[MAX_TOKEN], szLastId[MAX_TOKEN];
+    char szInputBuffer[MAX_LINE_SIZE], szType[MAX_TOKEN], szCourseId[MAX_TOKEN], szLastId[MAX_TOKEN], szCourseName[23];
     char * pszRemainingBuffer = NULL;
-    int iLevel, iPrevLevel;
+    int iLevel, iScanfCnt;
     FILE * pFile = fopen("p5Input.txt", "r");
 
     //Below is WIP!!!!!
@@ -52,14 +52,14 @@ void readData(Graph graph)
     {
         pszRemainingBuffer = getToken(szInputBuffer, szType, MAX_TOKEN-1);
         if(strcmp(szType,"COURSE")==0) {
-            pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
 
-            // Remove the trailing new line
-            strtok(pszRemainingBuffer, "\n");
+            iScanfCnt = sscanf(pszRemainingBuffer, "%7s %20[^\n]\n", szCourseId, szCourseName);
 
+            if(iScanfCnt < 2)
+                ErrExit(ERR_COMMAND_LINE, "Not Enough Arguments for COURSE");
 
-            printf(">> COURSE %s %s\n", szCourseId, pszRemainingBuffer);
-            insertCourse(graph, szCourseId, pszRemainingBuffer);
+            printf(">> COURSE %s %s\n", szCourseId, szCourseName);
+            insertCourse(graph, szCourseId, szCourseName);
             strcpy(szLastId, szCourseId);
         }
         else if(strcmp(szType,"PREREQ")==0) {
