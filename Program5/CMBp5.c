@@ -172,8 +172,9 @@ Notes:
 **************************************************************************/
 void printOne(Graph graph, int iVertex)
 {
-    printf("%-4s%-3s%20s%-15s%-15s\n", "Vx","TE","Course Name","Prereqs","Successors");
-    printf("%d %4d %20s\n",iVertex, 0, graph->vertexM[iVertex].szCourseName);
+    printf("%s %s %s %s %s\n", "Vx","TE","Course Name","Prereqs","Successors");
+    printf("%d %d %s\n",iVertex, 0, graph->vertexM[iVertex].szCourseName);
+    printf("%s %s\n", graph->vertexM[graph->vertexM[iVertex].prereqList->iPrereqVertex].szCourseId, graph->vertexM[graph->vertexM[iVertex].successorList->iSuccVertex].szCourseId);
 }
 
 /******************** doPlan **************************************
