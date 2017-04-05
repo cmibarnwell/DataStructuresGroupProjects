@@ -152,7 +152,12 @@ Notes:
 **************************************************************************/
 void printAllInList(Graph graph)
 {
-
+    int i;
+    printf("%s %s %s %s %s\n", "Vx","TE","Course Name","Prereqs","Successors");
+    for(i = 0; i < graph->iNumVertices; i++)
+    {
+        printf("%d %d %s %s %s\n", i, 0, graph->vertexM[i].szCourseName, graph->vertexM[graph->vertexM[i].prereqList->iPrereqVertex].szCourseId, graph->vertexM[graph->vertexM[i].successorList->iSuccVertex].szCourseId);
+    }
 }
 
 /******************** printOne **************************************
@@ -173,8 +178,7 @@ Notes:
 void printOne(Graph graph, int iVertex)
 {
     printf("%s %s %s %s %s\n", "Vx","TE","Course Name","Prereqs","Successors");
-    printf("%d %d %s\n",iVertex, 0, graph->vertexM[iVertex].szCourseName);
-    printf("%s %s\n", graph->vertexM[graph->vertexM[iVertex].prereqList->iPrereqVertex].szCourseId, graph->vertexM[graph->vertexM[iVertex].successorList->iSuccVertex].szCourseId);
+    printf("%d %d %s %s %s\n",iVertex, 0, graph->vertexM[iVertex].szCourseName, graph->vertexM[graph->vertexM[iVertex].prereqList->iPrereqVertex].szCourseId, graph->vertexM[graph->vertexM[iVertex].successorList->iSuccVertex].szCourseId);
 }
 
 /******************** doPlan **************************************

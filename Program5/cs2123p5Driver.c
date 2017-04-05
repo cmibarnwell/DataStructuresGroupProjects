@@ -20,7 +20,7 @@
 #include "cs2123p5.h"
 
  int main(int argc, char *argv[])
- {g
+ {
      Graph graph = newGraph();
      readData(graph);
 
