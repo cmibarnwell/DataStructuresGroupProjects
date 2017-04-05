@@ -55,14 +55,14 @@ int maxChain(Graph graph, int iVertex)
 	EdgeNode *p = allocateEdgeNode();
 	
 	if(graph->vertexM[iVertex].successorList->pNextEdge == NULL)
-		return 1
+		return 1;
 	
 	for(p = graph->vertexM[iVertex].successorList; p != NULL; p = p->pNextEdge)
 	{
 		int iValue = 0;
-		iValue += maxChain(graph, p.iSuccVertex)
+		iValue += maxChain(graph, p->iSuccVertex);
 		if(iValue > iMax)
-			iMax = iValue
+			iMax = iValue;
 	}
 	return iMax;
 	
