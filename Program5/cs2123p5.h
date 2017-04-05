@@ -57,7 +57,7 @@ typedef struct EdgeNode
 typedef struct Vertex
 {
     char szCourseId[8];             // Course Identifier
-    char szCourseName[21];          // Course Full Name
+    char szCourseName[23];          // Course Full Name
     char szDept[4];                 // Department (e.g., CS, MAT)
     int iLevel;                     // Specifies location within graph (For use with EdgeNode)
     int bExists;                    // pgm6 DELETE command causes this to be set to TRUE
