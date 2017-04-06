@@ -177,6 +177,9 @@ void printAllInList(Graph graph)
      int i;
     printf("%-3s %-3s %-21s %-7s                            %-7s\n"
          , "Vx","TE","Course Name","Prereqs","Successors");
+
+    if(graph->vertexM[i].prereqList->iPrereqVertex == -1 || graph->vertexM[i].successorList->iSuccVertex == -1)
+        return;
     for(i = 0; i < graph->iNumVertices; i++)
     {
         printf("%-3d %-3d %-21s %-7s                            %-7s\n"
@@ -203,6 +206,8 @@ Notes:
 **************************************************************************/
 void printOne(Graph graph, int iVertex)
 {
+    if(graph->vertexM[iVertex].prereqList->iPrereqVertex == -1 || graph->vertexM[iVertex].successorList->iSuccVertex == -1)
+        return;
     printf("%-3s %-3s %-21s %-7s                            %-7s\n"
             , "Vx","TE","Course Name","Prereqs","Successors");
     printf("%-3d %-3d %-21s %-7s                            %-7s\n"
