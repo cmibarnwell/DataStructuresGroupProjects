@@ -44,7 +44,7 @@ void readData(Graph graph)
 {
     char szInputBuffer[MAX_LINE_SIZE], szType[MAX_TOKEN], szCourseId[MAX_TOKEN], szLastId[MAX_TOKEN], szCourseName[23];
     char * pszRemainingBuffer = NULL;
-    int iLevel, iScanfCnt;
+    int iLevel, iScanfCnt, iMax;
     FILE * pFile = fopen("p5Input.txt", "r");
 
     //Below is WIP!!!!!
@@ -93,7 +93,8 @@ void readData(Graph graph)
         else if(strcmp(szType, "MAXCHAIN")==0){
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
             printf(">> MAXCHAIN %s\n", szCourseId);
-            //maxChain(graph, findCourse(graph, szCourseId));
+            iMax = maxChain(graph, findCourse(graph, szCourseId));
+            printf("Maximum chain for %s contains %d courses.\n", szCourseId, iMax);
         }
         else if(strcmp(szType, "PRTLONGS")==0){
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
