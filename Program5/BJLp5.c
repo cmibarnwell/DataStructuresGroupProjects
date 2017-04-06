@@ -10,7 +10,7 @@ int insertCourse(Graph graph, char szCourseId[], char szCourseName[])
 {
 	int iFind;
 	int i;
-	if(causeCycle)
+	if(causesCycle)
 		return -1;
 		
 	iFind = findCourse(graph, szCourseId);
