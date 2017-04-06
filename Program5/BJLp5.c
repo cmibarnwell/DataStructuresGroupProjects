@@ -67,7 +67,7 @@ int maxChain(Graph graph, int iVertex)
 	for(p = graph->vertexM[iVertex].successorList; p != NULL; p = p->pNextEdge)
 	{
 		int iValue = 0;
-		iValue += maxChain(graph, p->iSuccVertex);
+		iValue = 1 + maxChain(graph, p->iSuccVertex);
 		if(iValue > iMax)
 			iMax = iValue;
 	}
