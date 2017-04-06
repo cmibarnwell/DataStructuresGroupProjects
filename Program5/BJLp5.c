@@ -59,15 +59,15 @@ int insertCourse(Graph graph, char szCourseId[], char szCourseName[])
 int maxChain(Graph graph, int iVertex)
 {
 	int iMax = 0;
-	EdgeNode *p = allocateEdgeNode();
+	int iValue = 0;
+	EdgeNode *p;
 	
-	if(graph->vertexM[iVertex].successorList->pNextEdge == NULL)
-		return 1;
+	if(graph->vertexM[iVertex].successorList == NULL)
+		return 0;
 	
 	for(p = graph->vertexM[iVertex].successorList; p != NULL; p = p->pNextEdge)
 	{
-		int iValue = 0;
-		iValue += maxChain(graph, p->iSuccVertex);
+		iValue = 1 + maxChain(graph, p->iSuccVertex);
 		if(iValue > iMax)
 			iMax = iValue;
 	}
