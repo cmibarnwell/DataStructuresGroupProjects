@@ -76,7 +76,45 @@ int maxChain(Graph graph, int iVertex)
 }
 
 
+
+
+
+
+
+
+
+
+
 void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLongLength)
 {
+	iLongLength = maxChain(graph, iVertex);
+	EdgeNode *p = allocateEdgeNode();
+	if(iLongLength == 0)
+		return;
 	
+	printLongChains(graph, p->iSuccVertex, pathM, iLevel, iLongLength);
+	//Loop through SuccessorList
+	for(p = graph->vertexM[iVertex].successorList; p != NULL; p = p->pNextEdge)
+	{
+		if(maxChain(graph, p->iSuccVertex) == iLongLength - 1)
+		{
+			pathM[iLevel] = p->iSuccVertex;
+			iLevel = iLevel + 1;
+		}
+	}
+	//Check if iLevel = iLongLength and print
+	if(iLevel == iLongLength)
+	{
+		int i;
+		//print title
+		printf("Longest chain beginning with %s\n. /t%s "
+					,graph->vertexM[iVertex].szCourseId
+					,graph->vertexM[path[0]].szCourseId);
+		for(i = ; i < iLongLength; i++)
+		{
+			//print the courses after the main course
+			printf("%s  ", graph->vertexM[path[i]].szCourseId)
+			
+		}
+	}	
 }
