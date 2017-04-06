@@ -109,11 +109,11 @@ void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLon
 		//print title
 		printf("Longest chain beginning with %s\n. /t%s "
 					,graph->vertexM[iVertex].szCourseId
-					,graph->vertexM[path[0]].szCourseId);
-		for(i = ; i < iLongLength; i++)
+					,graph->vertexM[pathM[0]].szCourseId);
+		for(i = 0; i < iLongLength; i++)
 		{
 			//print the courses after the main course
-			printf("%s  ", graph->vertexM[path[i]].szCourseId)
+			printf("%s  ", graph->vertexM[pathM[i]].szCourseId);
 			
 		}
 	}	
