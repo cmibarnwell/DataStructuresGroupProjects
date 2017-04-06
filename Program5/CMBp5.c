@@ -79,7 +79,7 @@ void printTraversal(Graph graph, int iCourseVertex, int iIndent, int visitedM[])
     for (i = 0; i < iIndent; i++) {
         printf("\t");
     }
-    printf("%s\n", graph->vertexM[iCourseVertex].szCourseName);
+    printf("%s %s\n",graph->vertexM[iCourseVertex].szCourseId, graph->vertexM[iCourseVertex].szCourseName);
 
     if (visitedM[iCourseVertex] == TRUE)
         return;
@@ -175,26 +175,14 @@ Notes:
 void printAllInList(Graph graph)
 {
     int i;
-    printf("%-3s %-3s %-21s %-7s                            %-7s\n"
+    EdgeNode * p;
+
+    printf("%-3s %-3s %-21s%-7s                            %-7s\n"
          , "Vx","TE","Course Name","Prereqs","Successors");
+
     for(i = 0; i < graph->iNumVertices; i++)
     {
-        if(graph->vertexM[i].prereqList->iPrereqVertex == -1){
-            printf("%-3d %-3d %-21s %-7s                            %-7s\n", i + 1, 0, graph->vertexM[i].szCourseName,
-                   "-",
-                   graph->vertexM[graph->vertexM[i].successorList->iSuccVertex].szCourseId);
-        }
-        else if(graph->vertexM[i].successorList->iSuccVertex == -1){
-            printf("%-3d %-3d %-21s %-7s                            %-7s\n", i + 1, 0, graph->vertexM[i].szCourseName,
-                   graph->vertexM[graph->vertexM[i].prereqList->iPrereqVertex].szCourseId,
-                   "-");
-        }
-        else
-        {
-            printf("%-3d %-3d %-21s %-7s                            %-7s\n", i + 1, 0, graph->vertexM[i].szCourseName,
-                   graph->vertexM[graph->vertexM[i].prereqList->iPrereqVertex].szCourseId,
-                   graph->vertexM[graph->vertexM[i].successorList->iSuccVertex].szCourseId);
-        }
+        printOne(graph, i, TRUE);
     }
 }
 
@@ -213,25 +201,44 @@ Returns:
 Notes:
 
 **************************************************************************/
-void printOne(Graph graph, int iVertex)
+void printOne(Graph graph, int iVertex, int bPrintAll)
 {
-    printf("%-3s %-3s %-21s %-7s                            %-7s\n"
-            , "Vx","TE","Course Name","Prereqs","Successors");
+    EdgeNode * p;
+    int iDots = 3;
+
+    if(!bPrintAll)
+        printf("%-3s %-3s %-21s%-7s                            %-7s\n", "Vx","TE","Course Name","Prereqs","Successors");
+
+    printf("%-3d %-3d %-21s", iVertex + 1, 0, graph->vertexM[iVertex].szCourseName);
+
+
     if(graph->vertexM[iVertex].prereqList->iPrereqVertex == -1){
-        printf("%-3d %-3d %-21s %-7s                            %-7s\n", iVertex + 1, 0, graph->vertexM[iVertex].szCourseName,
-               "-",
-               graph->vertexM[graph->vertexM[iVertex].successorList->iSuccVertex].szCourseId);
+         printf("%-7s", "---");
     }
-    else if(graph->vertexM[iVertex].successorList->iSuccVertex == -1){
-        printf("%-3d %-3d %-21s %-7s                            %-7s\n", iVertex + 1, 0, graph->vertexM[iVertex].szCourseName,
-               graph->vertexM[graph->vertexM[iVertex].prereqList->iPrereqVertex].szCourseId,
-               "-");
+    else{
+        for(p = graph->vertexM[iVertex].prereqList; p->pNextEdge != NULL; p = p->pNextEdge){
+            printf("%s\t", graph->vertexM[p->iPrereqVertex].szCourseId);
+            iDots--;
+        }
+        printf("%s ", graph->vertexM[p->iPrereqVertex].szCourseId);
+        iDots--;
     }
-    else
-    {
-        printf("%-3d %-3d %-21s %-7s                            %-7s\n", iVertex + 1, 0, graph->vertexM[iVertex].szCourseName,
-               graph->vertexM[graph->vertexM[iVertex].prereqList->iPrereqVertex].szCourseId,
-               graph->vertexM[graph->vertexM[iVertex].successorList->iSuccVertex].szCourseId);
+
+    while(iDots > 1){
+        printf("\t...");
+        iDots--;
+    }
+    if(iDots == 1)
+        printf("\t...\t");
+
+    if(graph->vertexM[iVertex].successorList->iSuccVertex == -1){
+        printf(" %-7s\n", "---");
+    }
+    else{
+        for(p = graph->vertexM[iVertex].successorList; p->pNextEdge != NULL; p = p->pNextEdge){
+            printf("%s\t", graph->vertexM[p->iSuccVertex].szCourseId);
+        }
+        printf("%s\n", graph->vertexM[p->iSuccVertex].szCourseId);
     }
 }
 

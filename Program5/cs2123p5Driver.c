@@ -79,7 +79,7 @@ void readData(Graph graph)
         else if(strcmp(szType, "PRTONE")==0){
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
             printf(">> PRTONE %s\n", szCourseId);
-            printOne(graph, findCourse(graph, szCourseId));
+            printOne(graph, findCourse(graph, szCourseId), FALSE);
         }
         else if(strcmp(szType, "PRTSUCC")==0){
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
