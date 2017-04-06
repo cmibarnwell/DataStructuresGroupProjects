@@ -180,7 +180,7 @@ void printAllInList(Graph graph)
     for(i = 0; i < graph->iNumVertices; i++)
     {
         printf("%-3d %-3d %-21s %-7s                            %-7s\n"
-            , i, 0, graph->vertexM[i].szCourseName
+            , i+1, 0, graph->vertexM[i].szCourseName
             , graph->vertexM[graph->vertexM[i].prereqList->iPrereqVertex].szCourseId
             , graph->vertexM[graph->vertexM[i].successorList->iSuccVertex].szCourseId);
     }
@@ -206,7 +206,7 @@ void printOne(Graph graph, int iVertex)
     printf("%-3s %-3s %-21s %-7s                            %-7s\n"
             , "Vx","TE","Course Name","Prereqs","Successors");
     printf("%-3d %-3d %-21s %-7s                            %-7s\n"
-            , iVertex, 0, graph->vertexM[iVertex].szCourseName
+            , iVertex+1, 0, graph->vertexM[iVertex].szCourseName
             , graph->vertexM[graph->vertexM[iVertex].prereqList->iPrereqVertex].szCourseId
             , graph->vertexM[graph->vertexM[iVertex].successorList->iSuccVertex].szCourseId);
 }
