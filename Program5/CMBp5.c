@@ -35,7 +35,21 @@ Notes:
 **************************************************************************/
 void printSuccessors(Graph graph, int iVertex)
 {
-    printTraversal(graph, iVertex, 0);
+    int visitedM[graph->iNumVertices], i;
+    EdgeNode * p;
+
+    if(findCourse(graph, graph->vertexM[iVertex].szCourseId) == -1)
+    {
+        printf("Course %s not found.", graph->vertexM[iVertex].szCourseId);
+        return;
+    }
+
+    // Initialize our Visited to false
+    for(i=0;i<graph->iNumVertices;i++)
+        visitedM[i]= FALSE;
+
+    // Use DFT to find all successors
+    printTraversal(graph, iVertex, 0, visitedM);
 }
 
 /******************** printTraversal **************************************
@@ -52,21 +66,29 @@ Returns:
 Notes:
 
 **************************************************************************/
-void printTraversal(Graph graph, int iCourseVertex, int iIndent)
+void printTraversal(Graph graph, int iCourseVertex, int iIndent, int visitedM[])
 {
     int i;
+    EdgeNode * p;
 
     //check if NULL
     if (iCourseVertex == -1)
         return;
 
-    for(i=0; i<iIndent; i++){
+
+    for (i = 0; i < iIndent; i++) {
         printf("\t");
     }
     printf("%s\n", graph->vertexM[iCourseVertex].szCourseName);
 
-    //Print the successors recursively
-    printTraversal(graph, graph->vertexM[iCourseVertex].successorList->iSuccVertex, iIndent+1);
+    if (visitedM[iCourseVertex] == TRUE)
+        return;
+
+    visitedM[iCourseVertex]= TRUE;
+
+    for (p = graph->vertexM[iCourseVertex].successorList; p != NULL; p = p->pNextEdge) {
+        printTraversal(graph, p->iSuccVertex, iIndent + 1, visitedM);
+    }
 }
 
 /******************** printSources **************************************
@@ -152,11 +174,15 @@ Notes:
 **************************************************************************/
 void printAllInList(Graph graph)
 {
-    int i;
-    printf("%s %s %s %s %s\n", "Vx","TE","Course Name","Prereqs","Successors");
+     int i;
+    printf("%-3s %-3s %-21s %-7s                            %-7s\n"
+         , "Vx","TE","Course Name","Prereqs","Successors");
     for(i = 0; i < graph->iNumVertices; i++)
     {
-        printf("%d %d %s %s %s\n", i, 0, graph->vertexM[i].szCourseName, graph->vertexM[graph->vertexM[i].prereqList->iPrereqVertex].szCourseId, graph->vertexM[graph->vertexM[i].successorList->iSuccVertex].szCourseId);
+        printf("%-3d %-3d %-21s %-7s                            %-7s\n"
+            , i, 0, graph->vertexM[i].szCourseName
+            , graph->vertexM[graph->vertexM[i].prereqList->iPrereqVertex].szCourseId
+            , graph->vertexM[graph->vertexM[i].successorList->iSuccVertex].szCourseId);
     }
 }
 
@@ -177,8 +203,12 @@ Notes:
 **************************************************************************/
 void printOne(Graph graph, int iVertex)
 {
-    printf("%s %s %s %s %s\n", "Vx","TE","Course Name","Prereqs","Successors");
-    printf("%d %d %s %s %s\n",iVertex, 0, graph->vertexM[iVertex].szCourseName, graph->vertexM[graph->vertexM[iVertex].prereqList->iPrereqVertex].szCourseId, graph->vertexM[graph->vertexM[iVertex].successorList->iSuccVertex].szCourseId);
+    printf("%-3s %-3s %-21s %-7s                            %-7s\n"
+            , "Vx","TE","Course Name","Prereqs","Successors");
+    printf("%-3d %-3d %-21s %-7s                            %-7s\n"
+            , iVertex, 0, graph->vertexM[iVertex].szCourseName
+            , graph->vertexM[graph->vertexM[iVertex].prereqList->iPrereqVertex].szCourseId
+            , graph->vertexM[graph->vertexM[iVertex].successorList->iSuccVertex].szCourseId);
 }
 
 /******************** doPlan **************************************

@@ -105,7 +105,7 @@ int insertCourse(Graph graph, char szCourseId[], char szCourseName[]);
 /********** Caleb B. Funcs ****************/
 
 void printSuccessors(Graph graph, int iVertex);
-void printTraversal(Graph graph, int iCourseVertex, int iIndent);
+void printTraversal(Graph graph, int iCourseVertex, int iIndent, int visitedM[]);
 void printSources(Graph graph);
 void printSinks(Graph graph);
 void doPlan(Graph graph, Plan plan); //for program 6
