@@ -8,35 +8,39 @@
 
 int insertCourse(Graph graph, char szCourseId[], char szCourseName[])
 {
-	Vertex tempVertex = allocateVertex(szCourseName, szCourseId);
 	int iFind;
 	int i;
 	iFind = findCourse(graph, szCourseId);
-	//Copy SzDept into Vertex		
-	char szDept[4];
-    int j;
-    //Store the letters of szDept into temp variable
-	for(j = 0; j < strlen(szCourseId)-1; j++)
-	{
-		if (isalpha(szCourseId[j])) 
-			szDept[j] = szCourseId[j]; 
-        else 
-			break;
-            
-     }
-	 //copy szDept into the vertez
-     strcpy(tempVertex.szDept, szDept);
+
       
      //Create Vertex in vertexM[]
      if(iFind == -1)
      {
+		Vertex tempVertex = allocateVertex(szCourseName, szCourseId);
+		
+		//Copy SzDept into Vertex		
+		char szDept[4];
+		int j;
+		//Store the letters of szDept into temp variable
+		for(j = 0; j < strlen(szCourseId)-1; j++)
+		{
+			if (isalpha(szCourseId[j])) 
+				szDept[j] = szCourseId[j]; 
+			else 
+				break;
+            
+		}
+		//copy szDept into the vertez
+		strcpy(tempVertex.szDept, szDept);
+		
+		//Store new vertex and increase iNumVertices
 		graph->vertexM[graph->iNumVertices] = tempVertex;
         ++graph->iNumVertices;
 	 }
 	 //Course already exist so update szCourseName
 	 else
 	 {
-		 strcpy(graph->vertexM[iFind].szCourseName, tempVertex.szCourseName);
+		 strcpy(graph->vertexM[iFind].szCourseName, szCourseName);
 	 }
 	 return 0;
 }
