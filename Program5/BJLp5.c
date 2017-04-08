@@ -11,8 +11,8 @@ int insertCourse(Graph graph, char szCourseId[], char szCourseName[])
 	int iFind;
 	int i;
 	//If inserting will cause cycle return -1
-	if(causesCycle)
-		return -1;
+	//if(causesCycle)
+	//	return -1;
 
 	iFind = findCourse(graph, szCourseId);
 

@@ -67,57 +67,38 @@ void readData(Graph graph)
             printf(">> PREREQ %s\n", szCourseId);
             if(findCourse(graph, szCourseId)==-1)
             {
-              printf("Course %s was not found. Will be inserted now.\n", szCourseId);
+              printf("Course was not found in prereq\n");
               insertCourse(graph, szCourseId, "TBD");
             }
             else {
-            newEdgeNode(graph->vertexM[findCourse(graph, szLastId)].prereqList, findCourse(graph, szCourseId), findCourse(graph, szLastId));
-            newEdgeNode(graph->vertexM[findCourse(graph, szCourseId)].successorList, findCourse(graph, szCourseId), findCourse(graph, szLastId));
+
+            newEdgeNode(graph, graph->vertexM[findCourse(graph, szLastId)].prereqList, findCourse(graph, szCourseId), findCourse(graph, szLastId));
+            newEdgeNode(graph, graph->vertexM[findCourse(graph, szCourseId)].successorList, findCourse(graph, szCourseId), findCourse(graph, szLastId));
             }
         }
         else if(strcmp(szType, "PRTONE")==0){
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
             printf(">> PRTONE %s\n", szCourseId);
-            if(findCourse(graph, szCourseId) == -1){
-                printf("Course %s does not exist.\n", szCourseId);
-                continue;
-            }
             printOne(graph, findCourse(graph, szCourseId), FALSE);
         }
         else if(strcmp(szType, "PRTSUCC")==0){
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
-            if(findCourse(graph, szCourseId) == -1){
-                printf("Course %s does not exist.\n", szCourseId);
-                continue;
-            }
             printf(">> PRTSUCC %s\n", szCourseId);
             printSuccessors(graph,findCourse(graph, szCourseId));
         }
         else if(strcmp(szType, "PRTALL")==0){
             printf(">> PRTALL\n");
-            if(findCourse(graph, szCourseId) == -1){
-                printf("Course %s does not exist.\n", szCourseId);
-                continue;
-            }
             printAllInList(graph);
         }
         else if(strcmp(szType, "MAXCHAIN")==0){
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
             printf(">> MAXCHAIN %s\n", szCourseId);
-            if(findCourse(graph, szCourseId) == -1){
-                printf("Course %s does not exist.\n", szCourseId);
-                continue;
-            }
             iMax = maxChain(graph, findCourse(graph, szCourseId));
             printf("Maximum chain for %s contains %d courses.\n", szCourseId, iMax);
         }
         else if(strcmp(szType, "PRTLONGS")==0){
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
             printf(">> PRTLONGS %s\n", szCourseId);
-            if(findCourse(graph, szCourseId) == -1){
-                printf("Course %s does not exist.\n", szCourseId);
-                continue;
-            }
             //printLongChains(graph,findCourse(graph,szCourseId),);
         }
         else if(strcmp(szType, "PRTSINKS")==0){
@@ -248,10 +229,14 @@ EdgeNode * newEdgeNode(EdgeNode * list, int iPrereqVertex, int iSuccVertex)
  Returns:
 
  *****************************************************************/
-EdgeNode * newEdgeNode(EdgeNode * list, int iPrereqVertex, int iSuccVertex)
+EdgeNode * newEdgeNode(Graph graph, EdgeNode * list, int iPrereqVertex, int iSuccVertex)
 {
     EdgeNode *p, *pPrecedes, *pNew;
 
+    if(causeCycle(graph, iPrereqVertex, iSuccVertex))
+    {
+      return NULL;
+    }
 
     if(list->iPrereqVertex == -1 || list->iSuccVertex == -1)
     {

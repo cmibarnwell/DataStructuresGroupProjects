@@ -112,7 +112,7 @@ void doPlan(Graph graph, Plan plan); //for program 6
 void printAllInList(Graph graph);
 Vertex allocateVertex(char szCourseName[], char szCourseId[]);
 Graph newGraph();
-EdgeNode * newEdgeNode(EdgeNode * list, int iPrereqVertex, int iSuccVertex);
+EdgeNode * newEdgeNode(Graph graph, EdgeNode * list, int iPrereqVertex, int iSuccVertex);
 Graph newGraph();
 EdgeNode * allocateEdgeNode();
 void printOne(Graph graph, int iVertex, int bPrintAll);
