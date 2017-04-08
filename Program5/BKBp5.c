@@ -1,31 +1,63 @@
 #include "cs2123p5.h"
 #include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 
+void dfs(Graph, int, int*, int, int*);
+
+void dfs(Graph graph, int iVertex, int* visited, int iPrereqVertex, int* isCyclic)
+{
+  if(visited[iVertex])
+  {
+    //...wut
+    //i have absolutely no idea how the folliing works, but it does
+   // printf("hit a visited vertex\n");
+    *isCyclic = TRUE;
+    return;
+  }
+
+  else
+  {
+    visited[iVertex] = TRUE;
+    EdgeNode* e;
+    for(e = graph->vertexM[iVertex].successorList; e; e = e->pNextEdge)
+    {
+      if(e->iSuccVertex == iPrereqVertex)
+      {
+        //printf("hit similar vertex?\n");
+        *isCyclic = TRUE;
+        return;
+      }
+      dfs(graph, e->iSuccVertex, visited, iPrereqVertex, isCyclic);
+    }
+  }
+}
 int causeCycle(Graph graph, int iPrereqVertex, int iVertex)
 {
   //iVertex is the subscript needed to get the correct vertex
   //within the vertex array.
-  Vertex v = graph->vertexM[iVertex];
+  //
 
-  //this part is a bit contested, I either need the prereq list or 
-  //the successor list.
-  //Judging by the paper clark gave us, I'm assuming that its the successor
-  //list.
-  EdgeNode* e = v.successorList;
-  //since this adjacency list is represented with a 
-  //linked list, we can just iterate through the nodes.
-  while(e)
+  if((iPrereqVertex >= graph->iNumVertices || iVertex >= graph->iNumVertices) || (iPrereqVertex < 0 || iVertex < 0))
   {
-    //if the prereq vertex of the successor list
-    //equals the prereq vertex given, then it woulc cause a cycle.
-    if(e->iPrereqVertex == iPrereqVertex)
-    {
-      return TRUE;
-    }
+    printf("Attempted to index invalid memory. Used Vertex %d and Prereq Vertex%d\n", iVertex, iPrereqVertex);
+    exit(1);
+    return 0;
+  }
+  int iVertCount = graph->iNumVertices;
+  int visited[iVertCount];
+  int seenVerticies[iVertCount];
+  int i;
+  int isCyclic = FALSE;
+  for(i = 0; i < iVertCount; i++)
+  {
+    visited[i] = FALSE;
+   seenVerticies[i] = FALSE;
   }
 
-  return FALSE;
+  dfs(graph, iVertex, visited, iPrereqVertex, &isCyclic);
+  return isCyclic;
 }
 
 int findCourse(Graph graph, char szCourseId[])
