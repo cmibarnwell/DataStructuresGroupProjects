@@ -66,10 +66,12 @@ int maxChain(Graph graph, int iVertex)
 	int iValue = 0;
 	EdgeNode *p;
 
-    printf("Maxchains iVertex: %d\n", iVertex);
+    //printf("Maxchains iVertex: %d\n", iVertex);
 
 	if(graph->vertexM[iVertex].successorList == NULL || iVertex == -1)
 		return 0;
+
+  //printf("Maxchains iVertex: %d\n", iVertex);
 
 	for(p = graph->vertexM[iVertex].successorList; p != NULL; p = p->pNextEdge)
 	{

@@ -8,7 +8,7 @@ void dfs(Graph, int, int*, int, int*);
 
 void dfs(Graph graph, int iVertex, int* visited, int iPrereqVertex, int* isCyclic)
 {
-  printf("iVertex = %d, iPrereqVertex = %d\n", iVertex, iPrereqVertex);
+  //printf("iVertex = %d, iPrereqVertex = %d\n", iVertex, iPrereqVertex);
  
   if(iVertex < 0 && iPrereqVertex < 0)
   {
@@ -18,7 +18,7 @@ void dfs(Graph graph, int iVertex, int* visited, int iPrereqVertex, int* isCycli
   
   if(visited[iVertex])
   {
-    printf("hit a visited vertex, iVertex = %d iPrereqVertex = %d\n", iVertex, iPrereqVertex);
+//    printf("hit a visited vertex, iVertex = %d iPrereqVertex = %d\n", iVertex, iPrereqVertex);
     *isCyclic = TRUE;
     return;
   }
@@ -31,7 +31,7 @@ void dfs(Graph graph, int iVertex, int* visited, int iPrereqVertex, int* isCycli
     {
       if(e->iSuccVertex == iPrereqVertex)
       {
-        printf("hit similar vertex?\n");
+  //      printf("hit similar vertex?\n");
         *isCyclic = TRUE;
         return;
       }
