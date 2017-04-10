@@ -4,7 +4,7 @@
  Purpose:
      The driver file for Program 5
  Input:
-    
+
 
  Returns:
      
@@ -21,105 +21,172 @@
 
  int main(int argc, char *argv[])
  {
-     Graph graph = newGraph();
+     Graph graph = newGraph(); // Create our graph
+
+     // Call our "backbone" function
      readData(graph);
 
-     freeGraph(graph);
+     freeGraph(graph); // free our graph
+
+     return 0; // classic vlasic
  }
 
 
 /************************** readData ******************************************
 void readData(Graph graph)
+
 Purpose:
+    Reads in p5Input.txt. Uses getToken and sscanf to read in commands and
+    calls appropriate functions. This function is the backbone of Program 5.
 
 Parameters:
     I   Graph graph      graph
 
-Returns:
-
-Notes:
-
 **************************************************************************/
 void readData(Graph graph)
 {
+    // Necessary declarations
     char szInputBuffer[MAX_LINE_SIZE], szType[MAX_TOKEN], szCourseId[MAX_TOKEN], szLastId[MAX_TOKEN], szCourseName[23];
     char * pszRemainingBuffer = NULL;
-    int iLevel, iScanfCnt, iMax;
-    FILE * pFile = fopen("p5Input.txt", "r");
+    int iScanfCnt, iMax;
 
-    //Below is WIP!!!!!
+    // Open our command file
+    FILE * pFile = fopen("p5Input.txt", "r");
+    // Check if it is found
+    if(pFile == NULL)
+        ErrExit(ERR_COMMAND_LINE, "Please have the file p5Input.txt in the same directory as the program. p5Input.txt not found.");
+
+    // Begin Looping through the file
     while(fgets(szInputBuffer, MAX_LINE_SIZE-1, pFile))
     {
+        // Gather our first command
         pszRemainingBuffer = getToken(szInputBuffer, szType, MAX_TOKEN-1);
+
+        /***********
+         * COURSE
+         *********** */
         if(strcmp(szType,"COURSE")==0) {
-
+            // Gather course id and name
             iScanfCnt = sscanf(pszRemainingBuffer, "%7s %20[^\n]\n", szCourseId, szCourseName);
-
             if(iScanfCnt < 2)
                 ErrExit(ERR_COMMAND_LINE, "Not Enough Arguments for COURSE");
 
+            // Print given command
             printf(">> COURSE %s %s\n", szCourseId, szCourseName);
+
+            //insert course
             insertCourse(graph, szCourseId, szCourseName);
-            strcpy(szLastId, szCourseId);
+            strcpy(szLastId, szCourseId); // Remember our course in case the next command is for a prereq
         }
+
+        /***********
+         * PREREQ
+         *********** */
         else if(strcmp(szType,"PREREQ")==0) {
+            // Gather our course id
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
+
+            // Print given command
             printf(">> PREREQ %s\n", szCourseId);
+
+            // Check to see if it exists
             if(findCourse(graph, szCourseId)==-1)
             {
               printf("Course %s not found. Inserting with name TBD...\n", szCourseId);
               insertCourse(graph, szCourseId, "TBD");
             }
-            else {
+
+            // Add given course as a prereq to the last added course
             newEdgeNode(graph, graph->vertexM[findCourse(graph, szLastId)].prereqList, findCourse(graph, szCourseId), findCourse(graph, szLastId));
+            // Add last added course as a successor to given course
             newEdgeNode(graph, graph->vertexM[findCourse(graph, szCourseId)].successorList, findCourse(graph, szCourseId), findCourse(graph, szLastId));
-            }
         }
+
+        /***********
+         * PRTONE
+         *********** */
         else if(strcmp(szType, "PRTONE")==0){
-            pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
+            pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1); // gather course id
+
+            // Print command
             printf(">> PRTONE %s\n", szCourseId);
-            printOne(graph, findCourse(graph, szCourseId), FALSE);
+            printOne(graph, findCourse(graph, szCourseId), FALSE); // Call printOne
         }
+
+        /***********
+         * PRTSUCC
+         *********** */
         else if(strcmp(szType, "PRTSUCC")==0){
-            pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
+            pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1); // gather course id
+
+            // Print command
             printf(">> PRTSUCC %s\n", szCourseId);
             printSuccessors(graph,findCourse(graph, szCourseId));
         }
+
+        /***********
+         * PRTALL
+         *********** */
         else if(strcmp(szType, "PRTALL")==0){
-            printf(">> PRTALL\n");
+            printf(">> PRTALL\n"); // Print command
             printAllInList(graph);
         }
+
+        /***********
+         * MAXCHAIN
+         *********** */
         else if(strcmp(szType, "MAXCHAIN")==0){
-            pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
-            printf(">> MAXCHAIN %s\n", szCourseId);
-            iMax = maxChain(graph, findCourse(graph, szCourseId));
-            printf("Maximum chain for %s contains %d courses.\n", szCourseId, iMax);
+            pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1); // gather course id
+            printf(">> MAXCHAIN %s\n", szCourseId); // Print command
+
+            iMax = maxChain(graph, findCourse(graph, szCourseId)); // call maxchain and find value
+            printf("Maximum chain for %s contains %d courses.\n", szCourseId, iMax); // Print out result
         }
+
+        /***********
+         * PRTLONGS
+         *********** */
         else if(strcmp(szType, "PRTLONGS")==0){
-            pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1);
-            printf(">> PRTLONGS %s\n", szCourseId);
+            pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1); // gather course id
+            printf(">> PRTLONGS %s\n", szCourseId); // Print command
             //printLongChains(graph,findCourse(graph,szCourseId),);
         }
+
+        /***********
+         * PRTSINKS
+         *********** */
         else if(strcmp(szType, "PRTSINKS")==0){
-            printf(">> PRTSINKS\n");
+            printf(">> PRTSINKS\n"); // Print command
             printSinks(graph);
         }
+
+        /***********
+         * PRTSOURCES
+         *********** */
         else if(strcmp(szType, "PRTSOURCES")==0){
-            printf(">> PRTSOURCES\n");
+            printf(">> PRTSOURCES\n"); // Print command
             printSources(graph);
         }
+
+        /***********
+         * COMMENTS
+         *********** */
         else if(strcmp(szType, "*")==0){
-            fgets(szInputBuffer, MAX_LINE_SIZE-1, pFile);
-            strtok(szInputBuffer, "\n");
+            fgets(szInputBuffer, MAX_LINE_SIZE-1, pFile); // Get next line, where the comment is
+            strtok(szInputBuffer, "\n"); // Remove newline
+
+            // Print out comment
             printf(">> *\n>> %s\n>> *\n", szInputBuffer);
-            fgets(szInputBuffer, MAX_LINE_SIZE-1, pFile);
-            continue;
+            fgets(szInputBuffer, MAX_LINE_SIZE-1, pFile); // skip the next "*"
         }
+
+        // Unknown command given
         else{
             ErrExit(ERR_COMMAND_LINE, "Delegated command %s unknown.", szType);
         }
     }
 
+    //Close our file
     fclose(pFile);
 }
 
@@ -132,22 +199,25 @@ Start Graph Funcs
 
 /************************** newGraph ******************************************
 Graph newGraph()
-Purpose:
 
-Parameters:
+Purpose:
+    Allocates and returns a graph
 
 Returns:
-
-Notes:
+    Graph graph
 
 **************************************************************************/
 Graph newGraph()
 {
     Graph graph;
 
-    graph = (Graph)malloc(sizeof(GraphImp));
+    graph = (Graph)malloc(sizeof(GraphImp)); // Allocate memory for our graph
+
+    // Check if no space available
     if(graph == NULL)
         ErrExit(ERR_ALGORITHM, "No available memory for Graph");
+
+    // Initialize graph values
     graph->iNumVertices = 0;
 
     return graph;
@@ -155,13 +225,12 @@ Graph newGraph()
 
 /************************** freeGraph ******************************************
 void freeGraph()
+
 Purpose:
+    frees a graph's memory
 
 Parameters:
-
-Returns:
-
-Notes:
+    I Graph graph
 
 **************************************************************************/
 void freeGraph(Graph graph)
@@ -171,47 +240,56 @@ void freeGraph(Graph graph)
 
 /************************** allocateVertex ******************************************
 Vertex * allocateVertex(char szCourseName[], char szCourseID[])
+
 Purpose:
+    Assigns vertex values, allocates its lists, and returns a vertex.
 
 Parameters:
     I   char szCourseName[]
     I   char szCourseId[]
 
 Returns:
-
-Notes:
+    Vertex vertex
 
 **************************************************************************/
 Vertex allocateVertex(char szCourseName[], char szCourseId[])
 {
-    Vertex vertex;
+    Vertex vertex; // Declaration
+
+    //Initialize values
     strcpy(vertex.szCourseId, szCourseId);
     strcpy(vertex.szCourseName, szCourseName);
     strcpy(vertex.szDept, "");
-    vertex.prereqList = allocateEdgeNode();
-    vertex.successorList = allocateEdgeNode();
+    vertex.prereqList = allocateEdgeNode(); // Allocate prereqList
+    vertex.successorList = allocateEdgeNode(); // Allocate succList
 
     return vertex;
 }
 
 /************************** allocateEdgeNode ******************************************
 Vertex * allocateVertex(char szCourseName[], char szCourseID[])
+
 Purpose:
+    Allocates, initializes, and returns an edgeNode
 
 Parameters:
     I   char szCourseName[]
     I   char szCourseId[]
 
 Returns:
+    EdgeNode pEdge
 
 Notes:
-
+    Initializes iPrereqVertex and iSuccVertex to -1 (Nonexistent)
 **************************************************************************/
 EdgeNode * allocateEdgeNode()
 {
+    // Allocate memory
     EdgeNode *pEdge = (EdgeNode *)malloc(sizeof(EdgeNode));
-    if(pEdge == NULL)
+    if(pEdge == NULL) // Check if NULL
         ErrExit(ERR_ALGORITHM, "No available memory for Edge Node");
+
+    // Initialize edge values
     pEdge->iPrereqVertex = -1;
     pEdge->iSuccVertex = -1;
     pEdge->pNextEdge = NULL;
@@ -221,22 +299,29 @@ EdgeNode * allocateEdgeNode()
 
 /******************** newEdgeNode ****************************
 EdgeNode * newEdgeNode(EdgeNode * list, int iPrereqVertex, int iSuccVertex)
+
  Purpose:
+    Used for creation of a Prereq. Creates a newEdgeNode if it doesn't
+    cause a Cycle. Initializes to given values.
 
  Parameters:
-
+    I Graph graph
+    I EdgeNode * list       list node of a vector
+    I int iPrereqVertex
+    I int iSuccVertex
  Returns:
-
+    EdgeNode * pNew or EdgeNode * list
  *****************************************************************/
 EdgeNode * newEdgeNode(Graph graph, EdgeNode * list, int iPrereqVertex, int iSuccVertex)
 {
+    // Declarations
     EdgeNode *p, *pPrecedes, *pNew;
 
+    // Ensure it will not cause a cycle
     if(causesCycle(graph, iPrereqVertex, iSuccVertex))
-    {
       return NULL;
-    }
 
+    // Check if we are at the head of a list
     if(list->iPrereqVertex == -1 || list->iSuccVertex == -1)
     {
         list->iPrereqVertex = iPrereqVertex;
@@ -244,18 +329,22 @@ EdgeNode * newEdgeNode(Graph graph, EdgeNode * list, int iPrereqVertex, int iSuc
         return list;
     }
 
+    // Initialize pPrecedes
     pPrecedes = NULL;
 
+    // Go to the end of our list
     for(p = list; p!=NULL; p=p->pNextEdge)
     {
         pPrecedes = p;
     }
 
+    // Allocate our new edge and initialize values
     pNew = allocateEdgeNode();
     pNew->iPrereqVertex = iPrereqVertex;
     pNew->iSuccVertex = iSuccVertex;
     if(pPrecedes != NULL)
         pPrecedes->pNextEdge = pNew;
+    
     return pNew;
 }
 
