@@ -213,23 +213,22 @@ void printOne(Graph graph, int iVertex, int bPrintAll)
 
 
     if(graph->vertexM[iVertex].prereqList->iPrereqVertex == -1){
-         printf("%-7s", "---");
+         printf("%s\t", "---");
     }
     else{
         for(p = graph->vertexM[iVertex].prereqList; p->pNextEdge != NULL; p = p->pNextEdge){
             printf("%s\t", graph->vertexM[p->iPrereqVertex].szCourseId);
             iDots--;
         }
-        printf("%s ", graph->vertexM[p->iPrereqVertex].szCourseId);
-        iDots--;
+        printf("%s\t", graph->vertexM[p->iPrereqVertex].szCourseId);
     }
 
     while(iDots > 1){
-        printf("\t...");
+        printf("...\t");
         iDots--;
     }
     if(iDots == 1)
-        printf("\t...\t");
+        printf("...\t");
 
     if(graph->vertexM[iVertex].successorList->iSuccVertex == -1){
         printf(" %-7s\n", "---");
