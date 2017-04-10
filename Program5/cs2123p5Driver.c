@@ -232,7 +232,7 @@ EdgeNode * newEdgeNode(Graph graph, EdgeNode * list, int iPrereqVertex, int iSuc
 {
     EdgeNode *p, *pPrecedes, *pNew;
 
-    if(causeCycle(graph, iPrereqVertex, iSuccVertex))
+    if(causesCycle(graph, iPrereqVertex, iSuccVertex))
     {
       return NULL;
     }
