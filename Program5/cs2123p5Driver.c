@@ -67,11 +67,10 @@ void readData(Graph graph)
             printf(">> PREREQ %s\n", szCourseId);
             if(findCourse(graph, szCourseId)==-1)
             {
-              printf("Course was not found in prereq\n");
+              printf("Course %s not found. Inserting with name TBD...\n", szCourseId);
               insertCourse(graph, szCourseId, "TBD");
             }
             else {
-
             newEdgeNode(graph, graph->vertexM[findCourse(graph, szLastId)].prereqList, findCourse(graph, szCourseId), findCourse(graph, szLastId));
             newEdgeNode(graph, graph->vertexM[findCourse(graph, szCourseId)].successorList, findCourse(graph, szCourseId), findCourse(graph, szLastId));
             }
