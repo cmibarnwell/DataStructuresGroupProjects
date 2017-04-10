@@ -91,7 +91,7 @@ void dfs(Graph graph, int iVertex, int* visited, int iPrereqVertex, int* bIsCycl
  *
  *
  ******************************************************/
-int causeCycle(Graph graph, int iPrereqVertex, int iVertex)
+int causesCycle(Graph graph, int iPrereqVertex, int iVertex)
 {
   //if either the vertex indexes are greater than the number of verticies in the
   //graph, or either or them are -1
