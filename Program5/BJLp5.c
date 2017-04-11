@@ -5,7 +5,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "cs2123p5.h"
-
+//FINSHED FUNCTIONS
 int insertCourse(Graph graph, char szCourseId[], char szCourseName[])
 {
 	int iFind;
@@ -69,7 +69,7 @@ int maxChain(Graph graph, int iVertex)
     //printf("Maxchains iVertex: %d\n", iVertex);
 
 	if(graph->vertexM[iVertex].successorList == NULL || iVertex == -1)
-		return 1;
+		return 0;
 
   //printf("Maxchains iVertex: %d\n", iVertex);
 
@@ -95,14 +95,17 @@ int maxChain(Graph graph, int iVertex)
 
 void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLongLength)
 {
-	//printf("Test: iVertex = %s iLevel = %d iLongLength = %d\n", graph->vertexM[iVertex].szCourseId
-																												//,iLevel, iLongLength);
+	printf("Test: iVertex = %s Vertex @ iLevel = %s iLevel = %d iLongLength = %d\n"
+																				, graph->vertexM[iVertex].szCourseId
+																				, graph->vertexM[iLevel].szCourseId
+																				,iLevel
+																			, iLongLength);
 	EdgeNode *p;
 
-	//if(iVertex == -1)
-		//return;
+	if(graph->vertexM[iVertex].successorList == NULL)
+		return;
 
-	if(iLevel == iLongLength)
+	if(iLevel == iLongLength-1)
 	{
 		int i;
 		for(i = 0; i < iLongLength-1; i++)
@@ -119,12 +122,9 @@ void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLon
 	//Loop through SuccessorList
 	for(p = graph->vertexM[iVertex].successorList; p != NULL; p = p->pNextEdge)
 	{
-		//if(maxChain(graph, p->iSuccVertex) == iLongLength-1)
-		//{
 			pathM[iLevel] = p->iSuccVertex;
 			iLevel = iLevel + 1;
 			printLongChains(graph, graph->vertexM[iVertex].successorList->iSuccVertex, pathM, iLevel, iLongLength);
-		//}
 	}
 
 }
