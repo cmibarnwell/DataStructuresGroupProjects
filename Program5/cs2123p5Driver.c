@@ -1,15 +1,15 @@
 /****************************************************************
  cs2123p5Driver.c by Caleb Barnwell
- 
+
  Purpose:
      The driver file for Program 5
  Input:
 
 
  Returns:
-     
+
  Notes:
-     
+
  ****************************************************************/
 
 #define _CRT_SECURE_NO_WARNINGS 1
@@ -49,6 +49,7 @@ void readData(Graph graph)
     char szInputBuffer[MAX_LINE_SIZE], szType[MAX_TOKEN], szCourseId[MAX_TOKEN], szLastId[MAX_TOKEN], szCourseName[23];
     char * pszRemainingBuffer = NULL;
     int iScanfCnt, iMax;
+    int pathM[MAX_VERTICES];
 
     // Open our command file
     FILE * pFile = fopen("p5Input.txt", "r");
@@ -149,7 +150,8 @@ void readData(Graph graph)
         else if(strcmp(szType, "PRTLONGS")==0){
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1); // gather course id
             printf(">> PRTLONGS %s\n", szCourseId); // Print command
-            //printLongChains(graph,findCourse(graph,szCourseId),);
+            int iLongLength = maxChain(graph, findCourse(graph,szCourseId));
+            printLongChains(graph,findCourse(graph,szCourseId),pathM,0,iLongLength);
         }
 
         /***********
@@ -344,7 +346,7 @@ EdgeNode * newEdgeNode(Graph graph, EdgeNode * list, int iPrereqVertex, int iSuc
     pNew->iSuccVertex = iSuccVertex;
     if(pPrecedes != NULL)
         pPrecedes->pNextEdge = pNew;
-    
+
     return pNew;
 }
 
@@ -390,7 +392,7 @@ char * getToken(char *pszInputTxt, char szToken[], int iTokenSize)
     char szDelims[20] = " \n\r";        // delimiters
     szToken[0] = '\0';
 
-    // check for NULL pointer 
+    // check for NULL pointer
     if (pszInputTxt == NULL)
         ErrExit(ERR_ALGORITHM
         , "getToken passed a NULL pointer");

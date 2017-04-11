@@ -95,7 +95,7 @@ int maxChain(Graph graph, int iVertex)
 
 void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLongLength)
 {
-	iLongLength = maxChain(graph, iVertex);
+
 	EdgeNode *p = allocateEdgeNode();
 	if(iLongLength == 0)
 		return;
@@ -110,6 +110,7 @@ void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLon
 			iLevel = iLevel + 1;
 		}
 	}
+	
 	//Check if iLevel = iLongLength and print
 	if(iLevel == iLongLength)
 	{
