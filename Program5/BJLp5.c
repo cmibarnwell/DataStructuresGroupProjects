@@ -95,27 +95,26 @@ int maxChain(Graph graph, int iVertex)
 
 void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLongLength)
 {
-	printf("Test: iVertex = %s Vertex @ iLevel = %s iLevel = %d iLongLength = %d\n"
-																				, graph->vertexM[iVertex].szCourseId
-																				, graph->vertexM[iLevel].szCourseId
-																				,iLevel
-																			, iLongLength);
 	EdgeNode *p;
 
-	if(graph->vertexM[iVertex].successorList == NULL)
+	if(graph->vertexM[iVertex].successorList == NULL || iVertex == -1)
 		return;
 
-	if(iLevel == iLongLength-1)
+    if(iLevel == 0)
+        pathM[0] = iVertex;
+
+    iLevel = iLevel + 1;
+
+	if(iLevel == iLongLength)
 	{
 		int i;
-		for(i = 0; i < iLongLength-1; i++)
+		for(i = 0; i < iLongLength; i++)
 		{
 			//print the courses after the main course
 			printf("%s      ", graph->vertexM[pathM[i]].szCourseId);
 
 		}
 		printf("\n");
-		return;
 	}
 
 
@@ -123,7 +122,6 @@ void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLon
 	for(p = graph->vertexM[iVertex].successorList; p != NULL; p = p->pNextEdge)
 	{
 			pathM[iLevel] = p->iSuccVertex;
-			iLevel = iLevel + 1;
 			printLongChains(graph, graph->vertexM[iVertex].successorList->iSuccVertex, pathM, iLevel, iLongLength);
 	}
 
