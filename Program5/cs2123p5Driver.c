@@ -151,6 +151,7 @@ void readData(Graph graph)
             pszRemainingBuffer = getToken(pszRemainingBuffer, szCourseId, MAX_TOKEN-1); // gather course id
             printf(">> PRTLONGS %s\n", szCourseId); // Print command
             int iLongLength = maxChain(graph, findCourse(graph,szCourseId));
+            printf("Longest chain for %s contains:\n" , graph->vertexM[findCourse(graph,szCourseId)].szCourseId);
             printLongChains(graph,findCourse(graph,szCourseId),pathM,0,iLongLength);
         }
 
