@@ -377,6 +377,10 @@ Vertex newVertex(char szCourseName[], char szCourseId[])
     strcpy(vertex.szDept, "");
     vertex.prereqList = allocateEdgeNode(); // Allocate prereqList
     vertex.successorList = allocateEdgeNode(); // Allocate succList
+    vertex.iSemesterLevel = -1;
+    vertex.iHashChainNext = -1;
+    vertex.iDistSource = -1;
+    vertex.bExists = FALSE;
 
     return vertex;
 }
