@@ -109,7 +109,7 @@ void printSources(Graph graph);
 void printSinks(Graph graph);
 void doPlan(Graph graph, Plan plan); //for program 6
 void printAllInList(Graph graph);
-Vertex allocateVertex(char szCourseName[], char szCourseId[]);
+Vertex newVertex(char szCourseName[], char szCourseId[]);
 Graph newGraph();
 EdgeNode * newEdgeNode(Graph graph, EdgeNode * list, int iPrereqVertex, int iSuccVertex);
 Graph newGraph();

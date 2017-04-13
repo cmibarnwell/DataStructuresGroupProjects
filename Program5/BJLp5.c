@@ -20,7 +20,7 @@ int insertCourse(Graph graph, char szCourseId[], char szCourseName[])
      //Create Vertex in vertexM[]
      if(iFind == -1)
      {
-		Vertex tempVertex = allocateVertex(szCourseName, szCourseId);
+		Vertex tempVertex = newVertex(szCourseName, szCourseId);
 
 		//Copy SzDept into Vertex
 		char szDept[4];

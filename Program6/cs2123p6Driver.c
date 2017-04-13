@@ -213,6 +213,13 @@ void readData(Graph graph)
         }
 
         /***********
+         * HALT
+         *********** */
+        else if(strcmp(szType, "HALT")==0){
+            // I have no clue what this is supposed to do...
+        }
+
+        /***********
          * COMMENTS
          *********** */
         else if(strcmp(szType, "*")==0){
@@ -258,7 +265,7 @@ Returns:
 **************************************************************************/
 Plan newPlan()
 {
-    int i;
+    int i, j;
     Plan plan;
 
     plan = (Plan)malloc(sizeof(PlanImp)); // Allocate memory for our graph
@@ -270,6 +277,13 @@ Plan newPlan()
     // Initialize plan values to FALSE
     for(i = 0; i < MAX_VERTICES; i++){
         plan->bIncludeM[i] = FALSE;
+    }
+
+    // Initialize plan values to FALSE
+    for(i = 0; i < MAX_VERTICES; i++){
+        for(j = 0; j < 5; j++) {
+            plan->semesterM[j][i] = -1;
+        }
     }
 
     return plan;
@@ -339,8 +353,8 @@ void freeGraph(Graph graph)
     free(graph);
 }
 
-/************************** allocateVertex ******************************************
-Vertex * allocateVertex(char szCourseName[], char szCourseID[])
+/************************** newVertex ******************************************
+Vertex * newVertex(char szCourseName[], char szCourseID[])
 
 Purpose:
     Assigns vertex values, allocates its lists, and returns a vertex.
@@ -353,7 +367,7 @@ Returns:
     Vertex vertex
 
 **************************************************************************/
-Vertex allocateVertex(char szCourseName[], char szCourseId[])
+Vertex newVertex(char szCourseName[], char szCourseId[])
 {
     Vertex vertex; // Declaration
 
@@ -368,7 +382,7 @@ Vertex allocateVertex(char szCourseName[], char szCourseId[])
 }
 
 /************************** allocateEdgeNode ******************************************
-Vertex * allocateVertex(char szCourseName[], char szCourseID[])
+Vertex * allocateEdgeNode(char szCourseName[], char szCourseID[])
 
 Purpose:
     Allocates, initializes, and returns an edgeNode
