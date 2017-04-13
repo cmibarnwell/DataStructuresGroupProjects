@@ -100,7 +100,10 @@ void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLon
 	//If successorList is pointing to nothing ie the list is empty
 	if(graph->vertexM[iVertex].successorList == NULL
 							|| graph->vertexM[iVertex].successorList->iSuccVertex == -1)
-		return;
+		{
+   //   printf("Hit the NULL if statement\n");
+      return;
+    }
 
 
 	//Loop throught successors
@@ -114,6 +117,7 @@ void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLon
 		//Set the vertex to the current level
 		else
 		{
+      //printf("hit FOR LOOP ELSE STATEMENT\n");
 			//store vertex number into pathM
 			pathM[iLevel] = p->iSuccVertex;
 			printf("iVertex #  = %d   iVertex Name = %s\n "
@@ -121,8 +125,12 @@ void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLon
 																	,graph->vertexM[p->iSuccVertex].szCourseId);
 		}
 		//Increase iLevel
-		iLevel = iLevel + 1;
-
+    if(!iLevel || iLevel)
+    {
+     // printf("Tripped IF Statement, iLevel = %d\n", iLevel);
+		  iLevel = iLevel + 1;
+      //printf("End IF Statement, iLevel = %d", iLevel);
+    }
 
 		//Recursively print the courses in the longest chain
 		printLongChains(graph, p->iSuccVertex, pathM, iLevel, iLongLength);
