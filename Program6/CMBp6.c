@@ -1,14 +1,13 @@
 /****************************************************************
- CMBp5.c by Caleb Barnwell
+ CMBp6.c by Caleb Barnwell
 
  Purpose:
-    Handles multiple types of output printing for the program
+    Handles multiple types of output printing for the program.
+    Also, lays out a plan using doPlan.
 
  Input:
     Received from cs2123p5Driver.c
 
- Notes:
-    DoPlan is declared however will not be used until Program 6
  ****************************************************************/
 
 #define _CRT_SECURE_NO_WARNINGS 1
@@ -274,5 +273,71 @@ Notes:
 **************************************************************************/
 void doPlan(Graph graph, Plan plan)
 {
+    int i, j, iSem, iDist;
+    int iTotSem = 0;
+    int bChange = FALSE;
 
+    // Call SetLevel
+    for(i=0; i < graph->iNumVertices; i++){
+        if (plan->bIncludeM[i]) {
+            iDist = distanceFromSource(graph, plan, i, 0);
+            printf("iDist is: %d\n", iDist);
+            setLevel(graph, plan, i, iDist);
+        }
+    }
+
+    // Fill the semesters
+    for(i=0; i < graph->iNumVertices; i++) {
+        iSem = graph->vertexM[i].iSemesterLevel;
+        if(iSem == -1 )
+            return;
+        if (plan->bIncludeM[i]) {
+            while (!bChange) {
+                for (j = 0; j < 5; j++) {
+                    if (plan->semesterM[j][iSem] == -1 && !bChange) {
+                        plan->semesterM[j][iSem] = i;
+                        bChange = TRUE;
+                    }
+                }
+                if(iSem > iTotSem)
+                    iTotSem = iSem;
+                iSem++;
+            }
+            bChange = FALSE;
+        }
+    }
+
+    //Here print the semesters
+    printf("Semester Plan\n");
+    for(i=0; i < iTotSem; i++) {
+        printf("Semester #%d\n", i+1);
+        for (j = 0; j < 5; j++) {
+            if(plan->semesterM[j][i] != -1)
+                printf("\t%s %s\n",graph->vertexM[plan->semesterM[j][i]].szCourseId, graph->vertexM[plan->semesterM[j][i]].szCourseName);
+        }
+    }
+}
+
+/******************** distanceFromSource **************************************
+void distanceFromSource(Graph graph, Plan plan, iVertex, iSource)
+Purpose:
+
+Parameters:
+    I   Graph graph      graph
+
+Returns:
+
+Notes:
+
+**************************************************************************/
+int distanceFromSource(Graph graph, Plan plan, int iVertex, int iDist)
+{
+    EdgeNode * p;
+
+    if(iVertex == -1)
+        return iDist;
+
+    for(p = graph->vertexM[iVertex].prereqList; p != NULL; p = p->pNextEdge) {
+        return distanceFromSource(graph, plan, p->iPrereqVertex, iDist+1);
+    }
 }

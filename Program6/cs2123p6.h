@@ -119,6 +119,7 @@ void readData(Graph graph);
 void freeGraph(Graph graph);
 void freePlan(Plan plan);
 Plan newPlan();
+int distanceFromSource(Graph graph, Plan plan, int iVertex, int iDist);
 
 /********** Brandon B. Funcs ***************/
 int causesCycle(Graph graph, int iPrereqVertex, int iVertex);
