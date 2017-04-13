@@ -94,29 +94,45 @@ typedef PlanImp * Plan;
 
 // Prototypes
 
-// Recursive functions for program 5
-int maxChain(Graph graph, int iVertex);
-void printTraversal(Graph graph, int iCourseVertex, int indent);
-void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLongLength);
-int causesCycle(Graph graph, int iPrereqVertex, int iVertex);
+/********** Brandon L. Funcs **************/
 
-// Non-recursive for program 5
-int findCourse(Graph graph, char szCourseId[]);
-void insertPrereq(Graph graph, int iPrereqVertex, int iCourseVertex);
-void printAllInList(Graph graph); 
-void printOne(Graph graph, int iVertex);
+void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLongLength);
+void deleteCourse(Graph graph, int iVertex); //for program 6
+int maxChain(Graph graph, int iVertex);
+int insertCourse(Graph graph, char szCourseId[], char szCourseName[]);
+
+/********** Caleb B. Funcs ****************/
+
+void printSuccessors(Graph graph, int iVertex);
+void printTraversal(Graph graph, int iCourseVertex, int iIndent, int visitedM[]);
 void printSources(Graph graph);
 void printSinks(Graph graph);
-
+void doPlan(Graph graph, Plan plan); //for program 6
+void printAllInList(Graph graph);
+Vertex allocateVertex(char szCourseName[], char szCourseId[]);
 Graph newGraph();
+EdgeNode * newEdgeNode(Graph graph, EdgeNode * list, int iPrereqVertex, int iSuccVertex);
+Graph newGraph();
+EdgeNode * allocateEdgeNode();
+void printOne(Graph graph, int iVertex, int bPrintAll);
+void readData(Graph graph);
+void freeGraph(Graph graph);
+void freePlan(Plan plan);
+Plan newPlan();
 
-int insertCourse(Graph graph, char szCourseId[]);
+/********** Brandon B. Funcs ***************/
+int causesCycle(Graph graph, int iPrereqVertex, int iVertex);
+int findCourse(Graph graph, char szCourseId[]);
+void setLevel(Graph g, Plan plan, int iVertex, int iLev); //for program 6
+
+
+
+
 // Program 6 function for delete
 void deleteCourse (Graph graph, int iVertex);
 
 // Program 6 functions for Plan
 void doPlan(Graph graph, Plan plan);
-void setLevel(Graph g, Plan plan, int iVertex, int iLev);
 Plan newPlan();
 
 // hash function for extra credit
