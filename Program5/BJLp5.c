@@ -101,49 +101,26 @@ void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLon
 	if(graph->vertexM[iVertex].successorList == NULL
 							|| graph->vertexM[iVertex].successorList->iSuccVertex == -1)
 		{
-   //   printf("Hit the NULL if statement\n");
+			printf("NULLLLLLLLLLLLLL Recurse Back\n");
       return;
     }
+
 
 
 	//Loop throught successors
 	for(p=graph->vertexM[iVertex].successorList; p!=NULL; p=p->pNextEdge)
 	{
-		printf("iLevel = %d  iLongLength = %d\n "
-																,iLevel ,iLongLength);
-		//set location 0 to current vertex
+		int i = p->iSuccVertex;
 		if(iLevel == 0)
-    {
 			pathM[0] = iVertex;
-      printf("iVertex # = %d  iVertex Name = %s\n", p->iSuccVertex, graph->vertexM[p->iSuccVertex].szCourseId);
-    }
-		//Set the vertex to the current level
-		else
-		{
-      //printf("hit FOR LOOP ELSE STATEMENT\n");
-      //printf("BEGIN ELSE STATEMENT\n");
-     // printf("iLevel = %d\n", iLevel);
-			//store vertex number into pathM
-			pathM[iLevel] = p->iSuccVertex;
-			printf("iVertex #  = %d   iVertex Name = %s\n "
-																	,p->iSuccVertex
-																	,graph->vertexM[p->iSuccVertex].szCourseId);
-      //printf("END ELSE STATEMENT\n");
-		}
-		//Increase iLevel
-    if(!iLevel || iLevel)
-    {
-     // printf("Tripped IF Statement, iLevel = %d\n", iLevel);
-		  iLevel = iLevel + 1;
-      //printf("End IF Statement, iLevel = %d", iLevel);
-    }
-
-		//Recursively print the courses in the longest chain
-		printLongChains(graph, p->iSuccVertex, pathM, iLevel, iLongLength);
-	}
+		iLevel = iLevel + 1; //Increase iLevel
+		pathM[iLevel] = i;//store vertex number into pathM
+		printf("Inside for loop iLevel = %d  vertex inserted = %d\n"
+														,iLevel , i);
 
 		//Print the vertex stored into pathM
-		if(iLevel == iLongLength)
+		if(iLevel == iLongLength-1
+		)
 		{
 			int index;
 			for(index = 0; index < iLongLength; index++)
@@ -153,6 +130,13 @@ void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLon
 			}
 			printf(" \n");
 		}
+		//Recursively print the courses in the longest chain
+		printLongChains(graph, i, pathM, iLevel, iLongLength);
+	}
+
+
+
+
 
 
 }
