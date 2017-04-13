@@ -113,16 +113,22 @@ void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLon
 																,iLevel ,iLongLength);
 		//set location 0 to current vertex
 		if(iLevel == 0)
+    {
 			pathM[0] = iVertex;
+      printf("iVertex # = %d  iVertex Name = %s\n", p->iSuccVertex, graph->vertexM[p->iSuccVertex].szCourseId);
+    }
 		//Set the vertex to the current level
 		else
 		{
       //printf("hit FOR LOOP ELSE STATEMENT\n");
+      //printf("BEGIN ELSE STATEMENT\n");
+     // printf("iLevel = %d\n", iLevel);
 			//store vertex number into pathM
 			pathM[iLevel] = p->iSuccVertex;
 			printf("iVertex #  = %d   iVertex Name = %s\n "
 																	,p->iSuccVertex
 																	,graph->vertexM[p->iSuccVertex].szCourseId);
+      //printf("END ELSE STATEMENT\n");
 		}
 		//Increase iLevel
     if(!iLevel || iLevel)
