@@ -1,5 +1,5 @@
 # Define the machine object files for your program
-OBJECTS = cs2123p6Driver.o CMBp6.o BKBp5.o BJLp5.o
+OBJECTS = cs2123p6Driver.o CMBp6.o BKBp6.o BJLp5.o
 # Define your include file
 INCLUDES = cs2123p6.h
 
