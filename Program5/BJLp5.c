@@ -97,32 +97,48 @@ void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLon
 {
 	EdgeNode *p;
 
-	if(graph->vertexM[iVertex].successorList == NULL || iVertex == -1)
+	//If successorList is pointing to nothing ie the list is empty
+	if(graph->vertexM[iVertex].successorList == NULL
+							|| graph->vertexM[iVertex].successorList->iSuccVertex == -1)
 		return;
 
-    if(iLevel == 0)
-        pathM[0] = iVertex;
 
-    iLevel = iLevel + 1;
-
-	if(iLevel == iLongLength)
+	//Loop throught successors
+	for(p=graph->vertexM[iVertex].successorList; p!=NULL; p=p->pNextEdge)
 	{
-		int i;
-		for(i = 0; i < iLongLength; i++)
+		printf("iLevel = %d  iLongLength = %d\n "
+																,iLevel ,iLongLength);
+		//set location 0 to current vertex
+		if(iLevel == 0)
+			pathM[0] = iVertex;
+		//Set the vertex to the current level
+		else
 		{
-			//print the courses after the main course
-			printf("%s      ", graph->vertexM[pathM[i]].szCourseId);
-
-		}
-		printf("\n");
-	}
-
-
-	//Loop through SuccessorList
-	for(p = graph->vertexM[iVertex].successorList; p != NULL; p = p->pNextEdge)
-	{
+			//store vertex number into pathM
 			pathM[iLevel] = p->iSuccVertex;
-			printLongChains(graph, graph->vertexM[iVertex].successorList->iSuccVertex, pathM, iLevel, iLongLength);
+			printf("iVertex #  = %d   iVertex Name = %s\n "
+																	,p->iSuccVertex
+																	,graph->vertexM[p->iSuccVertex].szCourseId);
+		}
+		//Increase iLevel
+		iLevel = iLevel + 1;
+
+
+		//Recursively print the courses in the longest chain
+		printLongChains(graph, p->iSuccVertex, pathM, iLevel, iLongLength);
 	}
+
+		//Print the vertex stored into pathM
+		if(iLevel == iLongLength)
+		{
+			int index;
+			for(index = 0; index < iLongLength; index++)
+			{
+				printf("%s	",graph->vertexM[pathM[index]].szCourseId);
+
+			}
+			printf(" \n");
+		}
+
 
 }
