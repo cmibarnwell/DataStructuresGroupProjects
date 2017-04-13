@@ -46,7 +46,7 @@ Parameters:
 void readData(Graph graph)
 {
     // Necessary declarations
-    char szInputBuffer[MAX_LINE_SIZE], szType[MAX_TOKEN], szCourseId[MAX_TOKEN], szLastId[MAX_TOKEN], szCourseName[23];
+    char szInputBuffer[MAX_LINE_SIZE], szType[MAX_TOKEN], szCourseId[MAX_TOKEN], szLastId[MAX_TOKEN], szCourseName[23], szComment[MAX_LINE_SIZE];
     char * pszRemainingBuffer = NULL;
     int iScanfCnt, iMax;
     int pathM[MAX_VERTICES];
@@ -175,12 +175,10 @@ void readData(Graph graph)
          * COMMENTS
          *********** */
         else if(strcmp(szType, "*")==0){
-            fgets(szInputBuffer, MAX_LINE_SIZE-1, pFile); // Get next line, where the comment is
-            strtok(szInputBuffer, "\n"); // Remove newline
+            sscanf(szInputBuffer, "%[^\n]\n", szComment);
 
             // Print out comment
-            printf(">> *\n>> %s\n>> *\n", szInputBuffer);
-            fgets(szInputBuffer, MAX_LINE_SIZE-1, pFile); // skip the next "*"
+            printf(">> %s\n", szComment);
         }
 
         // Unknown command given
