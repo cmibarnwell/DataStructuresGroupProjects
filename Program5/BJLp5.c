@@ -117,7 +117,7 @@ void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLon
 		int i = p->iSuccVertex;
 		pathM[iLevel] = i;//store vertex number into pathM
 		//Print the vertex stored into pathM
-		if(iLevel == iLongLength-1)
+		if(iLevel == iLongLength-1 && i !=-1)
 		{
 			int index;
 			for(index = 0; index < iLongLength; index++)
