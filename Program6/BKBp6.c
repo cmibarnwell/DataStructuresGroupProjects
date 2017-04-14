@@ -159,8 +159,7 @@ int findCourse(Graph graph, char szCourseId[])
 
 
 /******************* setLevel **********************
- * void setLevel(Graph graph, Plan plan, int iVertex, int iLev)
- *
+ * void setLevel(Graph graph, Plan plan, int iVertex, int iLev)*
  * Purpose:
  *  This function sets the level of a given vertex.
  *
@@ -174,5 +173,19 @@ int findCourse(Graph graph, char szCourseId[])
  ***************************************************/
 void setLevel(Graph g, Plan plan, int iVertex, int iLev)
 {
-
+ int semesterCount;
+ int courses;
+ for(semesterCount = 0; semesterCount < 5; semesterCount++)
+ {
+   for(courses = 0; courses < MAX_VERTICES; courses++)
+   {
+      if(plan->semesterM[semesterCount][courses] != -1)
+      {
+        if(strcmp(g->vertexM[plan->semesterM[semesterCount][courses]].szCourseId, g->vertexM[iVertex].szCourseId) == 0)
+        {
+          g->vertexM[iVertex].iSemesterLevel = iLev;
+        }
+      }
+   }
+ }
 }
