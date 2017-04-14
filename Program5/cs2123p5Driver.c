@@ -2,13 +2,12 @@
  cs2123p5Driver.c by Caleb Barnwell
 
  Purpose:
-     The driver file for Program 5
+     The driver file for Program 5. Loops through the input file
+     and calls necessary functions as designated by commands in
+     the input file.
+
  Input:
-
-
- Returns:
-
- Notes:
+    I File pFile (p5Input.txt)
 
  ****************************************************************/
 
@@ -179,6 +178,14 @@ void readData(Graph graph)
 
             // Print out comment
             printf(">> %s\n", szComment);
+        }
+
+        /***********
+         * Blanks
+         *********** */
+        else if(strcmp(szType, "")==0){
+            //Just move on
+            continue;
         }
 
         // Unknown command given
