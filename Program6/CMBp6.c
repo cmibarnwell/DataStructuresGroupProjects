@@ -197,10 +197,8 @@ Purpose:
     If the course doesn't exist, show a warning.
 Parameters:
     I   Graph graph      graph
-
-Returns:
-
-Notes:
+    I   int iVertex     vertex number
+    I   int bPrintAll   true if printAll called this function
 
 **************************************************************************/
 void printOne(Graph graph, int iVertex, int bPrintAll)
@@ -340,4 +338,6 @@ int distanceFromSource(Graph graph, Plan plan, int iVertex, int iDist)
     for(p = graph->vertexM[iVertex].prereqList; p != NULL; p = p->pNextEdge) {
         return distanceFromSource(graph, plan, p->iPrereqVertex, iDist+1);
     }
+
+    return iDist;
 }

@@ -2,13 +2,12 @@
  cs2123p6Driver.c by Caleb Barnwell
 
  Purpose:
-     The driver file for Program 5
+     The driver file for Program 6. Loops through the input file
+     and calls necessary functions as designated by commands in
+     the input file.
+
  Input:
-
-
- Returns:
-
- Notes:
+    I File pFile (p6ExtraV1.txt)
 
  ****************************************************************/
 
@@ -53,7 +52,7 @@ void readData(Graph graph)
     Plan plan = newPlan();
 
     // Open our command file
-    FILE * pFile = fopen("p6InputV1.txt", "r");
+    FILE * pFile = fopen("p6ExtraV1.txt", "r");
     // Check if it is found
     if(pFile == NULL)
         ErrExit(ERR_COMMAND_LINE, "Please have the file p5Input.txt in the same directory as the program. p5Input.txt not found.");
