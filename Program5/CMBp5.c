@@ -114,7 +114,7 @@ void printSources(Graph graph)
     for(i = 0; i < graph->iNumVertices; i++)
     {
         if(graph->vertexM[i].prereqList->iPrereqVertex == -1) {
-            printf("%s %s\n", graph->vertexM[i].szCourseId, graph->vertexM[i].szCourseName);
+            printf("\t%s %s\n", graph->vertexM[i].szCourseId, graph->vertexM[i].szCourseName);
             bFindEver = TRUE;
         }
     }
