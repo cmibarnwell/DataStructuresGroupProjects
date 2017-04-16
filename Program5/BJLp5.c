@@ -5,7 +5,23 @@
 #include <string.h>
 #include <ctype.h>
 #include "cs2123p5.h"
-//FINSHED FUNCTIONS
+/************************** insertCourse ******************************************
+int insertCourse(Graph graph, char szCourseId[], char szCourseName[])
+
+Purpose:
+    	Searches the graph for the courseID passed in. If the vertx does not exist
+			create a new vertex and store the CourseID, SzDept, and CourseName. Once
+			vertex is created insert the vertex into the graph
+
+Parameters:
+		I 	Graph graph
+    I   char szCourseName[]
+    I   char szCourseId[]
+
+Returns:
+    0 if course was inserted
+
+**************************************************************************/
 int insertCourse(Graph graph, char szCourseId[], char szCourseName[])
 {
 	int iFind;
@@ -48,18 +64,22 @@ int insertCourse(Graph graph, char szCourseId[], char szCourseName[])
 	 }
 	 return 0;
 }
+/************************** maxChain ******************************************
+int maxChain(Graph graph, int iVertex)
 
+Purpose:
+    	Takes in a graph and vertex through the parameter list. Counts the longest
+			course chain starting with the vertex given. Then returns the count of
+			the max chain recursively
 
+Parameters:
+		I 	Graph graph
+    I   int iVertex
 
+Returns:
+  iMax the value of the longest chain
 
-
-
-
-
-
-
-
-
+**************************************************************************/
 int maxChain(Graph graph, int iVertex)
 {
 	int iMax = 0;
@@ -82,17 +102,26 @@ int maxChain(Graph graph, int iVertex)
 	return iMax;
 
 }
+/************************** printLongChains ******************************************
+void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLongLength)
+
+Purpose:
+    	Uses maxChain to count the distance of the longest chain starting from the
+			given vertex. Using that interger it prints all courses that start with
+			the given vertex with the same chain length as max chain. Recursive.
+
+Parameters:
+		I 	Graph graph
+		I		int iVertex
+		I 	int pathM[]
+		I		int iLevel
+		I		int iLongLength
 
 
+Returns:
+    Void, prints the courses equal to the max chain.
 
-
-
-
-
-
-
-
-
+**************************************************************************/
 void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLongLength)
 {
 	EdgeNode *p;
