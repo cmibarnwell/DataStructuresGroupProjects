@@ -113,7 +113,7 @@ void printSources(Graph graph)
     for(i = 0; i < graph->iNumVertices; i++)
     {
         if(graph->vertexM[i].prereqList->iPrereqVertex == -1) {
-            printf("%s %s\n", graph->vertexM[i].szCourseId, graph->vertexM[i].szCourseName);
+            printf("\t%s %s\n", graph->vertexM[i].szCourseId, graph->vertexM[i].szCourseName);
             bFindEver = TRUE;
         }
     }
@@ -138,6 +138,7 @@ void printSinks(Graph graph)
     int i, j;
     int bFind = FALSE;
     int bFindEver = FALSE;
+    EdgeNode * p;
 
     // Print Header
     printf("All Sinks:\n");
@@ -147,13 +148,15 @@ void printSinks(Graph graph)
     {
         for(j = 0; j < graph->iNumVertices; j++)
         {
-            if(graph->vertexM[j].prereqList->iPrereqVertex == i) {
-                bFind = TRUE;
-                bFindEver = TRUE;
+            for(p = graph->vertexM[j].prereqList; p != NULL; p = p->pNextEdge){
+                if(p->iPrereqVertex == i) {
+                    bFind = TRUE;
+                    bFindEver = TRUE;
+                }
             }
         }
         if(!bFind)
-            printf("%s %s\n", graph->vertexM[i].szCourseId, graph->vertexM[i].szCourseName);
+            printf("\t%s %s\n", graph->vertexM[i].szCourseId, graph->vertexM[i].szCourseName);
         bFind = FALSE;
     }
 
@@ -179,7 +182,7 @@ void printAllInList(Graph graph)
 
     // Print a header
     printf("%-3s %-3s %-21s%-7s                            %-7s\n"
-         , "Vx","TE","Course Name","Prereqs","Successors");
+            , "Vx","TE","Course Name","Prereqs","Successors");
 
     // Call printOne for every course
     for(i = 0; i < graph->iNumVertices; i++)
@@ -197,10 +200,8 @@ Purpose:
     If the course doesn't exist, show a warning.
 Parameters:
     I   Graph graph      graph
-
-Returns:
-
-Notes:
+    I   int iVertex     vertex number
+    I   int bPrintAll   true if printAll called this function
 
 **************************************************************************/
 void printOne(Graph graph, int iVertex, int bPrintAll)
@@ -224,9 +225,9 @@ void printOne(Graph graph, int iVertex, int bPrintAll)
 
     // if Nonexistent
     if(graph->vertexM[iVertex].prereqList->iPrereqVertex == -1){
-         printf("%s\t", "---");
+        printf("%s\t", "---");
     }
-    // Print all prereqs
+        // Print all prereqs
     else{
         for(p = graph->vertexM[iVertex].prereqList; p->pNextEdge != NULL; p = p->pNextEdge){
             printf("%s\t", graph->vertexM[p->iPrereqVertex].szCourseId);
@@ -247,7 +248,7 @@ void printOne(Graph graph, int iVertex, int bPrintAll)
     if(graph->vertexM[iVertex].successorList->iSuccVertex == -1){
         printf(" %-7s\n", "---");
     }
-    // Print all Successors
+        // Print all Successors
     else{
         for(p = graph->vertexM[iVertex].successorList; p->pNextEdge != NULL; p = p->pNextEdge){
             printf("%s\t", graph->vertexM[p->iSuccVertex].szCourseId);
@@ -340,4 +341,6 @@ int distanceFromSource(Graph graph, Plan plan, int iVertex, int iDist)
     for(p = graph->vertexM[iVertex].prereqList; p != NULL; p = p->pNextEdge) {
         return distanceFromSource(graph, plan, p->iPrereqVertex, iDist+1);
     }
+
+    return iDist;
 }

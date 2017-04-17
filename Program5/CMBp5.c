@@ -114,7 +114,7 @@ void printSources(Graph graph)
     for(i = 0; i < graph->iNumVertices; i++)
     {
         if(graph->vertexM[i].prereqList->iPrereqVertex == -1) {
-            printf("%s %s\n", graph->vertexM[i].szCourseId, graph->vertexM[i].szCourseName);
+            printf("\t%s %s\n", graph->vertexM[i].szCourseId, graph->vertexM[i].szCourseName);
             bFindEver = TRUE;
         }
     }
@@ -139,6 +139,7 @@ void printSinks(Graph graph)
     int i, j;
     int bFind = FALSE;
     int bFindEver = FALSE;
+    EdgeNode * p;
 
     // Print Header
     printf("All Sinks:\n");
@@ -148,13 +149,15 @@ void printSinks(Graph graph)
     {
         for(j = 0; j < graph->iNumVertices; j++)
         {
-            if(graph->vertexM[j].prereqList->iPrereqVertex == i) {
-                bFind = TRUE;
-                bFindEver = TRUE;
+            for(p = graph->vertexM[j].prereqList; p != NULL; p = p->pNextEdge){
+                if(p->iPrereqVertex == i) {
+                    bFind = TRUE;
+                    bFindEver = TRUE;
+                }
             }
         }
         if(!bFind)
-            printf("%s %s\n", graph->vertexM[i].szCourseId, graph->vertexM[i].szCourseName);
+            printf("\t%s %s\n", graph->vertexM[i].szCourseId, graph->vertexM[i].szCourseName);
         bFind = FALSE;
     }
 
@@ -198,10 +201,8 @@ Purpose:
     If the course doesn't exist, show a warning.
 Parameters:
     I   Graph graph      graph
-
-Returns:
-
-Notes:
+    I   int iVertex     vertex number
+    I   int bPrintAll   true if printAll called this function
 
 **************************************************************************/
 void printOne(Graph graph, int iVertex, int bPrintAll)
