@@ -5,16 +5,15 @@
 
 //utility funciton used by causeCycle
 void dfs(Graph, int, int*, int, int*);
-int hasPrereq(Graph, int, int*);
+void getPotentialPrereq(Graph, int, int*);
 
 
-int hasPrereq(Graph graph, int iVertex, int* iPrereqVertex)
+void getPotentialPrereq(Graph graph, int iVertex, int* iPrereqVertex)
 {
   if(iVertex < 0 && iVertex >= graph->iNumVertices)
   {
-    printf("Attempted to index invalid memory.");
+    printf("Attempted to index invalid memory, to obtain potential prereq. iVertex = %d\n.", iVertex);
     exit(1);
-    return 0;
   }
 
   EdgeNode* list = graph->vertexM[iVertex].prereqList;
@@ -22,11 +21,10 @@ int hasPrereq(Graph graph, int iVertex, int* iPrereqVertex)
   if(list->iSuccVertex > 0 && list)
   {
     *iPrereqVertex = list->iSuccVertex;
-    return 1;
   }
   else
   {
-    return 0;
+    *iPrereqVertex = 0;
   }
 }
 
@@ -197,6 +195,13 @@ int findCourse(Graph graph, char szCourseId[])
  ***************************************************/
 void setLevel(Graph g, Plan plan, int iVertex, int iLev)
 {
+
+  if(iVertex < 0 || iVertex >= g->iNumVertices)
+  {
+    printf("Attemted to set level with invalid vertex, iVertex = %d\n", iVertex);
+    exit(1);
+  }
+
  int tempreq = 0;
  int semesterLevel = 0;
  //is it in the plan?
@@ -214,6 +219,7 @@ void setLevel(Graph g, Plan plan, int iVertex, int iLev)
      }
    }
    
+
   }
 
   g->vertexM[iVertex].iSemesterLevel = semesterLevel;
