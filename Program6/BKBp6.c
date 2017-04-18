@@ -5,6 +5,30 @@
 
 //utility funciton used by causeCycle
 void dfs(Graph, int, int*, int, int*);
+int hasPrereq(Graph, int, int*);
+
+
+int hasPrereq(Graph graph, int iVertex, int* iPrereqVertex)
+{
+  if(iVertex < 0 && iVertex >= graph->iNumVertices)
+  {
+    printf("Attempted to index invalid memory.");
+    exit(1);
+    return 0;
+  }
+
+  EdgeNode* list = graph->vertexM[iVertex].prereqList;
+
+  if(list->iSuccVertex > 0 && list)
+  {
+    *iPrereqVertex = list->iSuccVertex;
+    return 1;
+  }
+  else
+  {
+    return 0;
+  }
+}
 
 /**************** dfs ****************
  * void dfs(Graph graph, int iVertex, int* visited, int iPrereqVertex, int* isCyclic)
@@ -173,19 +197,25 @@ int findCourse(Graph graph, char szCourseId[])
  ***************************************************/
 void setLevel(Graph g, Plan plan, int iVertex, int iLev)
 {
- int semesterCount;
- int courses;
- for(semesterCount = 0; semesterCount < 5; semesterCount++)
- {
-   for(courses = 0; courses < MAX_VERTICES; courses++)
+ int tempreq = 0;
+ int semesterLevel = 0;
+ //is it in the plan?
+  if(plan->bIncludeM[iVertex])
+  {
+   //its in the plan,
+   //so check for its prereqs
+   hasPrereqs(g, iVertex, &tempreq);
+   while(tempreq)
    {
-      if(plan->semesterM[semesterCount][courses] != -1)
-      {
-        if(strcmp(g->vertexM[plan->semesterM[semesterCount][courses]].szCourseId, g->vertexM[iVertex].szCourseId) == 0)
-        {
-          g->vertexM[iVertex].iSemesterLevel = iLev;
-        }
-      }
+     if(plan->bIncludeM[tempreq])
+     {
+      ++semesterLevel;
+      hasPrereqs(g, tempreq, &tempreq);
+     }
    }
+   
+  }
+
+  g->vertexM[iVertex].iSemesterLevel = semesterLevel;
+
  }
-}
