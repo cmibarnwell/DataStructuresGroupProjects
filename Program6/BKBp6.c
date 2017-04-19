@@ -10,22 +10,21 @@ void getPotentialPrereq(Graph, int, int*);
 
 void getPotentialPrereq(Graph graph, int iVertex, int* iPrereqVertex)
 {
-  if(iVertex < 0 && iVertex >= graph->iNumVertices)
+  if(iVertex < 0 || iVertex >= graph->iNumVertices)
   {
     printf("Attempted to index invalid memory, to obtain potential prereq. iVertex = %d\n.", iVertex);
-    exit(1);
+    printf("Skipping...\n");
+    //exit(1);
+    return;
   }
 
   EdgeNode* list = graph->vertexM[iVertex].prereqList;
 
-  if(list->iSuccVertex > 0 && list)
-  {
-    *iPrereqVertex = list->iSuccVertex;
-  }
-  else
-  {
-    *iPrereqVertex = 0;
-  }
+    if(list)
+    {
+	*iPrereqVertex = list->iSuccVertex;
+    }
+  
 }
 
 /**************** dfs ****************
@@ -203,6 +202,7 @@ void setLevel(Graph g, Plan plan, int iVertex, int iLev)
   }
 
  int tempreq = 0;
+ int temp = 0;
  int semesterLevel = 0;
  //is it in the plan?
   if(plan->bIncludeM[iVertex])
@@ -210,21 +210,18 @@ void setLevel(Graph g, Plan plan, int iVertex, int iLev)
    //its in the plan,
    //so check for its prereqs
    getPotentialPrereq(g, iVertex, &tempreq);
-   while(tempreq > 0)
+   temp = tempreq;
+   if(temp > 0)
    {
-     if(plan->bIncludeM[tempreq])
+     while(plan->bIncludeM[temp] && iLev > 0)
      {
-      ++semesterLevel;
-      getPotentialPrereq(g, tempreq, &tempreq);
-     }
-     else
-     {
-       break;
-      // getPotentialPrereq(g, tempreq, &tempreq);
+	--iLev;
+        ++semesterLevel;
+     	getPotentialPrereq(g, temp, &tempreq);
+     	temp = tempreq;
      }
    }
    
-
   }
 
   g->vertexM[iVertex].iSemesterLevel = semesterLevel;
