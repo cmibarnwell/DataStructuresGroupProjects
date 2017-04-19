@@ -219,7 +219,8 @@ void setLevel(Graph g, Plan plan, int iVertex, int iLev)
      }
      else
      {
-       getPotentialPrereq(g, tempreq, &tempreq);
+       break;
+      // getPotentialPrereq(g, tempreq, &tempreq);
      }
    }
    
