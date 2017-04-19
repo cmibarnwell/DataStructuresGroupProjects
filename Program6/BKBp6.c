@@ -210,12 +210,16 @@ void setLevel(Graph g, Plan plan, int iVertex, int iLev)
    //its in the plan,
    //so check for its prereqs
    getPotentialPrereq(g, iVertex, &tempreq);
-   while(tempreq)
+   while(tempreq > 0)
    {
      if(plan->bIncludeM[tempreq])
      {
       ++semesterLevel;
       getPotentialPrereq(g, tempreq, &tempreq);
+     }
+     else
+     {
+       getPotentialPrereq(g, tempreq, &tempreq);
      }
    }
    
