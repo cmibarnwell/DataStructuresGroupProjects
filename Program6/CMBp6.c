@@ -282,7 +282,6 @@ void doPlan(Graph graph, Plan plan)
     for(i=0; i < graph->iNumVertices; i++){
         if (plan->bIncludeM[i]) {
             iDist = distanceFromSource(graph, plan, i, 0);
-            printf("iDist is: %d\n", iDist);
             setLevel(graph, plan, i, iDist);
         }
     }
@@ -290,9 +289,10 @@ void doPlan(Graph graph, Plan plan)
     // Fill the semesters
     for(i=0; i < graph->iNumVertices; i++) {
         iSem = graph->vertexM[i].iSemesterLevel;
-        if(iSem == -1 )
-            return;
         if (plan->bIncludeM[i]) {
+            if(iSem == -1 ) {
+                continue;
+            }
             while (!bChange) {
                 for (j = 0; j < 5; j++) {
                     if (plan->semesterM[j][iSem] == -1 && !bChange) {
@@ -335,7 +335,7 @@ int distanceFromSource(Graph graph, Plan plan, int iVertex, int iDist)
 {
     EdgeNode * p;
 
-    if(iVertex == -1)
+    if(iVertex == -1 || !plan->bIncludeM[iVertex])
         return iDist;
 
     for(p = graph->vertexM[iVertex].prereqList; p != NULL; p = p->pNextEdge) {
