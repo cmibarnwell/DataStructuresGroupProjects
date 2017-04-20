@@ -213,7 +213,7 @@ void setLevel(Graph g, Plan plan, int iVertex, int iLev)
    temp = tempreq;
    if(temp > 0)
    {
-     while(plan->bIncludeM[temp] && iLev > 0)
+     while(plan->bIncludeM[temp] && iLev >= 0)
      {
 	--iLev;
         ++semesterLevel;
