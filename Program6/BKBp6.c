@@ -206,7 +206,7 @@ void setLevel(Graph g, Plan plan, int iVertex, int iLev)
  int tempreq = 0;
  int temp = 0;
  int semesterLevel = 0;
- printf("semesterLevel = %d\n", semesterLevel);
+// printf("semesterLevel = %d\n", semesterLevel);
  //is it in the plan?
   if(plan->bIncludeM[iVertex])
   {
@@ -219,17 +219,17 @@ void setLevel(Graph g, Plan plan, int iVertex, int iLev)
      while(plan->bIncludeM[temp] && iLev - 1 > 0)
      {
 	--iLev;
-	printf("iLevel is now %d\n", iLev);
+	//printf("iLevel is now %d\n", iLev);
         ++semesterLevel;
-	printf("semesterLevel is now %d\n", semesterLevel);
+	//printf("semesterLevel is now %d\n", semesterLevel);
      	getPotentialPrereq(g, temp, &tempreq);
      	temp = tempreq;
      }
    }
    
   }
-  printf("Returning %d\n", semesterLevel);
+  //printf("Returning %d\n", semesterLevel);
   g->vertexM[iVertex].iSemesterLevel = semesterLevel;
-  printf("Possible return value %d\n", semesterLevel + 1);
+  //printf("Possible return value %d\n", semesterLevel + 1);
 
  }
