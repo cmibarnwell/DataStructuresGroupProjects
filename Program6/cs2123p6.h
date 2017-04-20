@@ -1,30 +1,31 @@
 /**********************************************************************
 cs2123p5.h
 Purpose:
-   Defines constants: 
-       max constants 
+   Defines constants:
+       max constants
        error constants
        warning constants
        boolean constants
-   Defines typedef for 
+   Defines typedef for
        EdgeNode  - graph edge containing preq and successor vertex
        Vertex    - contains course information (course number, name), existence boolean,
                    successor list first node pointer, predecessor list first node pointer
        GraphImp  - array of vertices and a count of them
        Graph     - pointer to an allocated GraphImp
-       PlanImp   - tbd       
+       PlanImp   - tbd
    Defines function prototypes for functions used in pgm5 (recursive and non-recursive)
-   Defines function prototypes for functions used in pgm6 
+   Defines function prototypes for functions used in pgm6
    Defines WARNING macro
 Notes:
-   
+
 **********************************************************************/
 /*** constants ***/
 #define MAX_TOKEN 50               // Maximum number of actual characters for a token
 #define MAX_LINE_SIZE 100          // Maximum number of character per input line
 #define MAX_VERTICES 60
-#define OVERFLOW_BEGIN 29          // begin of overflow area 
+#define OVERFLOW_BEGIN 29          // begin of overflow area
 // Error constants (program exit values)
+#define EMPTY_VERTEX 1000000
 #define ERR_COMMAND_LINE    900    // invalid command line argument
 #define ERR_ALGORITHM      903     // Unexpected error in algorithm
 
@@ -35,7 +36,7 @@ Notes:
 #define ERR_EXPECTED_SWITCH        "expected switch, found"
 #define ERR_MISSING_ARGUMENT       "missing argument for"
 
-// exitUsage control 
+// exitUsage control
 #define USAGE_ONLY          0      // user only requested usage information
 #define USAGE_ERR           -1     // usage error, show message and usage information
 
@@ -74,9 +75,9 @@ typedef struct
     int iOverflowBegin;           // The subscript of the first overflow entry
                                   // in the array of vertices.
                                   // Any subscript less than this value is in
-                                  // the primary area.      
+                                  // the primary area.
     int iFreeHead;                // Subscript of a free list of entries
-                                  // in the overflow portion of the 
+                                  // in the overflow portion of the
                                   // graph's vertexM array
 } GraphImp;
 
@@ -86,7 +87,7 @@ typedef GraphImp *Graph;
 
 typedef struct
 {
-    int semesterM[5][MAX_VERTICES]; // Array which has five rows for each semester.  
+    int semesterM[5][MAX_VERTICES]; // Array which has five rows for each semester.
     int bIncludeM[MAX_VERTICES];    // TRUE if this course is to be included in the plan
 } PlanImp;
 typedef PlanImp * Plan;
@@ -149,8 +150,8 @@ void exitUsage(int iArg, char *pszMessage, char *pszDiagnosticInfo);
 void ErrExit(int iexitRC, char szFmt[], ...);
 char * getToken(char *pszInputTxt, char szToken[], int iTokenSize);
 
-/* 
-  WARNING macro 
+/*
+  WARNING macro
   Parameters:
      I szFmt - a printf format
      I ...   - a variable number of parameters corresponding to szFmt's
@@ -160,26 +161,26 @@ char * getToken(char *pszInputTxt, char szToken[], int iTokenSize);
   Notes:
      Since this generates multiple C statements, we surround them
      with a dummy do while(0) which only executes once.  Notice that the
-     dummy do while isn't ended with a ";" since the user of 
+     dummy do while isn't ended with a ";" since the user of
      the macro naturally specifies a ";".  Example:
          if (x != 0)
              WARNING("X must be blah blah");
          else
          {   // normal processing
             ....
-         } 
+         }
      If we used {} in the macro definition instead of the dummy do while(0),
      the generated code would have a bad ";":
          if (x != 0)
          {
-             printf("\tWARNING: "); 
+             printf("\tWARNING: ");
              printf("X must be blah blah");
              printf("\n");
          } ;  // yuck, bad ";" causing the compiler to not understand the else
          else
          {   // normal processing
             ....
-         } 
+         }
 */
 #define WARNING(szFmt, ...) do {    \
     printf("\tWARNING: ");          \

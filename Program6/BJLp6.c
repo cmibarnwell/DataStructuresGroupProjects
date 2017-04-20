@@ -160,9 +160,53 @@ void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLon
 		printLongChains(graph, i, pathM, iLevel+1, iLongLength);
 	}
 
+}
 
 
 
+void deleteCourse(Graph graph, int iVertex)
+{
+	//Remove the iVertex from the successorList
+	int i;
+	EdgeNode *pRemove;
+	EdgeNode *p;
+	EdgeNode *pPrecedes = NULL;
 
+
+for(i = 0; i < graph->iNumVertices; i++)//loop through the graph
+{
+	for(p = graph->vertexM[i].successorList; p != NULL; p = p->pNextEdge)//loop through successorList
+	{
+		pRemove = p;
+		if( p == NULL)//if the successorList is empty
+				break;
+		if(p->iSuccVertex == iVertex)//Vertex is in the successorList
+		{
+			if(pPrecedes == NULL)//iVertex is the first edgeNode
+			{
+				if(p->pNextEdge == NULL)//Removing would make list empty
+				{
+					p = NULL;
+				}
+				else//make p next edge the start of the successorList
+				{
+					p = p->pNextEdge;
+				}
+			}
+			else//iVertex is in the middle or the end of the list
+			{
+				pPrecedes->pNextEdge = p->pNextEdge;
+			}
+
+		}
+		pPrecedes = p;
+		free(pRemove);
+	}
+	for()//loop through prereqList
+	{
+
+	}
+
+}
 
 }
