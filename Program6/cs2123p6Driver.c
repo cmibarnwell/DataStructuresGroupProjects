@@ -379,7 +379,7 @@ Vertex newVertex(char szCourseName[], char szCourseId[])
     vertex.iSemesterLevel = -1;
     vertex.iHashChainNext = -1;
     vertex.iDistSource = -1;
-    vertex.bExists = FALSE;
+    vertex.bExists = TRUE;
 
     return vertex;
 }
