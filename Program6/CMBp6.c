@@ -211,7 +211,7 @@ void printOne(Graph graph, int iVertex, int bPrintAll)
     int iDots = 3;
 
     // Make sure course exists
-    if(findCourse(graph, graph->vertexM[iVertex].szCourseId) == -1){
+    if((findCourse(graph, graph->vertexM[iVertex].szCourseId) == -1 || !graph->vertexM[iVertex].bExists) && !bPrintAll){
         printf("Course does %s not exist.\n", graph->vertexM[iVertex].szCourseId);
         return;
     }
