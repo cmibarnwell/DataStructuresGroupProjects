@@ -175,6 +175,12 @@ void deleteCourse(Graph graph, int iVertex)
 
 for(i = 0; i < graph->iNumVertices; i++)//loop through the graph
 {
+	if(i == iVertex)//Remove the vertex from the graph
+		graph->vertexM[i].bExists = FALSE;
+	else
+		graph->vertexM[i].bExists = TRUE;
+
+
 	for(p = graph->vertexM[i].successorList; p != NULL; p = p->pNextEdge)//loop through successorList
 	{
 		pRemove = p;
@@ -202,11 +208,34 @@ for(i = 0; i < graph->iNumVertices; i++)//loop through the graph
 		pPrecedes = p;
 		free(pRemove);
 	}
-	for()//loop through prereqList
+	for(p = graph->vertexM[i].prereqList; p != NULL; p = p->pNextEdge)//loop through successorList
 	{
+		pRemove = p;
+		if( p == NULL)//if the prereqList is empty
+				break;
+		if(p->iPrereqVertex== iVertex)//Vertex is in the successorList
+		{
+			if(pPrecedes == NULL)//iVertex is the first edgeNode
+			{
+				if(p->pNextEdge == NULL)//Removing would make list empty
+				{
+					p = NULL;
+				}
+				else//make p next edge the start of the prereqList
+				{
+					p = p->pNextEdge;
+				}
+			}
+			else//iVertex is in the middle or the end of the list
+			{
+				pPrecedes->pNextEdge = p->pNextEdge;
+			}
 
-	}
+		}
+		pPrecedes = p;
+		free(pRemove);
 
 }
 
+}
 }
