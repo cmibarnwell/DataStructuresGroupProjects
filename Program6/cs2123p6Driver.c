@@ -208,7 +208,7 @@ void readData(Graph graph)
                 ErrExit(ERR_COMMAND_LINE, "Not Enough Arguments for DELETE");
             printf(">> DELETE %s\n", szCourseId); // Print command
 
-            //deleteCourse(graph, findCourse(graph, szCourseId));
+            deleteCourse(graph, findCourse(graph, szCourseId));
         }
 
         /***********
