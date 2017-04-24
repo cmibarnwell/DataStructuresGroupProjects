@@ -5,10 +5,56 @@
 
 //utility funciton used by causeCycle
 void dfs(Graph, int, int*, int, int*);
-void getPotentialPrereq(Graph, int, int*);
+void getPotentialPrereq(Graph, int, int*, int);
+int getPrereqChain(Graph, int, int);
+int chain(Graph, int);
+int dfsChain(Graph, int, int*);
+
+int dfsChain(Graph graph, int iVertex, int* visited)
+{
+  printf("IN LOOP HIT DFSCHAIN\n");
+  if(iVertex < 0 || iVertex >= graph->iNumVertices)
+  {
+    return 0;
+  }
+
+  if(visited[iVertex])
+  {
+    return 0;
+  }
+
+  visited[iVertex] = TRUE;
+  EdgeNode* list = NULL;
+  int count = 0;
+  for(list = graph->vertexM[iVertex].prereqList; list != NULL; list = list->pNextEdge)
+  {
+    printf("IN LOOP HIT RECURSIVE CYCLE\n");
+    count = 1 + dfsChain(graph, list->iSuccVertex, visited);
+  }
+  printf("IN LOOP WITH COUNT %d\n",count);
+  return count ;
+
+}
 
 
-void getPotentialPrereq(Graph graph, int iVertex, int* iPrereqVertex)
+int getPrereqChain(Graph graph, int iVertex, int iLevel)
+{
+  int count = 0, temp = 0;
+  printf("Begin getPrereqChain\n");
+  int visited[MAX_VERTICES];
+  int i;
+  for(i = 0; i < MAX_VERTICES; i++)
+  {
+    visited[i] = FALSE;
+  }
+
+  count = dfsChain(graph, iVertex, visited);
+  printf("Exit getPrereqChain\n");
+  return count;
+}
+
+
+void getPotentialPrereq(Graph graph, int iVertex, int* iPrereqVertex, int iLevel)
 {
   if(iVertex < 0 || iVertex >= graph->iNumVertices)
   {
@@ -18,13 +64,24 @@ void getPotentialPrereq(Graph graph, int iVertex, int* iPrereqVertex)
     return;
   }
 
-  EdgeNode* list = graph->vertexM[iVertex].prereqList;
+  printf("Begin PrereqVertex\n");
 
-    if(list)
+  EdgeNode* list = NULL;
+  int temp = 0, max = 0, actualvert = 0;
+    for(list= graph->vertexM[iVertex].prereqList; list != NULL; list = list->pNextEdge)
     {
-	*iPrereqVertex = list->iSuccVertex;
+    printf("IN LOOP %s\n", graph->vertexM[list->iSuccVertex].szCourseName);
+
+      temp = getPrereqChain(graph, list->iSuccVertex, iLevel);
+      printf("IN LOOP with TEMP %d\n", temp);
+      if(temp > max)
+      {
+        max = temp;
+        actualvert = list->iSuccVertex;
+      }
     }
-  
+    printf("Exit getPotentialPrereq\n");
+  *iPrereqVertex = actualvert;
 }
 
 /**************** dfs ****************
@@ -201,7 +258,7 @@ void setLevel(Graph g, Plan plan, int iVertex, int iLev)
     exit(1);
   }
 
- printf("iLevel = %d\n", iLev);
+ //printf("iLevel = %d\n", iLev);
 
  int tempreq = 0;
  int temp = 0;
@@ -212,7 +269,7 @@ void setLevel(Graph g, Plan plan, int iVertex, int iLev)
   {
    //its in the plan,
    //so check for its prereqs
-   getPotentialPrereq(g, iVertex, &tempreq);
+   getPotentialPrereq(g, iVertex, &tempreq, iLev);
    temp = tempreq;
    if(temp > 0)
    {
@@ -222,7 +279,7 @@ void setLevel(Graph g, Plan plan, int iVertex, int iLev)
 	//printf("iLevel is now %d\n", iLev);
         ++semesterLevel;
 	//printf("semesterLevel is now %d\n", semesterLevel);
-     	getPotentialPrereq(g, temp, &tempreq);
+     	getPotentialPrereq(g, temp, &tempreq, iLev);
      	temp = tempreq;
      }
    }
