@@ -203,7 +203,6 @@ for(i = 0; i < graph->iNumVertices; i++)//loop through the graph
 
 		}
 		pPrecedes = p;
-		free(pRemove);
 	}
 	for(p = graph->vertexM[i].prereqList; p != NULL; p = p->pNextEdge)//loop through successorList
 	{
@@ -230,7 +229,6 @@ for(i = 0; i < graph->iNumVertices; i++)//loop through the graph
 
 		}
 		pPrecedes = p;
-		free(pRemove);
 
 }
 
