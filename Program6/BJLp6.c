@@ -177,9 +177,6 @@ for(i = 0; i < graph->iNumVertices; i++)//loop through the graph
 {
 	if(i == iVertex)//Remove the vertex from the graph
 		graph->vertexM[i].bExists = FALSE;
-	else
-		graph->vertexM[i].bExists = TRUE;
-
 
 	for(p = graph->vertexM[i].successorList; p != NULL; p = p->pNextEdge)//loop through successorList
 	{
