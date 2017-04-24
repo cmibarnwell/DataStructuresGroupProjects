@@ -39,9 +39,9 @@ int reverseMaxChain(Graph graph, int iVertex)
 int getPrereqChain(Graph graph, int iVertex, int iLevel)
 {
   int count = 0, temp = 0;
-  printf("Begin getPrereqChain\n");
+  //printf("Begin getPrereqChain\n");
   count = reverseMaxChain(graph, iVertex);
-  printf("Exit getPrereqChain\n");
+  //printf("Exit getPrereqChain\n");
   return count;
 }
 
@@ -50,29 +50,29 @@ void getPotentialPrereq(Graph graph, int iVertex, int* iPrereqVertex, int iLevel
 {
   if(iVertex < 0 || iVertex >= graph->iNumVertices)
   {
-    printf("Attempted to index invalid memory, to obtain potential prereq. iVertex = %d\n.", iVertex);
-    printf("Skipping...\n");
+    //printf("Attempted to index invalid memory, to obtain potential prereq. iVertex = %d\n.", iVertex);
+    //printf("Skipping...\n");
     //exit(1);
     return;
   }
 
-  printf("Begin PrereqVertex\n");
+  //printf("Begin PrereqVertex\n");
 
   EdgeNode* list = NULL;
   int temp = 0, max = 0, actualvert = 0;
     for(list= graph->vertexM[iVertex].prereqList; list != NULL; list = list->pNextEdge)
     {
-    printf("IN LOOP %s\n", graph->vertexM[list->iSuccVertex].szCourseName);
+    //printf("IN LOOP %s\n", graph->vertexM[list->iSuccVertex].szCourseName);
 
       temp = reverseMaxChain(graph, list->iSuccVertex);
-      printf("IN LOOP with TEMP %d\n", temp);
+      //printf("IN LOOP with TEMP %d\n", temp);
       if(temp > max)
       {
         max = temp;
         actualvert = list->iSuccVertex;
       }
     }
-    printf("Exit getPotentialPrereq\n");
+    //printf("Exit getPotentialPrereq\n");
   *iPrereqVertex = actualvert;
 }
 
