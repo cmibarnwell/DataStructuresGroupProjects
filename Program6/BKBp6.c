@@ -11,8 +11,8 @@ int reverseMaxChain(Graph, int);
 
 int reverseMaxChain(Graph graph, int iVertex)
 {
-  printf("IN LOOP HIT DFSCHAIN %d\n", iVertex);
-  if(iVertex == -1 || graph->vertexM[iVertex].prereqList == NULL)
+  //printf("IN LOOP HIT DFSCHAIN %d\n", iVertex);
+  if(iVertex == -1 || graph->vertexM[iVertex].prereqList == NULL || !graph->vertexM[iVertex].bExists)
   {
     return 0;
   }
@@ -22,15 +22,15 @@ int reverseMaxChain(Graph graph, int iVertex)
   EdgeNode* list = NULL;
   for(list = graph->vertexM[iVertex].prereqList; list != NULL; list = list->pNextEdge)
   {
-    printf("IN LOOP HIT RECURSIVE CYCLE\n");
-    printf("IN LOOP VALUE IS %d\n", list->iSuccVertex);
-    value = 1 + reverseMaxChain(graph, list->iSuccVertex);
+    //printf("IN LOOP HIT RECURSIVE CYCLE\n");
+    //printf("IN LOOP VALUE IS %d\n", list->iSuccVertex);
+    value = 1 + reverseMaxChain(graph, list->iPrereqVertex);
     if(value > max)
     {
       max = value;
     }
   }
-  printf("IN LOOP WITH COUNT %d\n",max);
+  //printf("IN LOOP WITH COUNT %d\n",max);
   return max;
 
 }
