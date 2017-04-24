@@ -283,11 +283,8 @@ void doPlan(Graph graph, Plan plan)
     // Call SetLevel
     for(i=0; i < graph->iNumVertices; i++){
         if (plan->bIncludeM[i]) {
-            printf("\nCourse: %s\n", graph->vertexM[i].szCourseId);
             iDist = distanceFromSource(graph, plan, i, 0);
-            printf("iDist: %d\n", iDist);
             setLevel(graph, plan, i, iDist);
-            printf("Set Level: %d\n", graph->vertexM[i].iSemesterLevel);
         }
     }
 
@@ -344,8 +341,6 @@ int distanceFromSource(Graph graph, Plan plan, int iVertex, int iDist)
 
     if(iVertex == -1 || !plan->bIncludeM[iVertex])
         return iDist;
-
-    printf("We are at: %s\n", graph->vertexM[iVertex].szCourseId);
 
     for(p = graph->vertexM[iVertex].prereqList; p != NULL; p = p->pNextEdge) {
         iCheck = distanceFromSource(graph, plan, p->iPrereqVertex, iDist+1);
