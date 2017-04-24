@@ -215,6 +215,8 @@ void printOne(Graph graph, int iVertex, int bPrintAll)
         printf("Course does %s not exist.\n", graph->vertexM[iVertex].szCourseId);
         return;
     }
+    if(!graph->vertexM[iVertex].bExists)
+        return;
 
     // See if printAll called this. If not, print a header.
     if(!bPrintAll)
