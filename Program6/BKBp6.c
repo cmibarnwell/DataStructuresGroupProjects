@@ -7,32 +7,31 @@
 void dfs(Graph, int, int*, int, int*);
 void getPotentialPrereq(Graph, int, int*, int);
 int getPrereqChain(Graph, int, int);
-int chain(Graph, int);
-int dfsChain(Graph, int, int*);
+int reverseMaxChain(Graph, int);
 
-int dfsChain(Graph graph, int iVertex, int* visited)
+int reverseMaxChain(Graph graph, int iVertex)
 {
-  printf("IN LOOP HIT DFSCHAIN\n");
-  if(iVertex < 0 || iVertex >= graph->iNumVertices)
+  printf("IN LOOP HIT DFSCHAIN %d\n", iVertex);
+  if(iVertex == -1 || graph->vertexM[iVertex].prereqList == NULL)
   {
     return 0;
   }
 
-  if(visited[iVertex])
-  {
-    return 0;
-  }
+  int max = 0, value = 0;
 
-  visited[iVertex] = TRUE;
   EdgeNode* list = NULL;
-  int count = 0;
   for(list = graph->vertexM[iVertex].prereqList; list != NULL; list = list->pNextEdge)
   {
     printf("IN LOOP HIT RECURSIVE CYCLE\n");
-    count = 1 + dfsChain(graph, list->iSuccVertex, visited);
+    printf("IN LOOP VALUE IS %d\n", list->iSuccVertex);
+    value = 1 + reverseMaxChain(graph, list->iSuccVertex);
+    if(value > max)
+    {
+      max = value;
+    }
   }
-  printf("IN LOOP WITH COUNT %d\n",count);
-  return count ;
+  printf("IN LOOP WITH COUNT %d\n",max);
+  return max;
 
 }
 
@@ -41,14 +40,7 @@ int getPrereqChain(Graph graph, int iVertex, int iLevel)
 {
   int count = 0, temp = 0;
   printf("Begin getPrereqChain\n");
-  int visited[MAX_VERTICES];
-  int i;
-  for(i = 0; i < MAX_VERTICES; i++)
-  {
-    visited[i] = FALSE;
-  }
-
-  count = dfsChain(graph, iVertex, visited);
+  count = reverseMaxChain(graph, iVertex);
   printf("Exit getPrereqChain\n");
   return count;
 }
@@ -72,7 +64,7 @@ void getPotentialPrereq(Graph graph, int iVertex, int* iPrereqVertex, int iLevel
     {
     printf("IN LOOP %s\n", graph->vertexM[list->iSuccVertex].szCourseName);
 
-      temp = getPrereqChain(graph, list->iSuccVertex, iLevel);
+      temp = reverseMaxChain(graph, list->iSuccVertex);
       printf("IN LOOP with TEMP %d\n", temp);
       if(temp > max)
       {
