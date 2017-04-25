@@ -98,9 +98,9 @@ void readData(Graph graph)
             }
 
             // Add given course as a prereq to the last added course
-            newEdgeNode(graph, graph->vertexM[findCourse(graph, szLastId)].prereqList, findCourse(graph, szCourseId), findCourse(graph, szLastId));
+            newPreEdgeNode(graph, graph->vertexM[findCourse(graph, szLastId)].prereqList, findCourse(graph, szCourseId), findCourse(graph, szLastId));
             // Add last added course as a successor to given course
-            newEdgeNode(graph, graph->vertexM[findCourse(graph, szCourseId)].successorList, findCourse(graph, szCourseId), findCourse(graph, szLastId));
+            newSuccEdgeNode(graph, graph->vertexM[findCourse(graph, szCourseId)].successorList, findCourse(graph, szCourseId), findCourse(graph, szLastId));
         }
 
         /***********
@@ -175,7 +175,7 @@ void readData(Graph graph)
          * PLAN
          *********** */
         else if(strcmp(szType, "PLAN")==0){
-            iScanfCnt = sscanf(pszRemainingBuffer, "%7[^\n]\n", szCourseId);
+            iScanfCnt = sscanf(pszRemainingBuffer, "%7s\n", szCourseId);
             if(iScanfCnt < 1)
                 ErrExit(ERR_COMMAND_LINE, "Not Enough Arguments for PLAN");
 
@@ -415,11 +415,12 @@ EdgeNode * allocateEdgeNode()
     return pEdge;
 }
 
-/******************** newEdgeNode ****************************
-EdgeNode * newEdgeNode(EdgeNode * list, int iPrereqVertex, int iSuccVertex)
+/******************** newPreEdgeNode ****************************
+EdgeNode * newPreEdgeNode(Graph graph, EdgeNode * list, int iPrereqVertex, int iSuccVertex)
 
  Purpose:
-    Used for creation of a Prereq. Creates a newEdgeNode if it doesn't
+    Used for creation of a Prereq, specifically the prereqList portion.
+    Creates a newEdgeNode if it doesn't
     cause a Cycle. Initializes to given values.
 
  Parameters:
@@ -430,14 +431,16 @@ EdgeNode * newEdgeNode(EdgeNode * list, int iPrereqVertex, int iSuccVertex)
  Returns:
     EdgeNode * pNew or EdgeNode * list
  *****************************************************************/
-EdgeNode * newEdgeNode(Graph graph, EdgeNode * list, int iPrereqVertex, int iSuccVertex)
+EdgeNode * newPreEdgeNode(Graph graph, EdgeNode * list, int iPrereqVertex, int iSuccVertex)
 {
     // Declarations
     EdgeNode *p, *pPrecedes, *pNew;
 
     // Ensure it will not cause a cycle
-    if(causesCycle(graph, iPrereqVertex, iSuccVertex))
-      return NULL;
+    if(causesCycle(graph, iPrereqVertex, iSuccVertex)) {
+        printf("Error: Prereq would cause a cycle\n");
+        return NULL;
+    }
 
     // Check if we are at the head of a list
     if(list->iPrereqVertex == -1 || list->iSuccVertex == -1)
@@ -464,6 +467,46 @@ EdgeNode * newEdgeNode(Graph graph, EdgeNode * list, int iPrereqVertex, int iSuc
         pPrecedes->pNextEdge = pNew;
 
     return pNew;
+}
+
+/******************** newSuccEdgeNode ****************************
+EdgeNode * newSuccEdgeNode(Graph graph, EdgeNode * list, int iPrereqVertex, int iSuccVertex)
+
+ Purpose:
+    Used for creation of a Prereq, specifically the successorList portion.
+    Creates a newEdgeNode if it doesn't
+    cause a Cycle. Initializes to given values.
+
+ Parameters:
+    I Graph graph
+    I EdgeNode * list       list node of a vector
+    I int iPrereqVertex
+    I int iSuccVertex
+ Returns:
+    EdgeNode * pNew or EdgeNode * list
+ *****************************************************************/
+EdgeNode * newSuccEdgeNode(Graph graph, EdgeNode * list, int iPrereqVertex, int iSuccVertex)
+{
+    // Declarations
+    EdgeNode *pNew = allocateEdgeNode();
+    EdgeNode *p;
+
+    // Ensure it will not cause a cycle
+    if(causesCycle(graph, iPrereqVertex, iSuccVertex)) {
+        printf("Error: Prereq would cause a cycle\n");
+        return NULL;
+    }
+
+    // Initializing the new edges to the passed in values
+    pNew->iPrereqVertex = iPrereqVertex;
+    pNew->iSuccVertex = iSuccVertex;
+
+    // Update the successorList of the prereq vertex
+    p = graph->vertexM[iPrereqVertex].successorList;
+    graph->vertexM[iPrereqVertex].successorList = pNew;
+    pNew->pNextEdge = p;
+
+    return list;
 }
 
 /**************************

@@ -105,14 +105,15 @@ int insertCourse(Graph graph, char szCourseId[], char szCourseName[]);
 /********** Caleb B. Funcs ****************/
 
 void printSuccessors(Graph graph, int iVertex);
-void printTraversal(Graph graph, int iCourseVertex, int iIndent, int visitedM[]);
+void printTraversal(Graph graph, int iCourseVertex, int iIndent);
 void printSources(Graph graph);
 void printSinks(Graph graph);
 void doPlan(Graph graph, Plan plan); //for program 6
 void printAllInList(Graph graph);
 Vertex newVertex(char szCourseName[], char szCourseId[]);
 Graph newGraph();
-EdgeNode * newEdgeNode(Graph graph, EdgeNode * list, int iPrereqVertex, int iSuccVertex);
+EdgeNode * newPreEdgeNode(Graph graph, EdgeNode * list, int iPrereqVertex, int iSuccVertex);
+EdgeNode * newSuccEdgeNode(Graph graph, EdgeNode * list, int iPrereqVertex, int iSuccVertex);
 Graph newGraph();
 EdgeNode * allocateEdgeNode();
 void printOne(Graph graph, int iVertex, int bPrintAll);
