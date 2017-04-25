@@ -196,7 +196,7 @@ void readData(Graph graph)
          *********** */
         else if(strcmp(szType, "PRTHASH")==0){
             printf(">> PRTHASH\n"); // Print command
-            //printtHash(graph);
+            printHash(graph);
         }
 
         /***********
@@ -325,14 +325,23 @@ Graph newGraph()
 {
     Graph graph;
 
-    graph = (Graph)malloc(sizeof(GraphImp)); // Allocate memory for our graph
+    graph = (Graph)calloc(1, sizeof(GraphImp)); // Allocate memory for our graph
 
     // Check if no space available
     if(graph == NULL)
         ErrExit(ERR_ALGORITHM, "No available memory for Graph");
 
     // Initialize graph values
-    graph->iNumVertices = 0;
+    graph->iNumVertices = MAX_VERTICES;
+    graph->iOverflowBegin = OVERFLOW_BEGIN;
+    graph->iFreeHead = OVERFLOW_BEGIN;
+
+   int i;
+   for(i = 0; i < graph->iNumVertices; i++)
+   {
+	graph->vertexM[i].bExists = FALSE;
+	graph->vertexM[i].iHashChainNext = -1;
+   }
 
     return graph;
 }

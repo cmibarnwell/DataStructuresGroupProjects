@@ -53,14 +53,26 @@ int insertCourse(Graph graph, char szCourseId[], char szCourseName[])
 		//copy szDept into the vertez
 		strcpy(tempVertex.szDept, szDept);
 
+		int HashValue = hash(graph, szCourseId);
+		printf("HASH VALUE IS %d\n", HashValue);
 		//Store new vertex and increase iNumVertices
-		graph->vertexM[graph->iNumVertices] = tempVertex;
-        ++graph->iNumVertices;
+		if(graph->vertexM[HashValue].bExists)
+		{
+		  graph->vertexM[HashValue].iHashChainNext = graph->iFreeHead;
+		  graph->vertexM[graph->iFreeHead] = tempVertex;
+		  ++graph->iFreeHead;	
+		}
+
+		else
+		{
+		  	graph->vertexM[HashValue] = tempVertex;
+		}
 	 }
 	 //Course already exist so update szCourseName
 	 else
 	 {
 		 strcpy(graph->vertexM[iFind].szCourseName, szCourseName);
+		 return 1;
 	 }
 	 return 0;
 }

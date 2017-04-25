@@ -104,7 +104,7 @@ void printSources(Graph graph)
     // Loop through graph and find sources
     for(i = 0; i < graph->iNumVertices; i++)
     {
-        if(graph->vertexM[i].prereqList->iPrereqVertex == -1) {
+        if( graph->vertexM[i].prereqList == NULL || graph->vertexM[i].prereqList->iPrereqVertex == -1) {
             printf("\t%s %s\n", graph->vertexM[i].szCourseId, graph->vertexM[i].szCourseName);
             bFindEver = TRUE;
         }
