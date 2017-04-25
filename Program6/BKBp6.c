@@ -5,74 +5,99 @@
 
 //utility funciton used by causeCycle
 void dfs(Graph, int, int*, int, int*);
-void getPotentialPrereq(Graph, int, int*, int);
-int getPrereqChain(Graph, int, int);
+void getPotentialPrereq(Graph, int, int*);
 int reverseMaxChain(Graph, int);
 
+
+/** ***************reverseMaxChain *************************
+ * int reverseMaxChain(Graph graph, int iVertex)
+ * Purpose:
+ *  Returns the length of prereqs from a given vertex.
+ *
+ * Parameters: 
+ *   I Graph   graph       The graph to manuver around
+ *   I int     iVertex     The vertex to check.
+ *
+ * Return value:
+ *  The length of the prereqs.
+ *
+ *
+ *
+ * ********************************************************/
 int reverseMaxChain(Graph graph, int iVertex)
 {
-  //printf("IN LOOP HIT DFSCHAIN %d\n", iVertex);
+  //check to make sure this is a valid vertex
   if(iVertex == -1 || graph->vertexM[iVertex].prereqList == NULL || !graph->vertexM[iVertex].bExists)
   {
+    //if not, return 0
     return 0;
   }
 
   int max = 0, value = 0;
 
   EdgeNode* list = NULL;
+  //iterate over the prereq lists and recurse
   for(list = graph->vertexM[iVertex].prereqList; list != NULL; list = list->pNextEdge)
   {
-    //printf("IN LOOP HIT RECURSIVE CYCLE\n");
-    //printf("IN LOOP VALUE IS %d\n", list->iSuccVertex);
+    //if the value returned is greater than the previous max value,
+    //update it.
     value = 1 + reverseMaxChain(graph, list->iPrereqVertex);
     if(value > max)
     {
       max = value;
     }
   }
-  //printf("IN LOOP WITH COUNT %d\n",max);
+
+  //now return the maximum value.
   return max;
 
 }
 
-
-int getPrereqChain(Graph graph, int iVertex, int iLevel)
+/* ***************** getPotentialPrereq **********************
+ *
+ * Purpose:
+ *   This funciton gets the potential prereq from a given vertex.
+ *
+ * Paramters:
+ *  I Graph   graph           The graph to manuever within.
+ *  I int     iVertex         The vertex to check
+ *  O int*    iPrereqVertex   The pointer used to store the potential prereq vertex
+ *
+ * Return Value:
+ * Although the return value is void, the prereq vertex is returnd via 
+ * the pointer.
+ *
+ *
+ * ***********************************************************/
+void getPotentialPrereq(Graph graph, int iVertex, int* iPrereqVertex)
 {
-  int count = 0, temp = 0;
-  //printf("Begin getPrereqChain\n");
-  count = reverseMaxChain(graph, iVertex);
-  //printf("Exit getPrereqChain\n");
-  return count;
-}
-
-
-void getPotentialPrereq(Graph graph, int iVertex, int* iPrereqVertex, int iLevel)
-{
+  //check if a valid vertex, and break out of the function
+  //if it is not.
   if(iVertex < 0 || iVertex >= graph->iNumVertices)
   {
-    //printf("Attempted to index invalid memory, to obtain potential prereq. iVertex = %d\n.", iVertex);
-    //printf("Skipping...\n");
+    printf("Attempted to index invalid memory, to obtain potential prereq. iVertex = %d\n.", iVertex);
+    printf("Skipping...\n");
     //exit(1);
     return;
   }
 
-  //printf("Begin PrereqVertex\n");
-
+  //iterate through the prereq list of the given vertex
   EdgeNode* list = NULL;
   int temp = 0, max = 0, actualvert = 0;
     for(list= graph->vertexM[iVertex].prereqList; list != NULL; list = list->pNextEdge)
     {
-    //printf("IN LOOP %s\n", graph->vertexM[list->iSuccVertex].szCourseName);
-
+      //find out the chain of the the prereqs Succesor Vertex
       temp = reverseMaxChain(graph, list->iSuccVertex);
-      //printf("IN LOOP with TEMP %d\n", temp);
+      //if the temporary chain is greater than the actual chain, 
+      //then update the maximum variable and assign that prereq
+      //as the actual prereq 
       if(temp > max)
       {
         max = temp;
         actualvert = list->iSuccVertex;
       }
     }
-    //printf("Exit getPotentialPrereq\n");
+    //set the return value to the actual prereq vertex
   *iPrereqVertex = actualvert;
 }
 
@@ -231,7 +256,7 @@ int findCourse(Graph graph, char szCourseId[])
 /******************* setLevel **********************
  * void setLevel(Graph graph, Plan plan, int iVertex, int iLev)*
  * Purpose:
- *  This function sets the level of a given vertex.
+ *  This function sets the semester level of a given vertex.
  *
  *
  * Parameters:
@@ -244,41 +269,42 @@ int findCourse(Graph graph, char szCourseId[])
 void setLevel(Graph g, Plan plan, int iVertex, int iLev)
 {
 
+  //check if we are indexing vertices with valid indecies
   if(iVertex < 0 || iVertex >= g->iNumVertices)
   {
+    //if its invalid, break out of the function
     printf("Attemted to set level with invalid vertex, iVertex = %d\n", iVertex);
-    exit(1);
+    return;
   }
 
- //printf("iLevel = %d\n", iLev);
+ //set up the necessary variables
 
  int tempreq = 0;
  int temp = 0;
  int semesterLevel = 0;
-// printf("semesterLevel = %d\n", semesterLevel);
  //is it in the plan?
   if(plan->bIncludeM[iVertex])
   {
    //its in the plan,
    //so check for its prereqs
-   getPotentialPrereq(g, iVertex, &tempreq, iLev);
+   getPotentialPrereq(g, iVertex, &tempreq);
    temp = tempreq;
+   //if the temp vertex is valid
    if(temp > 0)
    {
+     //while it is in the plan and our level is still greater than 0
      while(plan->bIncludeM[temp] && iLev - 1 > 0)
      {
-	--iLev;
-	//printf("iLevel is now %d\n", iLev);
+       //decrement the iLevel value since its a loop control variale
+	      --iLev;
+	      //increment the semester level
         ++semesterLevel;
-	//printf("semesterLevel is now %d\n", semesterLevel);
-     	getPotentialPrereq(g, temp, &tempreq, iLev);
+	      //get the next prereq and repeat the process
+     	getPotentialPrereq(g, temp, &tempreq);
      	temp = tempreq;
      }
    }
-   
   }
-  //printf("Returning %d\n", semesterLevel);
+  //set the semester level
   g->vertexM[iVertex].iSemesterLevel = semesterLevel;
-  //printf("Possible return value %d\n", semesterLevel + 1);
-
  }
