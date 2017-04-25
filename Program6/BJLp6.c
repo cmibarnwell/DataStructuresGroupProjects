@@ -54,7 +54,6 @@ int insertCourse(Graph graph, char szCourseId[], char szCourseName[])
 		strcpy(tempVertex.szDept, szDept);
 
 		int HashValue = hash(graph, szCourseId);
-		printf("HASH VALUE IS %d\n", HashValue);
 		//Store new vertex and increase iNumVertices
 		if(graph->vertexM[HashValue].bExists)
 		{
