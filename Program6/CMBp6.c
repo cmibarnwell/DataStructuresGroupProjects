@@ -104,7 +104,9 @@ void printSources(Graph graph)
     // Loop through graph and find sources
     for(i = 0; i < graph->iNumVertices; i++)
     {
-        if( graph->vertexM[i].prereqList == NULL || graph->vertexM[i].prereqList->iPrereqVertex == -1) {
+        if(!graph->vertexM[i].bExists)
+            continue;
+        if( graph->vertexM[i].prereqList->iPrereqVertex == -1) {
             printf("\t%s %s\n", graph->vertexM[i].szCourseId, graph->vertexM[i].szCourseName);
             bFindEver = TRUE;
         }
@@ -138,8 +140,12 @@ void printSinks(Graph graph)
     // Loop through graph and find sinks
     for(i = 0; i < graph->iNumVertices; i++)
     {
+        if(!graph->vertexM[i].bExists)
+            continue;
         for(j = 0; j < graph->iNumVertices; j++)
         {
+            if(!graph->vertexM[j].bExists)
+                continue;
             for(p = graph->vertexM[j].prereqList; p != NULL; p = p->pNextEdge){
                 if(p->iPrereqVertex == i) {
                     bFind = TRUE;
