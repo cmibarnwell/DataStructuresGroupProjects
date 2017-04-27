@@ -191,8 +191,7 @@ void printAllInList(Graph graph)
 /******************** printOne **************************************
 void printOne(Graph graph, int iVertex)
 Purpose:
-    Print the vertex subscript, max dist from source (this isn't
-    set until the DOPLAN command is executed in Pgm #6, from now use 0),
+    Print the vertex subscript, max dist from source,
     course ID, course name, prereqs (max of 4), and successors.
     If the course doesn't exist, show a warning.
 Parameters:
@@ -215,12 +214,15 @@ void printOne(Graph graph, int iVertex, int bPrintAll)
     if(!graph->vertexM[iVertex].bExists)
         return;
 
+    // Find TE
+    graph->vertexM[iVertex].iDistSource = distanceFromSource(graph, iVertex, 0);
+
     // See if printAll called this. If not, print a header.
     if(!bPrintAll)
         printf("%-3s %-3s %-8s %-21s%-7s                           %-7s\n", "Vx","TE","Course","Name","Prereqs","Successors");
 
     // Print vertex index and Vertex Name
-    printf("%-3d %-3d %-8s %-21s", iVertex + 1, 0, graph->vertexM[iVertex].szCourseId,graph->vertexM[iVertex].szCourseName);
+    printf("%-3d %-3d %-8s %-21s", iVertex + 1, graph->vertexM[iVertex].iDistSource, graph->vertexM[iVertex].szCourseId,graph->vertexM[iVertex].szCourseName);
 
     // if Nonexistent
     if(graph->vertexM[iVertex].prereqList->iPrereqVertex == -1){
@@ -265,11 +267,7 @@ Purpose:
     successors have to be pushed back.
 Parameters:
     I   Graph graph      graph
-
-Returns:
-
-Notes:
-
+    I   Plan plan        degree plan
 **************************************************************************/
 void doPlan(Graph graph, Plan plan)
 {
@@ -280,8 +278,8 @@ void doPlan(Graph graph, Plan plan)
     // Call SetLevel
     for(i=0; i < graph->iNumVertices; i++){
         if (plan->bIncludeM[i]) {
-            iDist = distanceFromSource(graph, plan, i, 0);
-            setLevel(graph, plan, i, iDist);
+            graph->vertexM[i].iDistSource = distanceFromSource(graph, i, 0);
+            setLevel(graph, plan, i, graph->vertexM[i].iDistSource);
         }
     }
 
@@ -321,26 +319,27 @@ void doPlan(Graph graph, Plan plan)
 /******************** distanceFromSource **************************************
 void distanceFromSource(Graph graph, Plan plan, iVertex, iSource)
 Purpose:
+    Returns the max distance to a source for a vertex
 
 Parameters:
     I   Graph graph      graph
+    I   int iVertex      vertex
+    I   int iDist        distance for recursion
 
 Returns:
-
-Notes:
-
+    int iMax            Max distance
 **************************************************************************/
-int distanceFromSource(Graph graph, Plan plan, int iVertex, int iDist)
+int distanceFromSource(Graph graph, int iVertex, int iDist)
 {
     EdgeNode * p;
     int iMax = 0;
     int iCheck;
 
-    if(iVertex == -1 || !plan->bIncludeM[iVertex])
+    if(iVertex == -1)
         return iDist;
 
     for(p = graph->vertexM[iVertex].prereqList; p != NULL; p = p->pNextEdge) {
-        iCheck = distanceFromSource(graph, plan, p->iPrereqVertex, iDist+1);
+        iCheck = distanceFromSource(graph, p->iPrereqVertex, iDist+1);
         if(iCheck > iMax)
             iMax = iCheck;
     }
