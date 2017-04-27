@@ -53,10 +53,10 @@ void readData(Graph graph)
     Plan plan = newPlan();
 
     // Open our command file
-    FILE * pFile = fopen("p6ExtraV1.txt", "r");
+    FILE * pFile = fopen("p6ExtraV2.txt", "r");
     // Check if it is found
     if(pFile == NULL)
-        ErrExit(ERR_COMMAND_LINE, "Please have the file p5Input.txt in the same directory as the program. p5Input.txt not found.");
+        ErrExit(ERR_COMMAND_LINE, "Please have the file p6Input.txt in the same directory as the program. p5Input.txt not found.");
 
     // Begin Looping through the file
     while(fgets(szInputBuffer, MAX_LINE_SIZE-1, pFile))
