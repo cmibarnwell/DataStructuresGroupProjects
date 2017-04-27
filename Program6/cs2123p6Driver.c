@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
+#include <signal.h>
 #include "cs2123p6.h"
 
  int main(int argc, char *argv[])
@@ -215,7 +216,8 @@ void readData(Graph graph)
          * HALT
          *********** */
         else if(strcmp(szType, "HALT")==0){
-            // I have no clue what this is supposed to do...
+            printf(">> HALT\n");
+            //raise(SIGINT); Uncomment if you want a gdb breakpoint
         }
 
         /***********
