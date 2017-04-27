@@ -218,6 +218,7 @@ void readData(Graph graph)
         else if(strcmp(szType, "HALT")==0){
             printf(">> HALT\n");
             //raise(SIGINT); Uncomment if you want a gdb breakpoint
+            //raise(SIGSEGV); id really rather we just crash and burn
         }
 
         /***********
