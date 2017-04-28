@@ -59,7 +59,7 @@ int insertCourse(Graph graph, char szCourseId[], char szCourseName[])
 		{
 		  graph->vertexM[HashValue].iHashChainNext = graph->iFreeHead;
 		  graph->vertexM[graph->iFreeHead] = tempVertex;
-		  ++graph->iFreeHead;	
+		  ++graph->iFreeHead;
 		}
 
 		else
@@ -174,7 +174,23 @@ void printLongChains(Graph graph, int iVertex, int pathM[], int iLevel, int iLon
 }
 
 
+/************************** deleteCourse ******************************************
+void deleteCourse(Graph graph, int iVertex)
 
+
+Purpose:
+    	Given a vertex and a graph, deleteCourse will remove that vertex from all
+			prereqList and successorList. It will then set bExists to false so doPlan
+			and other functions know not to include it
+
+Parameters:
+		I 	Graph graph
+    I   int iVertex				vertex/course to be removed
+
+Returns:
+    void
+
+**************************************************************************/
 void deleteCourse(Graph graph, int iVertex)
 {
 	//Remove the iVertex from the successorList
