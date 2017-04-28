@@ -52,11 +52,15 @@ void readData(Graph graph)
     int pathM[MAX_VERTICES];
     Plan plan = newPlan();
 
-    // Open our command file
-    FILE * pFile = fopen("p6ExtraV2.txt", "r");
-    // Check if it is found
+    // Make sure we were given an input file
+    if(ftell(stdin) == -1)
+        ErrExit(ERR_COMMAND_LINE, "Input file not received. Please use the < symbol and delegate an input file.");
+
+    // Grab our stdin
+    FILE * pFile = stdin;
+
     if(pFile == NULL)
-        ErrExit(ERR_COMMAND_LINE, "Please have the file p6Input.txt in the same directory as the program. p5Input.txt not found.");
+        ErrExit(ERR_COMMAND_LINE, "Input file not found.");
 
     // Begin Looping through the file
     while(fgets(szInputBuffer, MAX_LINE_SIZE-1, pFile))
