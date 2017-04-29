@@ -207,7 +207,6 @@ void deleteCourse(Graph graph, int iVertex)
 	iTemp = OVERFLOW_BEGIN;
 	for (i = OVERFLOW_BEGIN; i != -1; i = graph->vertexM[i].iHashChainNext)
 	{
-		printf("iVertex: %d, i is: %d, iTemp is: %d\n", iVertex, i, iTemp);
 		if(i == iVertex){
 			if(graph->vertexM[iVertex].iHashChainNext != -1){
 				graph->vertexM[iTemp].iHashChainNext = graph->vertexM[iVertex].iHashChainNext;
