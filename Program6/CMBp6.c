@@ -222,7 +222,7 @@ void printOne(Graph graph, int iVertex, int bPrintAll)
         printf("%-3s %-3s %-8s %-21s%-7s                           %-7s\n", "Vx","TE","Course","Name","Prereqs","Successors");
 
     // Print vertex index and Vertex Name
-    printf("%-3d %-3d %-8s %-21s", iVertex + 1, graph->vertexM[iVertex].iDistSource, graph->vertexM[iVertex].szCourseId,graph->vertexM[iVertex].szCourseName);
+    printf("%-3d %-3d %-8s %-21s", iVertex, graph->vertexM[iVertex].iDistSource, graph->vertexM[iVertex].szCourseId,graph->vertexM[iVertex].szCourseName);
 
     // if Nonexistent
     if(graph->vertexM[iVertex].prereqList->iPrereqVertex == -1){
