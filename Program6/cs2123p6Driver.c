@@ -346,8 +346,8 @@ Graph newGraph()
    int i;
    for(i = 0; i < graph->iNumVertices; i++)
    {
-	graph->vertexM[i].bExists = FALSE;
-	graph->vertexM[i].iHashChainNext = -1;
+       graph->vertexM[i] = newVertex("","");
+	   graph->vertexM[i].bExists = FALSE;
    }
 
     return graph;

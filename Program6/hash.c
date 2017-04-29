@@ -56,6 +56,7 @@ Notes:
 void printHash(Graph g)
 {
     int i;
+    int j;
     // Print the heading for both types of output (primary area and collisions
     printf("    %2s %-7s %-20s %s\n", "Vx", "Crse Id", "Course Name", "Chain");
     printf("\t%-9s %2s %-7s %-20s %s\n", "Collision", "Vx", "Crse Id", "Course Name", "Chain");
@@ -77,14 +78,17 @@ void printHash(Graph g)
         {   // It doesn't have a vertex, but it has a chain
             printf("    %2d %-7s %-20s %4d\n", i, "-", " "
                 , g->vertexM[i].iHashChainNext);
-            printChain(g, g->vertexM[i].iHashChainNext);
+            for(j = g->vertexM[i].iHashChainNext; j != -1; j= g->vertexM[j].iHashChainNext) {
+                printChain(g, j);
+            }
         }
     }
     // Print the overflow free list
     printf("\tOverflow free list\n    ");
-    for (i = g->iFreeHead; i != -1; i = g->vertexM[i].iHashChainNext)
+    for (i = OVERFLOW_BEGIN; i < MAX_VERTICES; i++)
     {
-        printf("%2d ", i);
+        if(!g->vertexM[i].bExists)
+            printf("%2d ", i);
          
     }
     printf("\n");

@@ -57,9 +57,13 @@ int insertCourse(Graph graph, char szCourseId[], char szCourseName[])
 		//Store new vertex and increase iNumVertices
 		if(graph->vertexM[HashValue].bExists)
 		{
-		  graph->vertexM[HashValue].iHashChainNext = graph->iFreeHead;
-		  graph->vertexM[graph->iFreeHead] = tempVertex;
-		  ++graph->iFreeHead;
+			i = HashValue;
+			while (graph->vertexM[i].iHashChainNext != -1) {
+				i = graph->vertexM[i].iHashChainNext;
+			}
+	  		graph->vertexM[i].iHashChainNext = graph->iFreeHead;
+		  	graph->vertexM[graph->iFreeHead] = tempVertex;
+		  	++graph->iFreeHead;
 		}
 
 		else
@@ -193,71 +197,88 @@ Returns:
 **************************************************************************/
 void deleteCourse(Graph graph, int iVertex)
 {
-	//Remove the iVertex from the successorList
 	int i;
+	int iTemp;
 	EdgeNode *pRemove;
 	EdgeNode *p;
 	EdgeNode *pPrecedes = NULL;
 
-
-for(i = 0; i < graph->iNumVertices; i++)//loop through the graph
-{
-	if(i == iVertex)//Remove the vertex from the graph
-		graph->vertexM[i].bExists = FALSE;
-
-	for(p = graph->vertexM[i].successorList; p != NULL; p = p->pNextEdge)//loop through successorList
+	// Remove from Hash
+	iTemp = OVERFLOW_BEGIN;
+	for (i = OVERFLOW_BEGIN; i != -1; i = graph->vertexM[i].iHashChainNext)
 	{
-		pRemove = p;
-		if( p == NULL)//if the successorList is empty
-				break;
-		if(p->iSuccVertex == iVertex)//Vertex is in the successorList
-		{
-			if(pPrecedes == NULL)//iVertex is the first edgeNode
-			{
-				if(p->pNextEdge == NULL)//Removing would make list empty
-				{
-					p = NULL;
-				}
-				else//make p next edge the start of the successorList
-				{
-					p = p->pNextEdge;
-				}
+		printf("iVertex: %d, i is: %d, iTemp is: %d\n", iVertex, i, iTemp);
+		if(i == iVertex){
+			if(graph->vertexM[iVertex].iHashChainNext != -1){
+				graph->vertexM[iTemp].iHashChainNext = graph->vertexM[iVertex].iHashChainNext;
 			}
-			else//iVertex is in the middle or the end of the list
-			{
-				pPrecedes->pNextEdge = p->pNextEdge;
+			else{
+				graph->vertexM[iTemp].iHashChainNext = -1;
 			}
-
+			break;
 		}
-		pPrecedes = p;
+		iTemp = i;
 	}
-	for(p = graph->vertexM[i].prereqList; p != NULL; p = p->pNextEdge)//loop through successorList
+
+	//Remove the iVertex from the successorList
+	for(i = 0; i < graph->iNumVertices; i++)//loop through the graph
 	{
-		pRemove = p;
-		if( p == NULL)//if the prereqList is empty
-				break;
-		if(p->iPrereqVertex== iVertex)//Vertex is in the successorList
+		if(i == iVertex)//Remove the vertex from the graph
+			graph->vertexM[i].bExists = FALSE;
+
+		for(p = graph->vertexM[i].successorList; p != NULL; p = p->pNextEdge)//loop through successorList
 		{
-			if(pPrecedes == NULL)//iVertex is the first edgeNode
+			pRemove = p;
+			if( p == NULL)//if the successorList is empty
+					break;
+			if(p->iSuccVertex == iVertex)//Vertex is in the successorList
 			{
-				if(p->pNextEdge == NULL)//Removing would make list empty
+				if(pPrecedes == NULL)//iVertex is the first edgeNode
 				{
-					p = NULL;
+					if(p->pNextEdge == NULL)//Removing would make list empty
+					{
+						p = NULL;
+					}
+					else//make p next edge the start of the successorList
+					{
+						p = p->pNextEdge;
+					}
 				}
-				else//make p next edge the start of the prereqList
+				else//iVertex is in the middle or the end of the list
 				{
-					p = p->pNextEdge;
+					pPrecedes->pNextEdge = p->pNextEdge;
 				}
+
 			}
-			else//iVertex is in the middle or the end of the list
+			pPrecedes = p;
+		}
+		for(p = graph->vertexM[i].prereqList; p != NULL; p = p->pNextEdge)//loop through successorList
+		{
+			pRemove = p;
+			if( p == NULL)//if the prereqList is empty
+					break;
+			if(p->iPrereqVertex== iVertex)//Vertex is in the successorList
 			{
-				pPrecedes->pNextEdge = p->pNextEdge;
+				if(pPrecedes == NULL)//iVertex is the first edgeNode
+				{
+					if(p->pNextEdge == NULL)//Removing would make list empty
+					{
+						p = NULL;
+					}
+					else//make p next edge the start of the prereqList
+					{
+						p = p->pNextEdge;
+					}
+				}
+				else//iVertex is in the middle or the end of the list
+				{
+					pPrecedes->pNextEdge = p->pNextEdge;
+				}
+
 			}
+			pPrecedes = p;
 
 		}
-		pPrecedes = p;
 
-}
-
-}
+	}
 }
